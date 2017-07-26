@@ -1,0 +1,124 @@
+package edu.asu.diging.grazer.core.conceptpower.impl;
+
+import java.util.Arrays;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonProperty;
+
+import edu.asu.diging.grazer.core.model.IConcept;
+import edu.asu.diging.grazer.core.model.IConceptType;
+
+public class ConceptpowerConcept { 
+
+    private String id;
+    @JsonProperty("concept_uri")
+    private String conceptUri;
+    private String lemma;
+    private String pos;
+    private String description;
+    private String conceptList;
+    private boolean deleted;
+    @JsonProperty("equal_to")
+    private String equalTo;
+    @JsonProperty("similar_to")
+    private String similarTo;
+    @JsonProperty("synonym_ids")
+    private String synonymIds;
+    
+    private ConceptpowerConceptType type;
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getConceptUri() {
+        return conceptUri;
+    }
+
+    public void setConceptUri(String conceptUri) {
+        this.conceptUri = conceptUri;
+    }
+
+    public String getLemma() {
+        return lemma;
+    }
+
+    public void setLemma(String lemma) {
+        this.lemma = lemma;
+    }
+
+    public String getPos() {
+        return pos;
+    }
+
+    public void setPos(String pos) {
+        this.pos = pos;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getConceptList() {
+        return conceptList;
+    }
+
+    public void setConceptList(String conceptList) {
+        this.conceptList = conceptList;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
+    }
+
+    public List<String> getEqualTo() {
+        if (equalTo == null) {
+            return null;
+        }
+        return Arrays.asList(equalTo.split(","));
+    }
+
+    public void setEqualTo(String equalTo) {
+        this.equalTo = equalTo;
+    }
+
+    public String getSimilarTo() {
+        return similarTo;
+    }
+
+    public void setSimilarTo(String similarTo) {
+        this.similarTo = similarTo;
+    }
+
+    public String getSynonymIds() {
+        return synonymIds;
+    }
+
+    public void setSynonymIds(String synonymIds) {
+        this.synonymIds = synonymIds;
+    }
+
+    public IConceptType getType() {
+        return type;
+    }
+
+    public void setType(ConceptpowerConceptType type) {
+        this.type = type;
+    }
+    
+    public IConcept getAdapter() {
+        return new ConceptAdapter(this);
+    }
+}
