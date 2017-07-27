@@ -9,3 +9,7 @@
 <p>
 ${concept.description}
 </p>
+
+<c:forEach items="${graph.nodes}" var="node">
+${node.label}
+</c:forEach>

@@ -14,7 +14,7 @@
 		<admin.password>admin</admin.password>
 
 		<log.level>debug</log.level>
-		
+
 		<quadriga.url>http://localhost:8080/quadriga/</quadriga.url>
 		<quadriga.concepts.endpoint>public/concepts</quadriga.concepts.endpoint>
 		<conceptpower.url>https://chps.asu.edu/conceptpower/rest/</conceptpower.url>
@@ -187,6 +187,14 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>
+
+		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
+		<dependency>
+			<groupId>commons-io</groupId>
+			<artifactId>commons-io</artifactId>
+			<version>2.5</version>
+		</dependency>
+
 
 	</dependencies>
 
