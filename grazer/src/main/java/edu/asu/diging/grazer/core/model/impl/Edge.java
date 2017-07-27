@@ -7,8 +7,8 @@ public class Edge {
     private String label;
     private String concept;
     
-    private Concept sourceConcept;
-    private Concept targetConcept;
+    private Node sourceNode;
+    private Node targetNode;
     
     public String getSource() {
         return source;
@@ -34,16 +34,16 @@ public class Edge {
     public void setConcept(String concept) {
         this.concept = concept;
     }
-    public Concept getSourceConcept() {
-        return sourceConcept;
+    public Node getSourceNode() {
+        return sourceNode;
     }
-    public void setSourceConcept(Concept sourceConcept) {
-        this.sourceConcept = sourceConcept;
+    public void setSourceNode(Node sourceNode) {
+        this.sourceNode = sourceNode;
     }
-    public Concept getTargetConcept() {
-        return targetConcept;
+    public Node getTargetNode() {
+        return targetNode;
     }
-    public void setTargetConcept(Concept targetConcept) {
-        this.targetConcept = targetConcept;
+    public void setTargetNode(Node targetNode) {
+        this.targetNode = targetNode;
     }
 }

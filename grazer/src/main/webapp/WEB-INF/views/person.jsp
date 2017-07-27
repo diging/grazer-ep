@@ -10,6 +10,8 @@
 ${concept.description}
 </p>
 
-<c:forEach items="${graph.nodes}" var="node">
-${node.label}
+<ul>
+<c:forEach items="${graph.edges}" var="edge">
+<li>${edge.sourceNode.label} - ${edge.label} - ${edge.targetNode.label} </li>
 </c:forEach>
+</ul>
