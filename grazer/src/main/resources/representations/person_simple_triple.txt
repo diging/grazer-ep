@@ -1,0 +1,9 @@
+relationship_name_to+attend=attended
+relationship_name_CONd0fd788c-406d-468e-b5ae-6cc4faf172e3=attended
+relationship_name_WID-00789138-V-01-investigate=investigated
+relationship_name_WID-00829107-V-01-teach=taught
+relationship_name_CON98a492aa-a41a-4015-adf8-f07df4fff120=employed
+relationship_name_WID-00594337-V-01-know=knew
+relationship_name_CONa95f341b-e249-4371-aaed-92695014befa=used
+relationship_name_WID-01158872-V-01-use=used
+relationship_name_WID-00775831-V-01-oppose=opposed

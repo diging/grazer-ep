@@ -28,6 +28,8 @@ public class PersonController {
         IConcept concept = connector.getConcept(personId);
         Graph graph = graphManager.getTransformedGraph(concept.getUri());
         model.addAttribute("concept", concept);
+        model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
+        model.addAttribute("conceptAltIds", concept.getAlternativeUris());
         model.addAttribute("graph", graph);
         return "person";
     }

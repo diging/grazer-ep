@@ -71,6 +71,12 @@ a.appName:hover {
     padding: 6px 15px;
 }
 
+.nav > li > a:hover,
+.nav > li > a:focus {
+  text-decoration: underline;
+  background-color: transparent;
+}
+
 .breakwords {
   -ms-word-break: break-all;
   word-break: break-all;
@@ -81,4 +87,19 @@ a.appName:hover {
   -webkit-hyphens: auto;
   -moz-hyphens: auto;
   hyphens: auto;
+}
+
+strong {
+	font-weight: bold;
+	color: #dcb863;
+}
+
+a {
+    color: #167162;
+    text-decoration: underline;
+}
+
+a:hover, a:focus {
+    color: #0b352e;
+    text-decoration: underline;
 }

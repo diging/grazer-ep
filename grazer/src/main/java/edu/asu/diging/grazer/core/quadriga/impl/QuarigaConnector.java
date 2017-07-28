@@ -8,6 +8,7 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -53,12 +54,14 @@ public class QuarigaConnector implements IQuadrigaConnector {
      * @see edu.asu.diging.grazer.core.quadriga.impl.IQuadrigaConnector#getPersons()
      */
     @Override
+    @Cacheable(value = "quadriga_persons")
     public List<IConcept> getPersons() {
         Concept[] concepts = restTemplate.getForObject(String.format("%s%s?types=%s&projects=%s", quadrigaUrl, conceptsEndpoint, personType, projectId), Concept[].class);
         return Arrays.asList(concepts);
     }
     
     @Override
+    @Cacheable(value = "quadriga_graphs")
     public Graph getTransformedNetworks(String transformationName, Map<String, String> properties) throws IOException {
         Resource pathResource = new ClassPathResource(transformationFolder + PATTERN_PREFIX + transformationName + fileEnding);
         String pattern = IOUtils.toString(pathResource.getInputStream(), Charset.forName("UTF-8"));

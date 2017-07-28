@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache>
+
+	<defaultCache maxElementsInMemory="100" eternal="false"
+		overflowToDisk="false" memoryStoreEvictionPolicy="LFU" />
+
+	<cache name="concepts" eternal="false" maxElementsInMemory="500"
+		overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
+		timeToLiveSeconds="3600" memoryStoreEvictionPolicy="LRU" /><!-- 24hrs = 86400 -->
+		
+	<cache name="quadriga_graphs" eternal="false" maxElementsInMemory="500"
+        overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
+        timeToLiveSeconds="3600" memoryStoreEvictionPolicy="LRU" />
+        
+    <cache name="quadriga_persons" eternal="false" maxElementsInMemory="500"
+        overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
+        timeToLiveSeconds="3600" memoryStoreEvictionPolicy="LRU" />
+
+</ehcache>

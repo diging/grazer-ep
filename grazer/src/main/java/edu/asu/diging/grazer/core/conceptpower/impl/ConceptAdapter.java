@@ -1,5 +1,6 @@
 package edu.asu.diging.grazer.core.conceptpower.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import edu.asu.diging.grazer.core.model.IConcept;
@@ -98,8 +99,13 @@ public class ConceptAdapter implements IConcept {
 
     @Override
     public List<String> getAlternativeUris() {
-        // TODO not yet implemetned
-        return null;
+        List<ConceptpowerAlternativeId> altIds = concept.getAlternativeIds();
+        List<String> ids = new ArrayList<>();
+        if (altIds == null) {
+            return ids;
+        }
+        altIds.forEach(id -> ids.add(id.getConceptUri()));
+        return ids;
     }
 
     @Override

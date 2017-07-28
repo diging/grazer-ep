@@ -2,9 +2,8 @@ package edu.asu.diging.grazer.core.conceptpower.impl;
 
 import java.util.Arrays;
 
-import javax.xml.ws.Response;
-
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
@@ -40,6 +39,7 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
      * getConcept(java.lang.String)
      */
     @Override
+    @Cacheable(value = "concepts")
     public IConcept getConcept(String id) {
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setAccept(

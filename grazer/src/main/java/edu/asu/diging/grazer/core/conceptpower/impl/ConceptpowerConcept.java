@@ -26,6 +26,8 @@ public class ConceptpowerConcept {
     private String synonymIds;
     
     private ConceptpowerConceptType type;
+    
+    private List<ConceptpowerAlternativeId> alternativeIds;
 
     public String getId() {
         return id;
@@ -118,6 +120,14 @@ public class ConceptpowerConcept {
         this.type = type;
     }
     
+    public List<ConceptpowerAlternativeId> getAlternativeIds() {
+        return alternativeIds;
+    }
+
+    public void setAlternativeIds(List<ConceptpowerAlternativeId> alternativeIds) {
+        this.alternativeIds = alternativeIds;
+    }
+
     public IConcept getAdapter() {
         return new ConceptAdapter(this);
     }
