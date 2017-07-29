@@ -7,3 +7,4 @@ relationship_name_WID-00594337-V-01-know=knew
 relationship_name_CONa95f341b-e249-4371-aaed-92695014befa=used
 relationship_name_WID-01158872-V-01-use=used
 relationship_name_WID-00775831-V-01-oppose=opposed
+relationship_name_WID-00806314-V-02-support=supported
