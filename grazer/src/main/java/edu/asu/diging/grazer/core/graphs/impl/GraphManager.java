@@ -44,6 +44,12 @@ public class GraphManager implements IGraphManager {
         transformationNames.add(PERSON_OBJECT_SIMPLE_TRIPLE);
         transformationNames.add(PERSON_HAS_SOMEONE);
         transformationNames.add(SOMEONE_HAS_PERSON);
+        transformationNames.add("someone_has_sth_start_date");
+        transformationNames.add("sth_has_so_start_date");
+        transformationNames.add("someone_has_sth_end_date");
+        transformationNames.add("sth_has_so_end_date");
+        transformationNames.add("someone_has_sth_occur_date");
+        transformationNames.add("sth_has_so_occur_date");
     }
 
     /* (non-Javadoc)
@@ -78,6 +84,7 @@ public class GraphManager implements IGraphManager {
             });
             g.getEdges().forEach(e -> {
                 predicateProcessor.setPredicateName(e, tName);
+                predicateProcessor.setPredicateUri(e);
                 compoundGraph.getEdges().add(e);
             });
         }

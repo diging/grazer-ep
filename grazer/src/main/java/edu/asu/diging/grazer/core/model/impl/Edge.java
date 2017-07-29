@@ -6,6 +6,10 @@ public class Edge {
     private String target;
     private String label;
     private String concept;
+    private String sourceUri;
+    private String startTime;
+    private String endTime;
+    private String occurred;
     
     private Node sourceNode;
     private Node targetNode;
@@ -33,6 +37,30 @@ public class Edge {
     }
     public void setConcept(String concept) {
         this.concept = concept;
+    }
+    public String getSourceUri() {
+        return sourceUri;
+    }
+    public void setSourceUri(String sourceUri) {
+        this.sourceUri = sourceUri;
+    }
+    public String getStartTime() {
+        return startTime;
+    }
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+    public String getEndTime() {
+        return endTime;
+    }
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+    public String getOccurred() {
+        return occurred;
+    }
+    public void setOccurred(String occurred) {
+        this.occurred = occurred;
     }
     public Node getSourceNode() {
         return sourceNode;

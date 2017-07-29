@@ -34,7 +34,17 @@ ${concept.description}
     <c:otherwise>
         ${edge.targetNode.label}
     </c:otherwise>
-</c:choose>
+</c:choose> 
+<c:if test="${not empty edge.startTime}">
+    starting in ${edge.startTime}
+</c:if>
+<c:if test="${not empty edge.endTime}">
+    ending in ${edge.endTime}
+</c:if>
+<c:if test="${not empty edge.occurred}">
+    in ${edge.occurred}
+</c:if>
+    found in <a href="${edge.sourceUri}" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i> ${edge.sourceUri}</a>.
 </li>
 </c:forEach>
 </ul>

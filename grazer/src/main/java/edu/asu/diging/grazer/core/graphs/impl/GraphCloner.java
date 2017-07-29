@@ -25,8 +25,12 @@ public class GraphCloner implements IGraphCloner {
             Edge edgeClone = new Edge();
             edgeClone.setConcept(edge.getConcept());
             edgeClone.setLabel(edge.getLabel());
+            edgeClone.setSourceUri(edge.getSourceUri());
             edgeClone.setSource(edge.getSource());
             edgeClone.setTarget(edge.getTarget());
+            edgeClone.setStartTime(edge.getStartTime());
+            edgeClone.setEndTime(edge.getEndTime());
+            edgeClone.setOccurred(edge.getOccurred());
             clone.getEdges().add(edgeClone);
         }
         
