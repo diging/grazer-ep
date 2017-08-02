@@ -9,6 +9,13 @@
 ${concept.description}
 </p>
 
+<c:forEach var="listVar" items="${concept.equalTo }"> 
+    <li><a href="${listVar}" target="_blank"> ${listVar}</a></li>
+    
+</c:forEach>
+
+
+
 <ul class="list-group">
 <c:forEach items="${graph.edges}" var="edge">
 <li class="list-group-item">
