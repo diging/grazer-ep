@@ -26,11 +26,21 @@ public class PersonController {
     public String showPerson(@PathVariable("personId") String personId, Model model) throws IOException {
         
         IConcept concept = connector.getConcept(personId);
-        Graph graph = graphManager.getTransformedGraph(concept.getUri());
+        graphManager.transformGraph(concept.getUri());
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
-        model.addAttribute("conceptAltIds", concept.getAlternativeUris());
-        model.addAttribute("graph", graph);
         return "person";
+    }
+    
+    @RequestMapping("/person/{personId}/graph")
+    public String getPersonGraph(@PathVariable("personId") String personId, Model model) {
+        IConcept concept = connector.getConcept(personId);
+       
+        Graph graph = graphManager.getTransfomationResult(concept.getUri());
+        model.addAttribute("graph", graph);
+        
+        model.addAttribute("concept", concept);
+        model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
+        return "person/graph";
     }
 }
