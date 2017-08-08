@@ -5,10 +5,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.annotation.PostConstruct;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import edu.asu.diging.grazer.core.graphs.IGraphCloner;
@@ -17,6 +22,10 @@ import edu.asu.diging.grazer.core.graphs.IPredicateProcessor;
 import edu.asu.diging.grazer.core.model.impl.Graph;
 import edu.asu.diging.grazer.core.model.impl.Node;
 import edu.asu.diging.grazer.core.quadriga.IQuadrigaConnector;
+import edu.asu.diging.grazer.core.quadriga.impl.TransformationResponse;
+import net.sf.ehcache.Cache;
+import net.sf.ehcache.CacheManager;
+import net.sf.ehcache.Element;
 
 @Service
 public class GraphManager implements IGraphManager {
@@ -25,6 +34,8 @@ public class GraphManager implements IGraphManager {
     private final String PERSON_OBJECT_SIMPLE_TRIPLE = "person_object_simple_triple";
     private final String PERSON_HAS_SOMEONE = "person_has_someone";
     private final String SOMEONE_HAS_PERSON = "someone_has_person";
+    
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     
     @Autowired
     private IQuadrigaConnector quadrigaConnector;
@@ -35,7 +46,12 @@ public class GraphManager implements IGraphManager {
     @Autowired
     private IGraphCloner graphCloner;
     
+    @Autowired
+    @Qualifier("ehcache")
+    private CacheManager cacheManager;
+    
     private List<String> transformationNames;
+    private Cache cache;
     
     @PostConstruct
     public void init() {
@@ -50,13 +66,22 @@ public class GraphManager implements IGraphManager {
         transformationNames.add("sth_has_so_end_date");
         transformationNames.add("someone_has_sth_occur_date");
         transformationNames.add("sth_has_so_occur_date");
+        
+        cache = cacheManager.getCache("quadriga_graphs");
     }
 
     /* (non-Javadoc)
      * @see edu.asu.diging.grazer.core.graphs.impl.IGraphManager#getTransformedPersonGraph(java.lang.String)
      */
     @Override
-    public Graph getTransformedGraph(String uri) throws IOException {
+    @Async
+    public void transformGraph(String uri) throws IOException {
+        // if there is already a transformation running or a result cached, let's not
+        // start the transformation again
+        if (cache.isKeyInCache(uri) && !cache.get(uri).isExpired()) {
+            return;
+        }
+        cache.put(new Element(uri, null));
         Map<String, String> props = new HashMap<>();
         props.put("${person_uri}", uri);
         
@@ -64,9 +89,25 @@ public class GraphManager implements IGraphManager {
         // so we need to clone it first, before we change it
         Map<String, Graph> graphs = new HashMap<>();
         for (String tName : transformationNames) {
-            Graph retrievedGraph = quadrigaConnector.getTransformedNetworks(tName, props);
-            Graph graph = graphCloner.clone(retrievedGraph);
-            graphs.put(tName, graph);
+            Graph retrievedGraph = null;
+            // TODO: eventually we want to do this in parallel but for now let's not overwhelm Quadriga
+            TransformationResponse response = quadrigaConnector.getTransformedNetworks(tName, props);
+            while (true) {
+                response = quadrigaConnector.checkForResult(response);
+                if (!response.getStatus().equals("IN_PROGRESS")) {
+                    retrievedGraph = response.getGraph();
+                    break;
+                }
+                try {
+                    TimeUnit.SECONDS.sleep(2);
+                } catch (InterruptedException e1) {
+                    logger.error("Could not slep.", e1);
+                }
+            }
+            if (retrievedGraph != null) {
+                Graph graph = graphCloner.clone(retrievedGraph);
+                graphs.put(tName, graph);
+            }
         }
         
         Graph compoundGraph = new Graph();
@@ -98,6 +139,19 @@ public class GraphManager implements IGraphManager {
             n.setConceptId(n.getUri().substring(n.getUri().lastIndexOf("/")+1));
         });
         
-        return compoundGraph;
+        cache.put(new Element(uri, compoundGraph));
+    }
+    
+    @Override
+    public Graph getTransfomationResult(String uri) {
+        Element element = cache.get(uri);
+        if (element == null) {
+            return null;
+        }
+        Object result = element.getObjectValue();
+        if (result == null) {
+            return null;
+        }
+        return (Graph) result;
     }
 }
