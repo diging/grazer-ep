@@ -2,6 +2,8 @@ package edu.asu.diging.grazer.core.conceptpower.impl;
 
 import java.util.Arrays;
 
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.PropertySource;
@@ -19,6 +21,9 @@ import edu.asu.diging.grazer.core.model.IConcept;
 @Service
 @PropertySource("classpath:config.properties")
 public class ConceptpowerConnector implements IConceptpowerConnector {
+
+    @Autowired
+    protected SessionFactory sessionFactory;
 
     @Value("${conceptpower.url}")
     private String conceptpowerUrl;
@@ -41,6 +46,7 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
     @Override
     @Cacheable(value = "concepts")
     public IConcept getConcept(String id) {
+    	
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setAccept(
                 Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
