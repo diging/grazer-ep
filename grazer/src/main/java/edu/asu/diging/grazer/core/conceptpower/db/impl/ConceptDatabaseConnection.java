@@ -6,6 +6,7 @@ import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import edu.asu.diging.grazer.core.conceptpower.db.IConceptDatabaseConnection;
 import edu.asu.diging.grazer.core.model.IConcept;
@@ -19,13 +20,14 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());
 	
+	@Autowired
 	protected SessionFactory sessionFactory;
 
 	@Override
 	public IConcept getConcept(String uri) {
 		Object objConcept = sessionFactory.getCurrentSession().get(Concept.class, uri);
 		if (objConcept == null) {
-            Query<?> query = sessionFactory.getCurrentSession().createQuery("SELECT c from Concept c WHERE :uri in elements(c.alternativeUris)");
+            Query query = sessionFactory.getCurrentSession().createQuery("SELECT c from Concept c WHERE :uri in elements(c.alternativeUris)");
             query.setParameter("uri", uri);
             List<?> results = query.list();
             if (results != null && !results.isEmpty()) {

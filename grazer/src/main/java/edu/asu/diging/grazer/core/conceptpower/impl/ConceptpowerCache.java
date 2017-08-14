@@ -11,8 +11,6 @@ import edu.asu.diging.grazer.core.model.IConcept;
 @Service
 public class ConceptpowerCache implements IConceptpowerCache {
 	
-	
-	@Autowired
 	private IConceptDatabaseConnection conceptDB;
 	
 	@Autowired

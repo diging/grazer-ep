@@ -10,7 +10,6 @@ import edu.asu.diging.grazer.core.model.IConcept;
 @Service
 public class ASyncConceptUpdater implements IASyncConceptUpdater {
 	
-	@Autowired
 	private IConceptDatabaseConnection conceptDB;
 	
 	@Autowired

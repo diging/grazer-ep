@@ -12,7 +12,9 @@
 		<org.springframework-version>4.3.1.RELEASE</org.springframework-version>
 		<spring-security-version>4.1.3.RELEASE</spring-security-version>
 		<admin.password>admin</admin.password>
-
+		<database.url>jdbc:mysql://localhost:3306/quadriga</database.url>
+		<database.username>dbadmin</database.username>
+		<database.pw>dbadmin</database.pw>
 		<log.level>debug</log.level>
 
 		<quadriga.url>http://localhost:8080/quadriga/</quadriga.url>
@@ -55,6 +57,18 @@
             <artifactId>spring-context-support</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-tx</artifactId>
+            <version>4.1.6.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
+            <version>4.1.6.RELEASE</version>
+        </dependency>     
+        
+        
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -92,6 +106,9 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${spring-security-version}</version>
 		</dependency>
+		
+		
+
 
 		<!-- Spring AOP + AspectJ -->
 		<dependency>
@@ -111,6 +128,8 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.8.9</version>
 		</dependency>
+		
+		
 
 		<!-- Logging -->
 		<dependency>
@@ -226,7 +245,7 @@
 		<dependency>
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-core</artifactId>
-			<version>5.2.10.Final</version>
+			<version>4.2.21.Final</version>
 		</dependency>
 		
 		<!-- Hibernate library dependecy start -->
@@ -260,6 +279,13 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.0.1.Final</version>
+		</dependency>
+		
+		<!-- @Inject -->
+		<dependency>
+			<groupId>javax.inject</groupId>
+			<artifactId>javax.inject</artifactId>
+			<version>1</version>
 		</dependency>
 
 	</dependencies>
