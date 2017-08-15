@@ -1,12 +1,16 @@
 package edu.asu.diging.grazer.core.model.impl;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonTypeName;
 
 import edu.asu.diging.grazer.core.model.IConceptType;
 
 public class ConceptType implements IConceptType {
 
-    private String uri;
+	private String uri;
     private String id;
     private String name;
     private String description;

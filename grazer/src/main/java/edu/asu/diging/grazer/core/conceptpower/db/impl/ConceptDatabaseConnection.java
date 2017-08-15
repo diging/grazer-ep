@@ -7,6 +7,8 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import edu.asu.diging.grazer.core.conceptpower.db.IConceptDatabaseConnection;
 import edu.asu.diging.grazer.core.model.IConcept;
@@ -14,8 +16,8 @@ import edu.asu.diging.grazer.core.model.IConceptType;
 import edu.asu.diging.grazer.core.model.impl.Concept;
 import edu.asu.diging.grazer.core.model.impl.ConceptType;
 
-
-@SuppressWarnings("deprecation")
+@Component
+@Transactional
 public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
 
 	private final Logger logger = LoggerFactory.getLogger(getClass());

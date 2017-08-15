@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import edu.asu.diging.grazer.core.conceptpower.IConceptpowerCache;
 import edu.asu.diging.grazer.core.conceptpower.IConceptpowerConnector;
 import edu.asu.diging.grazer.core.graphs.IGraphManager;
 import edu.asu.diging.grazer.core.model.IConcept;
@@ -21,11 +22,14 @@ public class PersonController {
     
     @Autowired
     private IGraphManager graphManager;
+    
+    private IConceptpowerCache cache;
 
     @RequestMapping("/person/{personId}")
     public String showPerson(@PathVariable("personId") String personId, Model model) throws IOException {
-        
-        IConcept concept = connector.getConcept(personId);
+        	
+        //IConcept concept = connector.getConcept(personId);
+    		IConcept concept = cache.getConceptByUri(personId);
         Graph graph = graphManager.getTransformedGraph(concept.getUri());
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
