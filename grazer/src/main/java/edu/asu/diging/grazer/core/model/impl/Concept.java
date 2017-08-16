@@ -2,32 +2,60 @@ package edu.asu.diging.grazer.core.model.impl;
 
 import java.util.List;
 
+import javax.persistence.CollectionTable;
+import javax.persistence.Column;
+import javax.persistence.ElementCollection;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.hibernate.annotations.Index;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.IConceptType;
 
+@Entity
+@Table(name = "tbl_conceptpower_concept")
 public class Concept implements IConcept {
 
-    private String uri;
+	@Id @Index(name="uri_idx")private String uri;
     private String id;
     private String word;
     private String pos;
-    private String description;
+    @Lob private String description;
     private String conceptList;
     private String typeId;
     private boolean deleted;
     
+    @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @CollectionTable(name="tbl_conceptpower_alternativeuris", joinColumns=@JoinColumn(name="id"))
+    @Column(name="alternativeUris")
     private List<String> alternativeUris;
     
     private String creatorId;
     
+    @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @CollectionTable(name="tbl_conceptpower_equalto", joinColumns=@JoinColumn(name="id"))
+    @Column(name="equalto")
     private List<String> equalTo;
     
+    @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @CollectionTable(name="tbl_conceptpower_wordnetids", joinColumns=@JoinColumn(name="id"))
+    @Column(name="wordnetids")
     private List<String> wordnetIds;
     
     @JsonDeserialize(as=ConceptType.class)
-    private IConceptType type;
+    @Transient private IConceptType type;
     
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#getId()

@@ -27,22 +27,24 @@ public class ConceptpowerCache implements IConceptpowerCache {
 	
 	@Override
 	public IConcept getConceptByUri(String uri) {
-		
-		/*IConcept concept = conceptDB.getConcept(uri);
+		logger.debug("Inside getconceptbyuri in cache");
+		IConcept concept = conceptDB.getConcept(uri);
 		
 		if(concept != null) {
+			logger.debug("Inside cache through db");
 			conceptUpdater.updateConcept(uri);
 			return concept;
-		}*/
-		
-		/*IConcept concept = connector.getConcept(uri);
+		}
+		logger.debug("Inside cache  after db fails");
+		concept = connector.getConcept(uri);
 		if(concept != null) {
+			logger.debug("Inside cache through connector");
 			conceptDB.createOrUpdate(concept);
 		}
-        return concept;*/
-		IConcept concept = connector.getConcept(uri);
-        logger.debug("Inside getconceptbyuri in cache"); 
         return concept;
+		/*IConcept concept = connector.getConcept(uri);
+        logger.debug("Inside getconceptbyuri in cache"); 
+        return concept;*/
 	}
 	
 }

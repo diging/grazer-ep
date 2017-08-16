@@ -3,19 +3,57 @@ package edu.asu.diging.grazer.core.conceptpower.impl;
 import java.util.Arrays;
 import java.util.List;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlType;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.IConceptType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlType(name = "")
 public class ConceptpowerConcept { 
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		return result;
+	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		ConceptpowerConcept other = (ConceptpowerConcept) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
+
+	@XmlElement(required = true, namespace="http://www.digitalhps.org/")
     private String id;
     @JsonProperty("concept_uri")
     private String conceptUri;
+    @XmlElement(required = true, namespace="http://www.digitalhps.org/")
     private String lemma;
+    @XmlElement(required = true, namespace="http://www.digitalhps.org/")
     private String pos;
+    @XmlElement(required = true, namespace="http://www.digitalhps.org/")
     private String description;
+    @XmlElement(required = true, namespace="http://www.digitalhps.org/")
     private String conceptList;
     private boolean deleted;
     @JsonProperty("equal_to")
@@ -25,8 +63,11 @@ public class ConceptpowerConcept {
     @JsonProperty("synonym_ids")
     private String synonymIds;
     
+    @XmlElement(namespace="http://www.digitalhps.org/", type=ConceptpowerConceptType.class)
     private ConceptpowerConceptType type;
     
+    @XmlElementWrapper(name="alternativeIds", namespace="http://www.digitalhps.org/")
+    @XmlElement(name="id", namespace="http://www.digitalhps.org/")  
     private List<ConceptpowerAlternativeId> alternativeIds;
 
     public String getId() {

@@ -56,7 +56,7 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
 	@Override
 	public void createOrUpdate(IConcept concept) {
 		Object objConcept = sessionFactory.getCurrentSession().get(Concept.class, concept.getUri());
-        
+        logger.debug((String) objConcept);
         // if concept exists, let's update it
         if (objConcept == null || isDifferent(concept, (IConcept)objConcept)) {
             logger.debug((objConcept == null ? "Adding " : "Updating: ") + concept.getUri());

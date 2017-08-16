@@ -67,5 +67,12 @@
 		<!-- 2 hours -->
 		<session-timeout>120</session-timeout>
 	</session-config>
+	
+	<jsp-config>
+		<jsp-property-group>
+			<url-pattern>*.jsp</url-pattern>
+			<page-encoding>UTF-8</page-encoding>
+		</jsp-property-group>
+	</jsp-config>
 
 </web-app>

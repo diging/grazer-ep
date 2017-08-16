@@ -1,9 +1,13 @@
 package edu.asu.diging.grazer.core.conceptpower.impl;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.asu.diging.grazer.core.model.IConceptType;
 
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ConceptpowerConceptType implements IConceptType {
 
     @JsonProperty("type_id")

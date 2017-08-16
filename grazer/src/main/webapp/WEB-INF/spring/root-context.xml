@@ -17,10 +17,14 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
 	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
 	http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 	">
 
 	<mvc:annotation-driven />
 	<context:component-scan base-package="edu.asu.diging.grazer" />
+	
+	<!-- Enables the Spring Transaction programming model -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
 	<!-- Reference the hibernate -->
 	<beans:import resource="../hibernate/hibernate.cfg.xml"/>

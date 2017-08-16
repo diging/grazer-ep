@@ -12,7 +12,7 @@
 		<org.springframework-version>4.3.1.RELEASE</org.springframework-version>
 		<spring-security-version>4.1.3.RELEASE</spring-security-version>
 		<admin.password>admin</admin.password>
-		<database.url>jdbc:mysql://localhost:3306/quadriga</database.url>
+		<database.url>jdbc:mysql://localhost:3306/grazer</database.url>
 		<database.username>dbadmin</database.username>
 		<database.pw>dbadmin</database.pw>
 		<log.level>debug</log.level>

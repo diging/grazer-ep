@@ -23,6 +23,7 @@ public class PersonController {
     @Autowired
     private IGraphManager graphManager;
     
+    @Autowired
     private IConceptpowerCache cache;
 
     @RequestMapping("/person/{personId}")
