@@ -309,7 +309,64 @@
 			<artifactId>eclipselink</artifactId>
 			<version>2.6.4</version>
 		</dependency>
+		<dependency>
+			<groupId>javax.transaction</groupId>
+			<artifactId>jta</artifactId>
+			<version>1.1</version>
+		</dependency>
+		
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-oxm</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
+
+		<!-- Servlet -->
+		<dependency>
+			<groupId>javax.servlet</groupId>
+			<artifactId>servlet-api</artifactId>
+			<version>2.5</version>
+			<scope>provided</scope>
+		</dependency>
+		
 	</dependencies>
+	
+	<profiles>
+		<profile>
+			<id>dev</id>
+			<!-- Dev Env. Properties -->
+			<properties>
+				<!-- SQL Properties -->
+				<db.url>${database.url}</db.url>
+				<db.username>${database.username}</db.username>
+				<db.pw>${database.pw}</db.pw>
+				<tomcat.path>${tomcat.deploy.path}</tomcat.path>
+				<profile.conceptpower.url>${conceptpower.url}</profile.conceptpower.url>
+			</properties>
+		</profile>
+		<profile>
+			<id>test</id>
+			<!-- Test Env. Properties -->
+			<properties>
+				<!-- SQL Properties -->
+				<db.url>${database.url}</db.url>
+				<db.username>${database.username}</db.username>
+				<db.pw>${database.pw}</db.pw>
+				<profile.conceptpower.url>${conceptpower.url}</profile.conceptpower.url>
+			</properties>
+		</profile>
+		<profile>
+			<id>prod</id>
+			<!-- Dev Env. Properties -->
+			<properties>
+				<!-- SQL Properties -->
+				<db.url>${database.url}</db.url>
+				<db.username>${database.username}</db.username>
+				<db.pw>${database.pw}</db.pw>
+				<profile.conceptpower.url>${conceptpower.url}</profile.conceptpower.url>
+			</properties>
+		</profile>
+	</profiles>
 	
 	<build>
 		<finalName> grazer</finalName>

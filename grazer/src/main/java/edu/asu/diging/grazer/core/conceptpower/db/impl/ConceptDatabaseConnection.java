@@ -61,7 +61,9 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
         if (objConcept == null || isDifferent(concept, (IConcept)objConcept)) {
             logger.debug((objConcept == null ? "Adding " : "Updating: ") + concept.getUri());
             if (objConcept != null) {
-                sessionFactory.getCurrentSession().evict(objConcept);
+            		sessionFactory.getCurrentSession().saveOrUpdate(concept);
+            		sessionFactory.getCurrentSession().evict(objConcept);
+            		
             }
             //sessionFactory.getCurrentSession().saveOrUpdate(concept);
         }
@@ -71,7 +73,8 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
             IConceptType type = getType(concept.getTypeId());
             if (type == null || isDifferent(concept.getType(), type)) {
                 if (type != null) {
-                    sessionFactory.getCurrentSession().evict(type);
+                		sessionFactory.getCurrentSession().evict(type);
+                		sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
                 }
                 //sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
             }
