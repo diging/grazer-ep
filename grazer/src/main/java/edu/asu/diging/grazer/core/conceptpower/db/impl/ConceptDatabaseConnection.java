@@ -63,7 +63,7 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
             if (objConcept != null) {
                 sessionFactory.getCurrentSession().evict(objConcept);
             }
-            sessionFactory.getCurrentSession().saveOrUpdate(concept);
+            //sessionFactory.getCurrentSession().saveOrUpdate(concept);
         }
         
         // update type if there is one
@@ -73,7 +73,7 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
                 if (type != null) {
                     sessionFactory.getCurrentSession().evict(type);
                 }
-                sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
+                //sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
             }
         }
         
