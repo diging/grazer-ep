@@ -27,6 +27,7 @@ public class ConceptpowerCache implements IConceptpowerCache {
 	
 	@Override
 	public IConcept getConceptByUri(String uri) {
+		
 		logger.debug("Inside getconceptbyuri in cache");
 		IConcept concept = conceptDB.getConcept(uri);
 		
@@ -35,13 +36,14 @@ public class ConceptpowerCache implements IConceptpowerCache {
 			conceptUpdater.updateConcept(uri);
 			return concept;
 		}
+		
 		logger.debug("Inside cache  after db fails");
+		
 		concept = connector.getConcept(uri);
-		if(concept != null) {
-			logger.debug("Inside cache through connector");
-			conceptDB.createOrUpdate(concept);
-		}
+		logger.debug("Inside cache through connector");
+		conceptDB.createOrUpdate(concept);
         return concept;
+        
 		/*IConcept concept = connector.getConcept(uri);
         logger.debug("Inside getconceptbyuri in cache"); 
         return concept;*/

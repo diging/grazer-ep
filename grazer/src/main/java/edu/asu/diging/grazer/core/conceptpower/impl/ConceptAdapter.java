@@ -3,14 +3,17 @@ package edu.asu.diging.grazer.core.conceptpower.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.stereotype.Component;
+import javax.persistence.Entity;
 
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.IConceptType;
 
+@Entity
 public class ConceptAdapter implements IConcept {
     
     private ConceptpowerConcept concept;
+    
+    private ConceptpowerConceptType conceptType;
     
     public  ConceptAdapter(ConceptpowerConcept concept) {
         this.concept = concept;

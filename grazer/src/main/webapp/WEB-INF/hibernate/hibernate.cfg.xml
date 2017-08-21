@@ -20,6 +20,7 @@
     		<list>	
     			<value>edu.asu.diging.grazer</value>
     			<value>edu.asu.diging.grazer.core.conceptpower</value>
+    			<value>edu.asu.diging.grazer.core.conceptpower.impl.ConceptAdapter</value>
     		</list>
     	</property>
     </bean>
