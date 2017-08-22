@@ -12,7 +12,7 @@ import edu.asu.diging.grazer.core.conceptpower.IConceptpowerConnector;
 import edu.asu.diging.grazer.core.graphs.IGraphManager;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.impl.Graph;
-import edu.asu.diging.grazer.core.rdf.impl.RDFTripleService;
+import edu.asu.diging.grazer.core.rdf.IRDFTripleService;
 import edu.asu.diging.grazer.core.rdf.impl.RepositoryService;
 
 @Controller
@@ -25,7 +25,7 @@ public class PersonController {
     private IGraphManager graphManager;
     
     @Autowired
-    private RDFTripleService tripleService;
+    private IRDFTripleService tripleService;
 
     @RequestMapping("/person/{personId}")
     public String showPerson(@PathVariable("personId") String personId, Model model) throws IOException {
@@ -42,9 +42,6 @@ public class PersonController {
         IConcept concept = connector.getConcept(personId);
        
         Graph graph = graphManager.getTransfomationResult(concept.getUri());
-        if (graph != null) {
-            tripleService.addGraph(graph, concept.getUri());
-        }
         model.addAttribute("graph", graph);
         
         model.addAttribute("concept", concept);
