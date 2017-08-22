@@ -11,16 +11,20 @@
 		<org.slf4j-version>1.7.5</org.slf4j-version>
 		<org.springframework-version>4.3.1.RELEASE</org.springframework-version>
 		<spring-security-version>4.1.3.RELEASE</spring-security-version>
+		<rdf4j.version>2.2.2</rdf4j.version>
+		
 		<admin.password>admin</admin.password>
 
 		<log.level>debug</log.level>
-		
+
 		<app.url>http://localhost:8080/grazer/</app.url>
 
 		<quadriga.url>http://localhost:8080/quadriga/</quadriga.url>
 		<quadriga.concepts.endpoint>public/concepts</quadriga.concepts.endpoint>
 		<conceptpower.url>https://chps.asu.edu/conceptpower/rest/</conceptpower.url>
 		
+		<rdf.store.dir></rdf.store.dir>
+
 		<tomcat.manager.path></tomcat.manager.path>
 		<tomcat.server.id></tomcat.server.id>
 		<tomcat.appname>ep-grazer</tomcat.appname>
@@ -56,11 +60,11 @@
 			<artifactId>spring-web</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context-support</artifactId>
-            <version>${org.springframework-version}</version>
-        </dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context-support</artifactId>
+			<version>${org.springframework-version}</version>
+		</dependency>
 		<dependency>
 			<groupId>junit</groupId>
 			<artifactId>junit</artifactId>
@@ -220,6 +224,13 @@
 			</exclusions>
 		</dependency>
 
+		<!-- RDF4J triple store -->
+		<dependency>
+			<groupId>org.eclipse.rdf4j</groupId>
+			<artifactId>rdf4j-runtime</artifactId>
+			<version>${rdf4j.version}</version>
+		</dependency>
+
 	</dependencies>
 
 	<build>
@@ -266,66 +277,66 @@
 				</configuration>
 			</plugin>
 			<plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <url>${tomcat.manager.path}</url>
-                    <server>${tomcat.server.id}</server>
-                    <path>/${tomcat.appname}</path>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <webResources>
-                        <resource>
-                            <filtering>true</filtering>
-                            <directory>src/main/webapp</directory>
-                            <includes>
-                                <include>**/*</include>
-                                <!-- include any other file types you want to filter -->
-                            </includes>
-                            <excludes>
-                                <exclude>**/*.woff</exclude>
-                                <exclude>**/*.woff2</exclude>
-                                <exclude>**/*.ttf</exclude>
-                            </excludes>
-                        </resource>
-                    </webResources>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildnumber-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>create</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <doCheck>false</doCheck>
-                    <doUpdate>false</doUpdate>
-                    <revisionOnScmFailure></revisionOnScmFailure>
-                    <!-- <format>#{0} ({1,date})</format> -->
-                    <items>
-                        <item>buildNumber\d*</item>
-                        <item>timestamp</item>
-                    </items>
-                    <format>#{0} ({1,date,yyyy-MM-dd HH:mm:ss})</format>
-                </configuration>
-            </plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<url>${tomcat.manager.path}</url>
+					<server>${tomcat.server.id}</server>
+					<path>/${tomcat.appname}</path>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<filtering>true</filtering>
+							<directory>src/main/webapp</directory>
+							<includes>
+								<include>**/*</include>
+								<!-- include any other file types you want to filter -->
+							</includes>
+							<excludes>
+								<exclude>**/*.woff</exclude>
+								<exclude>**/*.woff2</exclude>
+								<exclude>**/*.ttf</exclude>
+							</excludes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+					<revisionOnScmFailure></revisionOnScmFailure>
+					<!-- <format>#{0} ({1,date})</format> -->
+					<items>
+						<item>buildNumber\d*</item>
+						<item>timestamp</item>
+					</items>
+					<format>#{0} ({1,date,yyyy-MM-dd HH:mm:ss})</format>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
-	
+
 	<scm>
-        <connection>scm:svn:http://none</connection>
-        <url>scm:svn:https://none</url>
-    </scm>
+		<connection>scm:svn:http://none</connection>
+		<url>scm:svn:https://none</url>
+	</scm>
 
 </project>

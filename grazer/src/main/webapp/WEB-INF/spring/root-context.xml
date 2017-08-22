@@ -17,8 +17,8 @@
 	http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
 	">
 
-	<mvc:annotation-driven />
-	<context:component-scan base-package="edu.asu.diging.grazer" />
+	<!-- <mvc:annotation-driven /> -->
+	<context:component-scan base-package="edu.asu.diging.grazer.core,edu.asu.diging.grazer.config" />
 	
 	<import resource="spring-security.xml" />
 	
