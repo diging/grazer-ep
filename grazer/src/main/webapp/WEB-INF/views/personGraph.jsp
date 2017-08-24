@@ -40,5 +40,3 @@
     found in <a href="${edge.sourceUri}" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i> ${edge.sourceUri}</a>.
 </li>
 </c:forEach>
-
-${ rdfStatements }

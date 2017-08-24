@@ -5,14 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
-import javax.print.DocFlavor.STRING;
-
-import org.eclipse.rdf4j.model.Value;
-import org.eclipse.rdf4j.model.vocabulary.RDF;
-import org.eclipse.rdf4j.query.BindingSet;
-import org.eclipse.rdf4j.query.QueryLanguage;
-import org.eclipse.rdf4j.query.TupleQuery;
-import org.eclipse.rdf4j.query.TupleQueryResult;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -29,6 +21,10 @@ import edu.asu.diging.grazer.core.rdf.IUriCreator;
 @Service
 @PropertySource(value = "classpath:/relationships.properties")
 public class RDFTripleService implements IRDFTripleService {
+    
+    private final String START_DATE = "http://schema.org/startDate";
+    private final String END_DATE = "http://schema.org/endDate";
+    private final String OCCUR_DATE = "http://dbpedia.org/ontology/date";
 
     @Autowired
     private IRepositoryService repoService;
@@ -61,30 +57,65 @@ public class RDFTripleService implements IRDFTripleService {
             }
 
             String contextUri = uriCreator.getContextUri(UUID.randomUUID().toString());
-            statements.add(createStatement(uriCreator.getUri(getConceptId(subjectConcept.getUri())),
-                    relationship, uriCreator.getUri(getConceptId(objectConcept.getUri())), contextUri));
+            String subjectUri = uriCreator.getUri(getConceptId(subjectConcept.getUri()));
+            String objectUri = uriCreator.getUri(getConceptId(objectConcept.getUri()));
+            
+            List<String> contextUris = doesTripleExistInGraphs(subjectUri, relationship, objectUri);
+            // if triple already exists, let's use the existing context uri
+            if (contextUri != null && contextUris.size() > 0) {
+                contextUri = contextUris.get(0);
+            } else {
+                // if not, add triple
+                statements.add(createStatement(subjectUri, relationship, objectUri, contextUri));
+            }
+            
 
             if (edge.getStartTime() != null
                     && !edge.getStartTime().trim().isEmpty()) {
-                statements.add(createStatement(contextUri,
-                        "http://schema.org/startDate", edge.getStartTime(),
-                        null));
+                List<String> objects = getObjects(contextUri, START_DATE);
+                if (!objects.contains(edge.getStartTime())) {
+                    statements.add(createStatement(contextUri,
+                            START_DATE, edge.getStartTime(),
+                            null));
+                }
             }
 
             if (edge.getEndTime() != null
                     && !edge.getEndTime().trim().isEmpty()) {
-                statements.add(createStatement(contextUri,
-                        "http://schema.org/endDate", edge.getEndTime(), null));
+                List<String> objects = getObjects(contextUri, END_DATE);
+                if (!objects.contains(edge.getEndTime())) {
+                    statements.add(createStatement(contextUri,
+                            "http://schema.org/endDate", edge.getEndTime(), null));
+                }
             }
 
             if (edge.getOccurred() != null
                     && !edge.getOccurred().trim().isEmpty()) {
-                statements.add(createStatement(contextUri,
-                        "http://dbpedia.org/ontology/date", edge.getOccurred(),
-                        null));
+                List<String> objects = getObjects(contextUri, OCCUR_DATE);
+                if (!objects.contains(edge.getOccurred())) {
+                    statements.add(createStatement(contextUri,
+                            OCCUR_DATE, edge.getOccurred(),
+                            null));
+                }
             }
         }
         repoService.addStatements(statements);
+    }
+    
+    private List<String> doesTripleExistInGraphs(String subject, String predicate, String object) {
+        String query = "SELECT ?c { GRAPH ?c { <" + subject + "> <" + predicate + "> <" + object + "> } }";
+        List<Map<String, String>> results = repoService.queryRepository(query);
+        List<String> contexts = new ArrayList<>();
+        results.forEach(map -> contexts.add(map.get("c")));
+        return contexts;
+    }
+    
+    private List<String> getObjects(String subject, String predicate) {
+        String query = "SELECT ?obj { <" + subject + "> <" + predicate + "> ?obj }";
+        List<Map<String, String>> results = repoService.queryRepository(query);
+        List<String> objects = new ArrayList<>();
+        results.forEach(map -> objects.add(map.get("c")));
+        return objects;
     }
 
     /* (non-Javadoc)

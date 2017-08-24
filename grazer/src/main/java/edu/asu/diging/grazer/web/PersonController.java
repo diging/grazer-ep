@@ -12,8 +12,6 @@ import edu.asu.diging.grazer.core.conceptpower.IConceptpowerConnector;
 import edu.asu.diging.grazer.core.graphs.IGraphManager;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.impl.Graph;
-import edu.asu.diging.grazer.core.rdf.IRDFTripleService;
-import edu.asu.diging.grazer.core.rdf.impl.RepositoryService;
 
 @Controller
 public class PersonController {
@@ -24,9 +22,6 @@ public class PersonController {
     @Autowired
     private IGraphManager graphManager;
     
-    @Autowired
-    private IRDFTripleService tripleService;
-
     @RequestMapping("/person/{personId}")
     public String showPerson(@PathVariable("personId") String personId, Model model) throws IOException {
         
