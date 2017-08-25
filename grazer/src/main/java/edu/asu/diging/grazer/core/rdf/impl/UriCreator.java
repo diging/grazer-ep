@@ -5,8 +5,8 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 
-import edu.asu.diging.grazer.api.ConceptAPI;
 import edu.asu.diging.grazer.core.rdf.IUriCreator;
+import edu.asu.diging.grazer.web.rdf.ConceptAPI;
 
 @Service
 @PropertySource("classpath:/config.properties")

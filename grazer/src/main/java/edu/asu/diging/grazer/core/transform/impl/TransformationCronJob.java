@@ -40,7 +40,7 @@ public class TransformationCronJob {
     }
     
 //    @Scheduled(cron = "0 29 17 * * ?")
-    @Scheduled(fixedDelay=360000)
+//    @Scheduled(fixedDelay=360000)
     public void retrieveTransformations() {
         logger.info("Updating triples...");
         List<IConcept> concepts = quadrigaConnector.getPersons();
