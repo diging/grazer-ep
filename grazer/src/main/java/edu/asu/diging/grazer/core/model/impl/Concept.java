@@ -18,6 +18,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import edu.asu.diging.grazer.core.conceptpower.impl.ConceptpowerAlternativeId;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.IConceptType;
 

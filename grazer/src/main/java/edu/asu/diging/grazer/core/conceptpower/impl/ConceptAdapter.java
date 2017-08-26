@@ -13,8 +13,6 @@ public class ConceptAdapter implements IConcept {
     
     private ConceptpowerConcept concept;
     
-    private ConceptpowerConceptType conceptType;
-    
     public  ConceptAdapter(ConceptpowerConcept concept) {
         this.concept = concept;
     }
@@ -104,13 +102,14 @@ public class ConceptAdapter implements IConcept {
 
     @Override
     public List<String> getAlternativeUris() {
-        List<ConceptpowerAlternativeId> altIds = concept.getAlternativeIds();
+        /*List<ConceptpowerAlternativeId> altIds = concept.getAlternativeIds();
         List<String> ids = new ArrayList<>();
         if (altIds == null) {
             return ids;
         }
         altIds.forEach(id -> ids.add(id.getConceptUri()));
-        return ids;
+        return ids;*/
+    		return null;
     }
 
     @Override

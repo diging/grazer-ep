@@ -25,6 +25,9 @@ import edu.asu.diging.grazer.core.model.IConcept;
 @PropertySource("classpath:config.properties")
 public class ConceptpowerConnector implements IConceptpowerConnector {
 
+	@Autowired
+	ConceptMapper conceptMapper;
+	
     @Autowired
     protected SessionFactory sessionFactory;
 
@@ -61,7 +64,10 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
         ConceptpowerConcepts concepts = response.getBody();
         if (concepts.getConceptEntries() != null
                 && !concepts.getConceptEntries().isEmpty()) {
-            return concepts.getConceptEntries().get(0).getAdapter();
+        		ConceptpowerConcept cpc = concepts.getConceptEntries().get(0);
+        		IConcept concept = conceptMapper.mapConceptpowerConceptToConcept(cpc);
+        		return concept;
+            //return concepts.getConceptEntries().get(0).getAdapter();
         }
         return null;
     }

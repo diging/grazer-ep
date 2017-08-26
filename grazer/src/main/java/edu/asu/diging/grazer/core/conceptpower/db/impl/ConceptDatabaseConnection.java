@@ -8,6 +8,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.asu.diging.grazer.core.conceptpower.db.IConceptDatabaseConnection;
@@ -28,6 +29,7 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
 	@Override
 	public IConcept getConcept(String uri) {
 		Object objConcept = sessionFactory.getCurrentSession().get(Concept.class, uri);
+		logger.debug("" + objConcept);
 		if (objConcept == null) {
             Query query = sessionFactory.getCurrentSession().createQuery("SELECT c from Concept c WHERE :uri in elements(c.alternativeUris)");
             query.setParameter("uri", uri);
@@ -56,13 +58,13 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
 	@Override
 	public void createOrUpdate(IConcept concept) {
 		Object objConcept = sessionFactory.getCurrentSession().get(Concept.class, concept.getUri());
-        logger.debug((String) objConcept);
         // if concept exists, let's update it
         if (objConcept == null || isDifferent(concept, (IConcept)objConcept)) {
+        		//logger.debug("inside createorupdate " + concept.getUri());
             logger.debug((objConcept == null ? "Adding " : "Updating: ") + concept.getUri());
             if (objConcept != null) {
-            		sessionFactory.getCurrentSession().saveOrUpdate(concept);
             		sessionFactory.getCurrentSession().evict(objConcept);
+            		sessionFactory.getCurrentSession().saveOrUpdate(concept);
             		
             }
             //sessionFactory.getCurrentSession().saveOrUpdate(concept);

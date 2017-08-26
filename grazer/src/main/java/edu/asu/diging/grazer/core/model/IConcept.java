@@ -2,6 +2,8 @@ package edu.asu.diging.grazer.core.model;
 
 import java.util.List;
 
+import edu.asu.diging.grazer.core.conceptpower.impl.ConceptpowerAlternativeId;
+
 public interface IConcept {
 
     String getId();
