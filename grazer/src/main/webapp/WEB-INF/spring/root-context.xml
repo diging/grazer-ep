@@ -46,6 +46,9 @@
    </bean>
 	
 	<aop:aspectj-autoproxy proxy-target-class="true" />
+	
+	<task:executor id="executor" pool-size="5"/>
+    <task:annotation-driven executor="executor" />
 
     <cache:annotation-driven />
     <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">

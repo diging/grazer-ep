@@ -88,7 +88,7 @@
 		<p class="text-muted pull-left">
 		
 	    <p class="text-muted">
-	    
+	    Version: ${buildNumber}
         </p>
         </div>
         </div>
