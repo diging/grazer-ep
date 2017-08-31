@@ -8,7 +8,7 @@
 <div>Total: ${fn:length(concepts)}</div>
 <div class="list-group">
 <c:forEach items="${concepts}" var="concept">
-<a href="<c:url value="/person/${concept.id}" />" class="list-group-item">
+<a href="<c:url value="/concept/${concept.id}" />" class="list-group-item">
 ${concept.word}
 </a>
 </c:forEach>

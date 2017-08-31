@@ -23,7 +23,7 @@ public class PersonController {
     @Autowired
     private IGraphManager graphManager;
     
-    @RequestMapping(value = "/person/{personId}", produces = MediaType.TEXT_HTML_VALUE)
+    @RequestMapping(value = "/concept/{personId}", produces = MediaType.TEXT_HTML_VALUE)
     public String showPerson(@PathVariable("personId") String personId, Model model) throws IOException {
         
         IConcept concept = connector.getConcept(personId);
@@ -33,7 +33,7 @@ public class PersonController {
         return "person";
     }
     
-    @RequestMapping("/person/{personId}/graph")
+    @RequestMapping("/concept/{personId}/graph")
     public String getPersonGraph(@PathVariable("personId") String personId, Model model) {
         IConcept concept = connector.getConcept(personId);
        

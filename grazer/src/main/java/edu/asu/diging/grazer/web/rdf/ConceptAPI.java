@@ -20,7 +20,7 @@ import edu.asu.diging.grazer.web.rdf.util.impl.RDFCreator;
 public class ConceptAPI {
     
     public final static String ID_PLACEHOLDER = "{id}";
-    public final static String CONCEPT_PREFIX = "/person/" + ID_PLACEHOLDER;
+    public final static String CONCEPT_PREFIX = "/concept/" + ID_PLACEHOLDER;
     
     @Autowired
     private IRDFTripleService tripleService;
