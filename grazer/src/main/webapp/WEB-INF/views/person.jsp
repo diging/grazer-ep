@@ -1,9 +1,7 @@
-<%@ page pageEncoding="UTF-8"%>
+<%@ page pageEncoding="UTF-8" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib prefix="sec"
-	uri="http://www.springframework.org/security/tags"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <script type="text/javascript">
 //# sourceURL=getGraph.js
 	$(function() {
@@ -30,6 +28,15 @@
 <h2>${concept.word}</h2>
 
 <p>${concept.description}</p>
+
+<div>
+	<c:forEach var="listVar" items="${concept.getEqualTo() }"> 
+		<c:if test="${listVar != '[]'}">
+	    		<a href="${listVar}" target="_blank"> <i class="fa fa-external-link" aria-hidden="true"></i>       ${listVar} </a><br/>
+	    	</c:if>
+	</c:forEach>
+</div>
+<br/>
 
 <ul id="graphList" class="list-group">
 <div id="spinner"><div class="fa fa-spinner fa-spin"></div> Loading relationships... Hang tight, this might take a few minutes.</div>
