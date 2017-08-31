@@ -16,6 +16,10 @@
 
 
 	<mvc:annotation-driven />
+	
+	<context:component-scan
+		base-package="edu.asu.diging.grazer" />
+		
 	<!-- Handles HTTP GET requests for /resources/** by efficiently serving 
 		up static resources in the ${webappRoot}/resources directory -->
 	<mvc:resources mapping="/resources/**" location="/resources/" />
@@ -32,8 +36,7 @@
 	<se:global-method-security
 		pre-post-annotations="enabled" />
 		
-	<context:component-scan
-		base-package="edu.asu.diging.grazer" />
+	<aop:aspectj-autoproxy proxy-target-class="true" />
 		
 	<beans:bean id="tilesViewResolver"
 		class="org.springframework.web.servlet.view.UrlBasedViewResolver">

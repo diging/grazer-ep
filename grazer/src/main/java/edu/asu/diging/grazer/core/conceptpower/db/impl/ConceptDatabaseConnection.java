@@ -8,7 +8,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import edu.asu.diging.grazer.core.conceptpower.db.IConceptDatabaseConnection;
@@ -28,6 +27,7 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
 
 	@Override
 	public IConcept getConcept(String uri) {
+
 		Object objConcept = sessionFactory.getCurrentSession().get(Concept.class, uri);
 		logger.debug("" + objConcept);
 		if (objConcept == null) {
@@ -66,7 +66,7 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
             		sessionFactory.getCurrentSession().saveOrUpdate(concept);
             		
             }
-            //sessionFactory.getCurrentSession().saveOrUpdate(concept);
+            sessionFactory.getCurrentSession().saveOrUpdate(concept);
         }
         
         // update type if there is one
@@ -77,7 +77,7 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
                 		sessionFactory.getCurrentSession().evict(type);
                 		sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
                 }
-                //sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
+                sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
             }
         }
         

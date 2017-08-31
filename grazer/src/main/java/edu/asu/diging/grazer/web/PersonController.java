@@ -17,8 +17,8 @@ import edu.asu.diging.grazer.core.model.impl.Graph;
 @Controller
 public class PersonController {
     
-    @Autowired
-    private IConceptpowerConnector connector;
+    //@Autowired
+    // IConceptpowerConnector connector;
     
     @Autowired
     private IGraphManager graphManager;

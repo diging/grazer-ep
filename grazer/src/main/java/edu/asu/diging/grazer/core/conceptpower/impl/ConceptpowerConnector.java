@@ -22,7 +22,6 @@ import edu.asu.diging.grazer.core.conceptpower.IConceptpowerConnector;
 import edu.asu.diging.grazer.core.model.IConcept;
 
 @Service
-@PropertySource("classpath:config.properties")
 public class ConceptpowerConnector implements IConceptpowerConnector {
 
 	@Autowired
@@ -31,12 +30,16 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
     @Autowired
     protected SessionFactory sessionFactory;
 
+    @Autowired
     @Value("${conceptpower.url}")
     private String conceptpowerUrl;
 
+    @Autowired
     @Value("${conceptpower.concept.endpoint}")
     private String conceptEndpoint;
 
+    //@Autowired
+    //@Named("restTemplate")
     private RestTemplate restTemplate;
 
     public ConceptpowerConnector() {

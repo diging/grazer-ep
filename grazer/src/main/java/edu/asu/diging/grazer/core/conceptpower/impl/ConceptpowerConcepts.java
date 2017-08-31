@@ -7,11 +7,8 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "conceptpowerConcepts")
 public class ConceptpowerConcepts {
 
-	@XmlElement(required = true, namespace="http://www.digitalhps.org/")
     private List<ConceptpowerConcept> conceptEntries;
     
     private String pagination;

@@ -10,17 +10,15 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlType;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import edu.asu.diging.grazer.core.conceptpower.IConceptMapper;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.IConceptType;
 
-@XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "")
 public class ConceptpowerConcept { 
-	
-	private IConceptMapper conceptMapper;
 	
 	@Override
 	public int hashCode() {
@@ -47,17 +45,12 @@ public class ConceptpowerConcept {
 		return true;
 	}
 
-	@XmlElement(required = true, namespace="http://www.digitalhps.org/")
     private String id;
     @JsonProperty("concept_uri")
     private String conceptUri;
-    @XmlElement(required = true, namespace="http://www.digitalhps.org/")
     private String lemma;
-    @XmlElement(required = true, namespace="http://www.digitalhps.org/")
     private String pos;
-    @XmlElement(required = true, namespace="http://www.digitalhps.org/")
     private String description;
-    @XmlElement(required = true, namespace="http://www.digitalhps.org/")
     private String conceptList;
     private boolean deleted;
     @JsonProperty("equal_to")
@@ -67,10 +60,8 @@ public class ConceptpowerConcept {
     @JsonProperty("synonym_ids")
     private String synonymIds;
     
-    @XmlElement(namespace="http://www.digitalhps.org/", type=ConceptpowerConceptType.class) ConceptpowerConceptType type;
-    
-    @XmlElementWrapper(name="alternativeIds", namespace="http://www.digitalhps.org/")
-    @XmlElement(name="id", namespace="http://www.digitalhps.org/")  
+    ConceptpowerConceptType type;
+ 
     private List<ConceptpowerAlternativeId> alternativeIds;
 
     public String getId() {
@@ -180,11 +171,7 @@ public class ConceptpowerConcept {
     }
 
     public IConcept getAdapter() {
-    		//ConceptAdapter adapter = new ConceptAdapter(this);
-    		//IConcept concept = conceptMapper.MapConceptAdapterToConcept(adapter);
-    		IConcept concept = conceptMapper.mapConceptpowerConceptToConcept(this);
-    		return concept;
-        //return new ConceptAdapter(this);
+        return new ConceptAdapter(this);
     }
 
 	public Object getWordnetId() {

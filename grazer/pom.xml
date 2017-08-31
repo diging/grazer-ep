@@ -271,6 +271,11 @@
 			<artifactId>persistence-api</artifactId>
 			<version>1.0</version>
 		</dependency>
+		<dependency>
+		    <groupId>org.hibernate.javax.persistence</groupId>
+		    <artifactId>hibernate-jpa-2.0-api</artifactId>
+		    <version>1.0.1.Final</version>
+		</dependency>
 
 		<!-- Hibernate library dependecy end -->
 		
@@ -307,7 +312,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-tx</artifactId>
-            <version>4.1.6.RELEASE</version>
+            <version>4.2.9.RELEASE</version>
         </dependency>
         
         <dependency>
