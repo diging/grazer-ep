@@ -77,7 +77,8 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
                 		sessionFactory.getCurrentSession().evict(type);
                 		sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
                 }
-                sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
+                if (concept.getType() != null)
+                    sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
             }
         }
         

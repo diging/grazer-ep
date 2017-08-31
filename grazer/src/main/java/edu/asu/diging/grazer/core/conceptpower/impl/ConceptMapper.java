@@ -78,7 +78,8 @@ public class ConceptMapper implements IConceptMapper {
         type.setId(conceptType.getTypeId());
         type.setDescription("");
         type.setName(conceptType.getTypeName());
-        concept.setType(type);
+        // FIXME: this needs to be set to a type
+        concept.setType(null);
         
         return concept;
 		
