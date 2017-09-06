@@ -1,8 +1,5 @@
 package edu.asu.diging.grazer.core.conceptpower.impl;
 
-import javax.persistence.Entity;
-import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class ConceptpowerAlternativeId {

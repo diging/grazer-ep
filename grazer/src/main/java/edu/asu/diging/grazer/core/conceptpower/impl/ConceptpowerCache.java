@@ -40,9 +40,6 @@ public class ConceptpowerCache implements IConceptpowerCache {
 			conceptDB.createOrUpdate(concept);
         return concept;
         
-		/*IConcept concept = connector.getConcept(uri);
-        logger.debug("Inside getconceptbyuri in cache"); 
-        return concept;*/
 	}
 	
 }

@@ -22,10 +22,7 @@ public class ConceptMapper implements IConceptMapper {
 		ConceptpowerConceptType conceptType = conceptpowerConcept.type;
 		
 		//ID -- get last part of URI = id
-        int idx = conceptpowerConcept.getId().lastIndexOf("/");
-        if (idx > -1) {
-            concept.setId(conceptpowerConcept.getId().substring(idx+1));
-        }
+		concept.setId(conceptpowerConcept.getId());
         
 		//URI
         concept.setUri(conceptpowerConcept.getId());
@@ -67,7 +64,7 @@ public class ConceptMapper implements IConceptMapper {
         
 		//WORDNETIDS
         if (conceptpowerConcept.getWordnetId() != null) {
-            //concept.setWordnetIds(Arrays.asList(conceptpowerConcept.getWordnetId().split(",")));
+            concept.setWordnetIds(Arrays.asList(((String) conceptpowerConcept.getWordnetId()).split(",")));
         } else {
             concept.setWordnetIds(new ArrayList<>());
         }
