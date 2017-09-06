@@ -23,10 +23,8 @@ public class ASyncConceptUpdater implements IASyncConceptUpdater {
 	@Override
 	@Async
 	public void updateConcept(String uri) {
-		logger.debug("Inside async updateConcept outside if");
 		IConcept concept = connector.getConcept(uri);
 		if(concept != null) {
-			logger.debug("Inside async updateConcept inside if");
 			conceptDB.createOrUpdate(concept);
 		}
 	}

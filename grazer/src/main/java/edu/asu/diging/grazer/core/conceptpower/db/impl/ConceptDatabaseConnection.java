@@ -63,7 +63,7 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
             logger.debug((objConcept == null ? "Adding " : "Updating: ") + concept.getUri());
             if (objConcept != null) {
             		sessionFactory.getCurrentSession().evict(objConcept);
-            		//sessionFactory.getCurrentSession().saveOrUpdate(concept);
+            		sessionFactory.getCurrentSession().saveOrUpdate(concept);
             		
             }
             sessionFactory.getCurrentSession().saveOrUpdate(concept);
@@ -116,9 +116,9 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
         if (!concept1.getConceptList().equals(concept2.getConceptList())) {
             return true;
         }
-        if (!concept1.getCreatorId().equals(concept2.getCreatorId())) {
+        /*if (!concept1.getCreatorId().equals(concept2.getCreatorId())) {
             return true;
-        }
+        }*/
         if (!concept1.getDescription().equals(concept2.getDescription())) {
             return true;
         }

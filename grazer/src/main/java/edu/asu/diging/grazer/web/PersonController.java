@@ -38,7 +38,6 @@ public class PersonController {
     
     @RequestMapping("/person/{personId}/graph")
     public String getPersonGraph(@PathVariable("personId") String personId, Model model) {
-        //IConcept concept = connector.getConcept(personId);
         IConcept concept = cache.getConceptByUri(personId);
         
         Graph graph = graphManager.getTransfomationResult(concept.getUri());
