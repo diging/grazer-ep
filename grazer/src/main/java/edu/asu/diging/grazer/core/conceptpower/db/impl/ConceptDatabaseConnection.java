@@ -63,7 +63,7 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
             logger.debug((objConcept == null ? "Adding " : "Updating: ") + concept.getUri());
             if (objConcept != null) {
             		sessionFactory.getCurrentSession().evict(objConcept);
-            		sessionFactory.getCurrentSession().saveOrUpdate(concept);
+            		//sessionFactory.getCurrentSession().saveOrUpdate(concept);
             		
             }
             sessionFactory.getCurrentSession().saveOrUpdate(concept);

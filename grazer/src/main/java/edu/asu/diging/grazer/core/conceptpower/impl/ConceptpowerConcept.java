@@ -4,17 +4,8 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
-import javax.xml.bind.annotation.XmlType;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import edu.asu.diging.grazer.core.conceptpower.IConceptMapper;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.IConceptType;
 
@@ -148,6 +139,9 @@ public class ConceptpowerConcept {
     }
 
     public IConceptType getType() {
+    		if (this.type == null) {
+            this.type = new ConceptpowerConceptType();
+        }
         return type;
     }
 

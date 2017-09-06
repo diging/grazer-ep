@@ -57,7 +57,7 @@ public class ConceptMapper implements IConceptMapper {
         
 		//EQUALTO
         if (conceptpowerConcept.getEqualTo() != null) {
-            //concept.setEqualTo(Arrays.asList(conceptpowerConcept.getEqualTo().split(",")));
+            concept.setEqualTo(conceptpowerConcept.getEqualTo());
         } else {
             concept.setEqualTo(new ArrayList<>());
         }
@@ -70,13 +70,13 @@ public class ConceptMapper implements IConceptMapper {
         }
         
 		//SETTYPE
-        IConceptType type = conceptpowerConcept.getType();
+        IConceptType type = new ConceptType();
         type.setUri(conceptType.getTypeUri());
         type.setId(conceptType.getTypeId());
         type.setDescription("");
         type.setName(conceptType.getTypeName());
         // FIXME: this needs to be set to a type
-        concept.setType(null);
+        concept.setType(type);
         
         return concept;
 		
