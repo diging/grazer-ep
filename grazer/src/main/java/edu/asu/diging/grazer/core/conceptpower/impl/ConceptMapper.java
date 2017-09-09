@@ -21,7 +21,7 @@ public class ConceptMapper implements IConceptMapper {
 		IConcept concept = new Concept();
 		ConceptpowerConceptType conceptType = conceptpowerConcept.type;
 		
-		//ID -- get last part of URI = id
+		//ID
 		concept.setId(conceptpowerConcept.getId());
         
 		//URI
@@ -30,7 +30,7 @@ public class ConceptMapper implements IConceptMapper {
 		//WORD
         concept.setWord(conceptpowerConcept.getLemma());
         if (conceptpowerConcept.getWordnetId() != null) {
-            concept.setWordnetIds(Arrays.asList(((String) conceptpowerConcept.getWordnetId()).split(",")));
+            concept.setWordnetIds(conceptpowerConcept.getWordnetId());
         } else {
             concept.setWordnetIds(new ArrayList<>());
         }
@@ -64,7 +64,7 @@ public class ConceptMapper implements IConceptMapper {
         
 		//WORDNETIDS
         if (conceptpowerConcept.getWordnetId() != null) {
-            concept.setWordnetIds(Arrays.asList(((String) conceptpowerConcept.getWordnetId()).split(",")));
+            concept.setWordnetIds(conceptpowerConcept.getWordnetId());
         } else {
             concept.setWordnetIds(new ArrayList<>());
         }
@@ -75,7 +75,6 @@ public class ConceptMapper implements IConceptMapper {
         type.setId(conceptType.getTypeId());
         type.setDescription("");
         type.setName(conceptType.getTypeName());
-        // FIXME: this needs to be set to a type
         concept.setType(type);
         
         return concept;

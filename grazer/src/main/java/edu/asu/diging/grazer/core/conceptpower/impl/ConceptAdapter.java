@@ -1,9 +1,6 @@
 package edu.asu.diging.grazer.core.conceptpower.impl;
 
-import java.util.ArrayList;
 import java.util.List;
-
-import javax.persistence.Entity;
 
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.IConceptType;

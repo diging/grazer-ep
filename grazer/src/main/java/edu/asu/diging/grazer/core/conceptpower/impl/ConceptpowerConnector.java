@@ -2,14 +2,10 @@ package edu.asu.diging.grazer.core.conceptpower.impl;
 
 import java.util.Arrays;
 
-import javax.inject.Inject;
-import javax.inject.Named;
-
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
-import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -70,7 +66,6 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
         		ConceptpowerConcept cpc = concepts.getConceptEntries().get(0);
         		IConcept concept = conceptMapper.mapConceptpowerConceptToConcept(cpc);
         		return concept;
-            //return concepts.getConceptEntries().get(0).getAdapter();
         }
         return null;
     }

@@ -9,16 +9,12 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.asu.diging.grazer.core.conceptpower.IConceptpowerCache;
-import edu.asu.diging.grazer.core.conceptpower.IConceptpowerConnector;
 import edu.asu.diging.grazer.core.graphs.IGraphManager;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.impl.Graph;
 
 @Controller
 public class PersonController {
-    
-    //@Autowired
-    // IConceptpowerConnector connector;
     
     @Autowired
     private IGraphManager graphManager;

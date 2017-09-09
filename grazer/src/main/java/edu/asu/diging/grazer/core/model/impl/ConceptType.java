@@ -5,8 +5,6 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import edu.asu.diging.grazer.core.model.IConceptType;
 
 @Entity

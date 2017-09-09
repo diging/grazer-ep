@@ -50,6 +50,7 @@ public class ConceptpowerConcept {
     private String similarTo;
     @JsonProperty("synonym_ids")
     private String synonymIds;
+    private List<String> wordnetIds;
     
     ConceptpowerConceptType type;
  
@@ -168,9 +169,14 @@ public class ConceptpowerConcept {
         return new ConceptAdapter(this);
     }
 
-	public Object getWordnetId() {
+	public List<String> getWordnetId() {
 		// TODO Auto-generated method stub
-		return null;
+		//return null;
+		return wordnetIds;
+	}
+	
+	public void setWordnetId(List<String> wordnetIds) {
+		this.wordnetIds = wordnetIds;
 	}
 
 	public String getCreatorId() {
