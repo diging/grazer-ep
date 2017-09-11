@@ -29,11 +29,6 @@ public class ConceptMapper implements IConceptMapper {
         
 		//WORD
         concept.setWord(conceptpowerConcept.getLemma());
-        if (conceptpowerConcept.getWordnetId() != null) {
-            concept.setWordnetIds(conceptpowerConcept.getWordnetId());
-        } else {
-            concept.setWordnetIds(new ArrayList<>());
-        }
         
 		//POS
         concept.setPos(conceptpowerConcept.getPos());
