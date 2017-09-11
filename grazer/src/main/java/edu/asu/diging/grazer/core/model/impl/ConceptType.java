@@ -1,7 +1,5 @@
 package edu.asu.diging.grazer.core.model.impl;
 
-import com.fasterxml.jackson.annotation.JsonTypeName;
-
 import edu.asu.diging.grazer.core.model.IConceptType;
 
 public class ConceptType implements IConceptType {

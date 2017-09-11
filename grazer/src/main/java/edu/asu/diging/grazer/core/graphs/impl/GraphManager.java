@@ -1,6 +1,12 @@
 package edu.asu.diging.grazer.core.graphs.impl;
 
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -56,7 +63,7 @@ public class GraphManager implements IGraphManager {
     @PostConstruct
     public void init() {
         transformationNames = new ArrayList<>();
-        transformationNames.add(PERSON_SIMPLE_TRIPLE);
+        /*transformationNames.add(PERSON_SIMPLE_TRIPLE);
         transformationNames.add(PERSON_OBJECT_SIMPLE_TRIPLE);
         transformationNames.add(PERSON_HAS_SOMEONE);
         transformationNames.add(SOMEONE_HAS_PERSON);
@@ -65,10 +72,23 @@ public class GraphManager implements IGraphManager {
         transformationNames.add("someone_has_sth_end_date");
         transformationNames.add("sth_has_so_end_date");
         transformationNames.add("someone_has_sth_occur_date");
-        transformationNames.add("sth_has_so_occur_date");
+        transformationNames.add("sth_has_so_occur_date");*/
+        
+        File folder = new File("/git/grazer-ep/grazer/src/main/resources/transformations");
+        File[] listOfFiles = {};
+        if(folder.isDirectory()) {
+        		listOfFiles = folder.listFiles();
+        	}
+        for (int i = 0; i < listOfFiles.length; i++) {
+        		String name = listOfFiles[i].getName();
+        		String nameWithoutExt = name.replaceFirst("[.][^.]+$", "");
+        		transformationNames.add(nameWithoutExt);
+        }
         
         cache = cacheManager.getCache("quadriga_graphs");
+        
     }
+    
 
     /* (non-Javadoc)
      * @see edu.asu.diging.grazer.core.graphs.impl.IGraphManager#getTransformedPersonGraph(java.lang.String)
