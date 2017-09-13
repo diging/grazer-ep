@@ -1,12 +1,7 @@
 package edu.asu.diging.grazer.core.graphs.impl;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -19,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.core.io.ClassPathResource;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
@@ -37,10 +31,10 @@ import net.sf.ehcache.Element;
 @Service
 public class GraphManager implements IGraphManager {
 
-    private final String PERSON_SIMPLE_TRIPLE = "person_simple_triple";
-    private final String PERSON_OBJECT_SIMPLE_TRIPLE = "person_object_simple_triple";
-    private final String PERSON_HAS_SOMEONE = "person_has_someone";
-    private final String SOMEONE_HAS_PERSON = "someone_has_person";
+    //private final String PERSON_SIMPLE_TRIPLE = "person_simple_triple";
+    //private final String PERSON_OBJECT_SIMPLE_TRIPLE = "person_object_simple_triple";
+    //private final String PERSON_HAS_SOMEONE = "person_has_someone";
+    //private final String SOMEONE_HAS_PERSON = "someone_has_person";
     
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
@@ -60,6 +54,9 @@ public class GraphManager implements IGraphManager {
     private List<String> transformationNames;
     private Cache cache;
     
+    File folder = new File("/Users/mshah18/git/grazer-ep/grazer/src/main/resources/transformations");
+    File[] fileNames = {};
+   
     @PostConstruct
     public void init() {
         transformationNames = new ArrayList<>();
@@ -74,15 +71,21 @@ public class GraphManager implements IGraphManager {
         transformationNames.add("someone_has_sth_occur_date");
         transformationNames.add("sth_has_so_occur_date");*/
         
-        File folder = new File("/git/grazer-ep/grazer/src/main/resources/transformations");
-        File[] listOfFiles = {};
-        if(folder.isDirectory()) {
-        		listOfFiles = folder.listFiles();
-        	}
-        for (int i = 0; i < listOfFiles.length; i++) {
-        		String name = listOfFiles[i].getName();
-        		String nameWithoutExt = name.replaceFirst("[.][^.]+$", "");
-        		transformationNames.add(nameWithoutExt);
+        
+       if(folder.exists()) {
+	        	if(folder.isDirectory()) {
+	        		fileNames = folder.listFiles();
+	        		if(fileNames != null && fileNames.length > 0) {
+	        			//fileNames[0] contains a hidden file DS_Store, so starting the for loop with index 1
+	        			for(int i = 1; i < fileNames.length; i++) {
+	        				// Removing prefixes PAT_ and TRA_ and .graphml at the end 
+	        				String file = fileNames[i].getName().substring(4).replaceFirst("[.][^.]+$", "");
+	        				if(!transformationNames.contains(file)) {
+	        					transformationNames.add(file);
+	        				}
+	        			}
+	        		}
+	        	}
         }
         
         cache = cacheManager.getCache("quadriga_graphs");
@@ -96,6 +99,7 @@ public class GraphManager implements IGraphManager {
     @Override
     @Async
     public void transformGraph(String uri) throws IOException {
+    		   		
         // if there is already a transformation running or a result cached, let's not
         // start the transformation again
         if (cache.isKeyInCache(uri) && !cache.get(uri).isExpired()) {
