@@ -32,6 +32,10 @@ import net.sf.ehcache.Element;
 @Service
 public class GraphManager implements IGraphManager {
     
+    private final String fileExtension = ".graphml";
+    private final String prefix = "PAT_";
+    private final String folderName = getClass().getResource("/transformations").getFile();
+    
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
     @Autowired
@@ -50,8 +54,8 @@ public class GraphManager implements IGraphManager {
     private List<String> transformationNames;
     private Cache cache;
     
-    File folder = new File(getClass().getResource("/transformations").getFile());
-    File[] fileNames = {};
+    File folder = new File(folderName);
+    private File[] fileNames;
     
     @PostConstruct
     public void init() {
@@ -59,7 +63,7 @@ public class GraphManager implements IGraphManager {
         
     		FileFilter filter = new FileFilter() {
     			public boolean accept(File file) {
-    				if (file.getName().endsWith(".graphml")) {
+    				if (file.getName().endsWith(fileExtension) && file.getName().startsWith(prefix)) {
     					return true;
     				}
     				return false;
@@ -70,7 +74,7 @@ public class GraphManager implements IGraphManager {
     			if(folder.isDirectory()) {
 	        		fileNames = folder.listFiles(filter);
 	        		if(fileNames != null && fileNames.length > 0) {
-	        			for(int i = 0; i < fileNames.length && fileNames[i].getName().startsWith("PAT_"); i++) {
+	        			for(int i = 0; i < fileNames.length; i++) {
 	        				// Removing prefixes PAT_ and TRA_ and .graphml at the end 
 		        			String file = fileNames[i].getName().substring(4).replaceFirst("[.][^.]+$", "");
 		        			if(!transformationNames.contains(file)) {
@@ -80,9 +84,7 @@ public class GraphManager implements IGraphManager {
 	        		}
 	        	}
         }
-        
         cache = cacheManager.getCache("quadriga_graphs");
-        
     }
     
 
