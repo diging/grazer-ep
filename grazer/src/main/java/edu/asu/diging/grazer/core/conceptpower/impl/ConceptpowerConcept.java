@@ -151,12 +151,11 @@ public class ConceptpowerConcept {
     }
     
     public List<String> getAlternativeIds() {
-    		List<ConceptpowerAlternativeId> altIds = alternativeIds;
     		List<String> ids = new ArrayList<>();
-        if (altIds == null) {
+        if (alternativeIds == null) {
             return ids;
         }
-        altIds.forEach(id -> ids.add(id.getConceptUri()));
+        alternativeIds.forEach(id -> ids.add(id.getConceptUri()));
         return ids;
     }
 
