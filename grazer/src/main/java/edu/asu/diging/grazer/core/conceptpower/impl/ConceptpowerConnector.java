@@ -2,7 +2,6 @@ package edu.asu.diging.grazer.core.conceptpower.impl;
 
 import java.util.Arrays;
 
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -21,21 +20,14 @@ import edu.asu.diging.grazer.core.model.IConcept;
 public class ConceptpowerConnector implements IConceptpowerConnector {
 
 	@Autowired
-	ConceptMapper conceptMapper;
-	
-    @Autowired
-    protected SessionFactory sessionFactory;
+	private ConceptMapper conceptMapper;
 
-    @Autowired
     @Value("${conceptpower.url}")
     private String conceptpowerUrl;
 
-    @Autowired
     @Value("${conceptpower.concept.endpoint}")
     private String conceptEndpoint;
 
-    //@Autowired
-    //@Named("restTemplate")
     private RestTemplate restTemplate;
 
     public ConceptpowerConnector() {
@@ -64,8 +56,7 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
         if (concepts.getConceptEntries() != null
                 && !concepts.getConceptEntries().isEmpty()) {
         		ConceptpowerConcept cpc = concepts.getConceptEntries().get(0);
-        		IConcept concept = conceptMapper.mapConceptpowerConceptToConcept(cpc);
-        		return concept;
+        		return conceptMapper.mapConceptpowerConceptToConcept(cpc);
         }
         return null;
     }

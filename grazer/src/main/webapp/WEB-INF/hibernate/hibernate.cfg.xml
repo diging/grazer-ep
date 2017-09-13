@@ -18,7 +18,6 @@
     	</property>
     	<property name="packagesToScan">
     		<list>	
-    			<value>edu.asu.diging.grazer</value>
     			<value>edu.asu.diging.grazer.core</value>
     		</list>
     	</property>

@@ -101,6 +101,21 @@
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${spring-security-version}</version>
 		</dependency>    
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-web</artifactId>
+			<version>${spring-security-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-ldap</artifactId>
+			<version>${spring-security-version}</version>
+		</dependency>
+		<dependency>
+			<groupId>commons-httpclient</groupId>
+			<artifactId>commons-httpclient</artifactId>
+			<version>3.1</version>
+		</dependency>
 		
 		<!-- Spring AOP + AspectJ -->
 		<dependency>
@@ -228,23 +243,6 @@
 			<version>5.1.25</version>
 		</dependency>    
 		
-		<!-- Spring Security -->
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-web</artifactId>
-			<version>${spring-security-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>org.springframework.security</groupId>
-			<artifactId>spring-security-ldap</artifactId>
-			<version>${spring-security-version}</version>
-		</dependency>
-		<dependency>
-			<groupId>commons-httpclient</groupId>
-			<artifactId>commons-httpclient</artifactId>
-			<version>3.1</version>
-		</dependency>
-		
 		<!-- Hibernate and Dependent jars -->
 		<!-- Hibernate core -->
 		<dependency>
@@ -279,12 +277,6 @@
 
 		<!-- Hibernate library dependecy end -->
 		
-		<dependency>
-			<groupId>javax.mail</groupId>
-			<artifactId>mail</artifactId>
-			<version>1.5.0-b01</version>
-		</dependency>
-		
 		<!-- Hibernate Validator -->
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -305,15 +297,15 @@
 		</dependency>
 		
 		<dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-orm</artifactId>
-            <version>4.1.6.RELEASE</version>
+			<groupId>org.springframework</groupId>
+            	<artifactId>spring-orm</artifactId>
+            	<version>4.1.6.RELEASE</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>4.2.9.RELEASE</version>
-        </dependency>
+		<dependency>
+        		<groupId>org.springframework</groupId>
+        		<artifactId>spring-tx</artifactId>
+        		<version>4.2.9.RELEASE</version>
+		</dependency>
         
         <dependency>
 			<groupId>org.eclipse.persistence</groupId>
@@ -331,53 +323,8 @@
 			<artifactId>spring-oxm</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-
-		<!-- Servlet -->
-		<dependency>
-			<groupId>javax.servlet</groupId>
-			<artifactId>servlet-api</artifactId>
-			<version>2.5</version>
-			<scope>provided</scope>
-		</dependency>
 		
 	</dependencies>
-	
-	<profiles>
-		<profile>
-			<id>dev</id>
-			<!-- Dev Env. Properties -->
-			<properties>
-				<!-- SQL Properties -->
-				<db.url>${database.url}</db.url>
-				<db.username>${database.username}</db.username>
-				<db.pw>${database.pw}</db.pw>
-				<tomcat.path>${tomcat.deploy.path}</tomcat.path>
-				<profile.conceptpower.url>${conceptpower.url}</profile.conceptpower.url>
-			</properties>
-		</profile>
-		<profile>
-			<id>test</id>
-			<!-- Test Env. Properties -->
-			<properties>
-				<!-- SQL Properties -->
-				<db.url>${database.url}</db.url>
-				<db.username>${database.username}</db.username>
-				<db.pw>${database.pw}</db.pw>
-				<profile.conceptpower.url>${conceptpower.url}</profile.conceptpower.url>
-			</properties>
-		</profile>
-		<profile>
-			<id>prod</id>
-			<!-- Dev Env. Properties -->
-			<properties>
-				<!-- SQL Properties -->
-				<db.url>${database.url}</db.url>
-				<db.username>${database.username}</db.username>
-				<db.pw>${database.pw}</db.pw>
-				<profile.conceptpower.url>${conceptpower.url}</profile.conceptpower.url>
-			</properties>
-		</profile>
-	</profiles>
 	
 	<build>
 		<finalName> grazer</finalName>

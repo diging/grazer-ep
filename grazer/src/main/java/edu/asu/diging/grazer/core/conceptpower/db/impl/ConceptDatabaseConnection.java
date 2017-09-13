@@ -29,14 +29,13 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
 	public IConcept getConcept(String uri) {
 
 		Object objConcept = sessionFactory.getCurrentSession().get(Concept.class, uri);
-		logger.debug("" + objConcept);
 		if (objConcept == null) {
             Query query = sessionFactory.getCurrentSession().createQuery("SELECT c from Concept c WHERE :uri in elements(c.alternativeUris)");
             query.setParameter("uri", uri);
             List<?> results = query.list();
             if (results != null && !results.isEmpty()) {
-                // there shouldn't be more than one, but if there is just take the first one
-                objConcept = results.get(0);
+            		// there shouldn't be more than one, but if there is just take the first one
+            		objConcept = results.get(0);
             }
         }
         

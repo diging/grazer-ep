@@ -141,8 +141,8 @@ public class ConceptpowerConcept {
 
     public IConceptType getType() {
     		if (this.type == null) {
-            this.type = new ConceptpowerConceptType();
-        }
+    			return null;
+    		}
         return type;
     }
 
@@ -152,13 +152,12 @@ public class ConceptpowerConcept {
     
     public List<String> getAlternativeIds() {
     		List<ConceptpowerAlternativeId> altIds = alternativeIds;
-        List<String> ids = new ArrayList<>();
+    		List<String> ids = new ArrayList<>();
         if (altIds == null) {
             return ids;
         }
         altIds.forEach(id -> ids.add(id.getConceptUri()));
         return ids;
-        //return alternativeIds;
     }
 
     public void setAlternativeIds(List<ConceptpowerAlternativeId> alternativeIds) {
@@ -170,8 +169,6 @@ public class ConceptpowerConcept {
     }
 
 	public List<String> getWordnetId() {
-		// TODO Auto-generated method stub
-		//return null;
 		return wordnetIds;
 	}
 	

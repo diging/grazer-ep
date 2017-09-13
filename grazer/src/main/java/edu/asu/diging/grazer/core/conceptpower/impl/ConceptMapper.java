@@ -1,7 +1,6 @@
 package edu.asu.diging.grazer.core.conceptpower.impl;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 import org.springframework.stereotype.Component;
 
@@ -16,6 +15,9 @@ import edu.asu.diging.grazer.core.conceptpower.impl.ConceptpowerConceptType;
 @Component
 public class ConceptMapper implements IConceptMapper {
 	
+	/* (non-Javadoc)
+     * @see edu.asu.diging.grazer.core.conceptpower.impl.IConceptMapper#mapConceptpowerConceptToConcept
+     */
 	@Override
 	public IConcept mapConceptpowerConceptToConcept(ConceptpowerConcept conceptpowerConcept) {
 		IConcept concept = new Concept();
@@ -73,6 +75,5 @@ public class ConceptMapper implements IConceptMapper {
         concept.setType(type);
         
         return concept;
-		
 	}
 }

@@ -24,5 +24,4 @@ public class ASyncConceptUpdater implements IASyncConceptUpdater {
 			conceptDB.createOrUpdate(concept);
 		}
 	}
-	
 }
