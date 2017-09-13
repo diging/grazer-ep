@@ -54,11 +54,12 @@ public class GraphManager implements IGraphManager {
     private List<String> transformationNames;
     private Cache cache;
     
-    File folder = new File(folderName);
     private File[] fileNames;
     
     @PostConstruct
     public void init() {
+        
+        File folder = new File(folderName);
     		transformationNames = new ArrayList<>();        
         
     		FileFilter filter = new FileFilter() {
