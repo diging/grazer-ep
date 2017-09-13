@@ -1,6 +1,7 @@
 package edu.asu.diging.grazer.core.graphs.impl;
 
 import java.io.File;
+import java.io.FileFilter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,11 +31,6 @@ import net.sf.ehcache.Element;
 
 @Service
 public class GraphManager implements IGraphManager {
-
-    //private final String PERSON_SIMPLE_TRIPLE = "person_simple_triple";
-    //private final String PERSON_OBJECT_SIMPLE_TRIPLE = "person_object_simple_triple";
-    //private final String PERSON_HAS_SOMEONE = "person_has_someone";
-    //private final String SOMEONE_HAS_PERSON = "someone_has_person";
     
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
@@ -59,30 +55,27 @@ public class GraphManager implements IGraphManager {
     
     @PostConstruct
     public void init() {
-        transformationNames = new ArrayList<>();
-        /*transformationNames.add(PERSON_SIMPLE_TRIPLE);
-        transformationNames.add(PERSON_OBJECT_SIMPLE_TRIPLE);
-        transformationNames.add(PERSON_HAS_SOMEONE);
-        transformationNames.add(SOMEONE_HAS_PERSON);
-        transformationNames.add("someone_has_sth_start_date");
-        transformationNames.add("sth_has_so_start_date");
-        transformationNames.add("someone_has_sth_end_date");
-        transformationNames.add("sth_has_so_end_date");
-        transformationNames.add("someone_has_sth_occur_date");
-        transformationNames.add("sth_has_so_occur_date");*/
+    		transformationNames = new ArrayList<>();        
         
-        
-       if(folder.exists()) {
-	        	if(folder.isDirectory()) {
-	        		fileNames = folder.listFiles();
+    		FileFilter filter = new FileFilter() {
+    			public boolean accept(File file) {
+    				if (file.getName().endsWith(".graphml")) {
+    					return true;
+    				}
+    				return false;
+    			}
+    		};
+    		
+    		if(folder.exists()) {
+    			if(folder.isDirectory()) {
+	        		fileNames = folder.listFiles(filter);
 	        		if(fileNames != null && fileNames.length > 0) {
-	        			//fileNames[0] contains a hidden file DS_Store, so starting the for loop with index 1
-	        			for(int i = 1; i < fileNames.length; i++) {
+	        			for(int i = 0; i < fileNames.length && fileNames[i].getName().startsWith("PAT_"); i++) {
 	        				// Removing prefixes PAT_ and TRA_ and .graphml at the end 
-	        				String file = fileNames[i].getName().substring(4).replaceFirst("[.][^.]+$", "");
-	        				if(!transformationNames.contains(file)) {
-	        					transformationNames.add(file);
-	        				}
+		        			String file = fileNames[i].getName().substring(4).replaceFirst("[.][^.]+$", "");
+		        			if(!transformationNames.contains(file)) {
+		        				transformationNames.add(file);
+		        			}
 	        			}
 	        		}
 	        	}
