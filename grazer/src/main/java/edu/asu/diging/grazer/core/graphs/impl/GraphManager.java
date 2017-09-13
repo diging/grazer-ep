@@ -54,9 +54,9 @@ public class GraphManager implements IGraphManager {
     private List<String> transformationNames;
     private Cache cache;
     
-    File folder = new File("/Users/mshah18/git/grazer-ep/grazer/src/main/resources/transformations");
+    File folder = new File(getClass().getResource("/transformations").getFile());
     File[] fileNames = {};
-   
+    
     @PostConstruct
     public void init() {
         transformationNames = new ArrayList<>();
