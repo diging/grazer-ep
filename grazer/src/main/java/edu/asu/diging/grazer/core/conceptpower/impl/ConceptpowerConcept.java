@@ -51,9 +51,7 @@ public class ConceptpowerConcept {
     @JsonProperty("synonym_ids")
     private String synonymIds;
     private List<String> wordnetIds;
-    
-    ConceptpowerConceptType type;
- 
+    private ConceptpowerConceptType type;
     private List<ConceptpowerAlternativeId> alternativeIds;
 
     public String getId() {
@@ -140,9 +138,6 @@ public class ConceptpowerConcept {
     }
 
     public IConceptType getType() {
-    		if (this.type == null) {
-    			return null;
-    		}
         return type;
     }
 

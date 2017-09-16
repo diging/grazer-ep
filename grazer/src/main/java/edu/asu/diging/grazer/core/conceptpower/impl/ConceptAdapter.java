@@ -148,5 +148,4 @@ public class ConceptAdapter implements IConcept {
     public IConceptType getType() {
         return this.concept.getType();
     }
-
 }

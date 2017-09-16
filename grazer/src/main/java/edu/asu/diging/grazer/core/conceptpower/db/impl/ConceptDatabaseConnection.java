@@ -20,16 +20,16 @@ import edu.asu.diging.grazer.core.model.impl.ConceptType;
 @Transactional
 public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
 
-	private final Logger logger = LoggerFactory.getLogger(getClass());
+    private final Logger logger = LoggerFactory.getLogger(getClass());
 	
-	@Autowired
-	protected SessionFactory sessionFactory;
+    @Autowired
+    protected SessionFactory sessionFactory;
 
-	@Override
-	public IConcept getConcept(String uri) {
+    @Override
+    public IConcept getConcept(String uri) {
 
-		Object objConcept = sessionFactory.getCurrentSession().get(Concept.class, uri);
-		if (objConcept == null) {
+        Object objConcept = sessionFactory.getCurrentSession().get(Concept.class, uri);
+        if (objConcept == null) {
             Query query = sessionFactory.getCurrentSession().createQuery("SELECT c from Concept c WHERE :uri in elements(c.alternativeUris)");
             query.setParameter("uri", uri);
             List<?> results = query.list();
@@ -49,8 +49,7 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
             if (objType != null) {
                 concept.setType((IConceptType) objType);
             }
-        }
-        
+        }    
         return concept;
 	}
 
@@ -63,7 +62,6 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
             if (objConcept != null) {
             		sessionFactory.getCurrentSession().evict(objConcept);
             		sessionFactory.getCurrentSession().saveOrUpdate(concept);
-            		
             }
             sessionFactory.getCurrentSession().saveOrUpdate(concept);
         }
@@ -87,8 +85,7 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
             if (!altUri.equals(concept.getUri())) {
                 deleteConcept(altUri);
             }
-        }
-		
+        }	
 	}
 
 	@Override
@@ -115,9 +112,6 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
         if (!concept1.getConceptList().equals(concept2.getConceptList())) {
             return true;
         }
-        /*if (!concept1.getCreatorId().equals(concept2.getCreatorId())) {
-            return true;
-        }*/
         if (!concept1.getDescription().equals(concept2.getDescription())) {
             return true;
         }

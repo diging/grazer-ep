@@ -10,7 +10,6 @@ import edu.asu.diging.grazer.core.model.IConceptType;
 import edu.asu.diging.grazer.core.model.impl.Concept;
 import edu.asu.diging.grazer.core.model.impl.ConceptType;
 import edu.asu.diging.grazer.core.conceptpower.impl.ConceptpowerConcept;
-import edu.asu.diging.grazer.core.conceptpower.impl.ConceptpowerConceptType;
 
 @Component
 public class ConceptMapper implements IConceptMapper {
@@ -21,7 +20,7 @@ public class ConceptMapper implements IConceptMapper {
 	@Override
 	public IConcept mapConceptpowerConceptToConcept(ConceptpowerConcept conceptpowerConcept) {
 		IConcept concept = new Concept();
-		ConceptpowerConceptType conceptType = conceptpowerConcept.type;
+		IConceptType conceptType = conceptpowerConcept.getType();
 		
 		//ID
 		concept.setId(conceptpowerConcept.getId());
@@ -42,7 +41,7 @@ public class ConceptMapper implements IConceptMapper {
         concept.setConceptList(conceptpowerConcept.getConceptList());
         
 		//TYPEID
-        concept.setTypeId(conceptType.getTypeUri() != null ? conceptType.getTypeUri()  : "");
+        concept.setTypeId(conceptType.getUri() != null ? conceptType.getUri()  : "");
         
 		//DELETED
         
@@ -68,10 +67,10 @@ public class ConceptMapper implements IConceptMapper {
         
 		//SETTYPE
         IConceptType type = new ConceptType();
-        type.setUri(conceptType.getTypeUri());
-        type.setId(conceptType.getTypeId());
+        type.setUri(conceptType.getUri());
+        type.setId(conceptType.getId());
         type.setDescription("");
-        type.setName(conceptType.getTypeName());
+        type.setName(conceptType.getName());
         concept.setType(type);
         
         return concept;
