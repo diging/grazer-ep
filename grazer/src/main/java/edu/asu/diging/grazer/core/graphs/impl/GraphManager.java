@@ -32,9 +32,9 @@ import net.sf.ehcache.Element;
 @Service
 public class GraphManager implements IGraphManager {
     
-    private final String fileExtension = ".graphml";
-    private final String prefix = "PAT_";
-    private final String folderName = getClass().getResource("/transformations").getFile();
+    private final String FILE_EXTENSION = ".graphml";
+    private final String PREFIX = "PAT_";
+    private final String FOLDER_NAME = "/transformations";
     
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
@@ -54,17 +54,17 @@ public class GraphManager implements IGraphManager {
     private List<String> transformationNames;
     private Cache cache;
     
-    private File[] fileNames;
+    private File[] files;
     
     @PostConstruct
     public void init() {
         
-        File folder = new File(folderName);
+        File folder = new File(getClass().getResource(FOLDER_NAME).getFile());
     		transformationNames = new ArrayList<>();        
         
     		FileFilter filter = new FileFilter() {
     			public boolean accept(File file) {
-    				if (file.getName().endsWith(fileExtension) && file.getName().startsWith(prefix)) {
+    				if (file.getName().endsWith(FILE_EXTENSION) && file.getName().startsWith(PREFIX)) {
     					return true;
     				}
     				return false;
@@ -73,14 +73,12 @@ public class GraphManager implements IGraphManager {
     		
     		if(folder.exists()) {
     			if(folder.isDirectory()) {
-	        		fileNames = folder.listFiles(filter);
-	        		if(fileNames != null && fileNames.length > 0) {
-	        			for(int i = 0; i < fileNames.length; i++) {
+    			    files = folder.listFiles(filter);
+	        		if(files != null && files.length > 0) {
+	        			for(int i = 0; i < files.length; i++) {
 	        				// Removing prefixes PAT_ and TRA_ and .graphml at the end 
-		        			String file = fileNames[i].getName().substring(4).replaceFirst("[.][^.]+$", "");
-		        			if(!transformationNames.contains(file)) {
-		        				transformationNames.add(file);
-		        			}
+		        			String file = files[i].getName().substring(4).replaceFirst("[.][^.]+$", "");
+		        			transformationNames.add(file);
 	        			}
 	        		}
 	        	}
@@ -88,7 +86,6 @@ public class GraphManager implements IGraphManager {
         cache = cacheManager.getCache("quadriga_graphs");
     }
     
-
     /* (non-Javadoc)
      * @see edu.asu.diging.grazer.core.graphs.impl.IGraphManager#getTransformedPersonGraph(java.lang.String)
      */
