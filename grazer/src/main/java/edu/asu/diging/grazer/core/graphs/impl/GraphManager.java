@@ -35,6 +35,7 @@ public class GraphManager implements IGraphManager {
     private final String FILE_EXTENSION = ".graphml";
     private final String PREFIX = "PAT_";
     private final String FOLDER_NAME = "/transformations";
+    
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
     @Autowired
