@@ -25,7 +25,7 @@ public class PersonController {
     @RequestMapping("/person/{personId}")
     public String showPerson(@PathVariable("personId") String personId, Model model) throws IOException {
         	
-    		IConcept concept = cache.getConceptByUri(personId);
+        IConcept concept = cache.getConceptByUri(personId);
         graphManager.transformGraph(concept.getUri());
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));

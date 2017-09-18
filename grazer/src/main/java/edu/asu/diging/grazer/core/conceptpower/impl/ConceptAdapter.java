@@ -5,7 +5,6 @@ import java.util.List;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.IConceptType;
 
-
 public class ConceptAdapter implements IConcept {
     
     private ConceptpowerConcept concept;

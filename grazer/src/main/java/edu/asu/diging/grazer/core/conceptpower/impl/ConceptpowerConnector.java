@@ -19,8 +19,8 @@ import edu.asu.diging.grazer.core.model.IConcept;
 @Service
 public class ConceptpowerConnector implements IConceptpowerConnector {
 
-	@Autowired
-	private ConceptMapper conceptMapper;
+    @Autowired
+    private ConceptMapper conceptMapper;
 
     @Value("${conceptpower.url}")
     private String conceptpowerUrl;
@@ -55,8 +55,8 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
         ConceptpowerConcepts concepts = response.getBody();
         if (concepts.getConceptEntries() != null
                 && !concepts.getConceptEntries().isEmpty()) {
-        		ConceptpowerConcept cpc = concepts.getConceptEntries().get(0);
-        		return conceptMapper.mapConceptpowerConceptToConcept(cpc);
+            ConceptpowerConcept cpc = concepts.getConceptEntries().get(0);
+            return conceptMapper.mapConceptpowerConceptToConcept(cpc);
         }
         return null;
     }

@@ -5,5 +5,5 @@ import edu.asu.diging.grazer.core.model.IConcept;
 
 public interface IConceptMapper {
 
-	IConcept mapConceptpowerConceptToConcept(ConceptpowerConcept conceptpowerConcept);
+    IConcept mapConceptpowerConceptToConcept(ConceptpowerConcept conceptpowerConcept);
 }

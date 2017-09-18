@@ -5,9 +5,9 @@ import edu.asu.diging.grazer.core.model.IConceptType;
 
 public interface IConceptDatabaseConnection {
 
-	IConcept getConcept(String uri);
+    IConcept getConcept(String uri);
 	
-	void createOrUpdate(IConcept concept);
+    void createOrUpdate(IConcept concept);
 
     void deleteConcept(String uri);
 

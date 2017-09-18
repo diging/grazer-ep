@@ -25,7 +25,7 @@ import edu.asu.diging.grazer.core.model.IConceptType;
 @Table(name = "tbl_conceptpower_concept")
 public class Concept implements IConcept {
 
-	@Id @Index(name="uri_idx")private String uri;
+    @Id @Index(name="uri_idx")private String uri;
     private String id;
     private String word;
     private String pos;
@@ -64,6 +64,7 @@ public class Concept implements IConcept {
     public String getId() {
         return id;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#setId(java.lang.String)
      */
@@ -71,6 +72,7 @@ public class Concept implements IConcept {
     public void setId(String id) {
         this.id = id;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#getUri()
      */
@@ -78,6 +80,7 @@ public class Concept implements IConcept {
     public String getUri() {
         return uri;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#setUri(java.lang.String)
      */
@@ -85,6 +88,7 @@ public class Concept implements IConcept {
     public void setUri(String uri) {
         this.uri = uri;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#getWord()
      */
@@ -92,6 +96,7 @@ public class Concept implements IConcept {
     public String getWord() {
         return word;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#setWord(java.lang.String)
      */
@@ -99,9 +104,11 @@ public class Concept implements IConcept {
     public void setWord(String word) {
         this.word = word;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#getPos()
      */
+    
     @Override
     public String getPos() {
         return pos;
@@ -113,6 +120,7 @@ public class Concept implements IConcept {
     public void setPos(String pos) {
         this.pos = pos;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#getDescription()
      */
@@ -120,6 +128,7 @@ public class Concept implements IConcept {
     public String getDescription() {
         return description;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#setDescription(java.lang.String)
      */
@@ -127,6 +136,7 @@ public class Concept implements IConcept {
     public void setDescription(String description) {
         this.description = description;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#getConceptList()
      */
@@ -134,6 +144,7 @@ public class Concept implements IConcept {
     public String getConceptList() {
         return conceptList;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#setConceptList(java.lang.String)
      */
@@ -141,6 +152,7 @@ public class Concept implements IConcept {
     public void setConceptList(String conceptList) {
         this.conceptList = conceptList;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#getTypeId()
      */
@@ -148,6 +160,7 @@ public class Concept implements IConcept {
     public String getTypeId() {
         return typeId;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#setTypeId(java.lang.String)
      */
@@ -155,6 +168,7 @@ public class Concept implements IConcept {
     public void setTypeId(String typeId) {
         this.typeId = typeId;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#isDeleted()
      */
@@ -162,6 +176,7 @@ public class Concept implements IConcept {
     public boolean isDeleted() {
         return deleted;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#setDeleted(boolean)
      */
@@ -169,6 +184,7 @@ public class Concept implements IConcept {
     public void setDeleted(boolean deleted) {
         this.deleted = deleted;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#getAlternativeUris()
      */
@@ -176,6 +192,7 @@ public class Concept implements IConcept {
     public List<String> getAlternativeUris() {
         return alternativeUris;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#setAlternativeUris(java.util.List)
      */
@@ -183,6 +200,7 @@ public class Concept implements IConcept {
     public void setAlternativeUris(List<String> alternativeUris) {
         this.alternativeUris = alternativeUris;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#getCreatorId()
      */
@@ -190,6 +208,7 @@ public class Concept implements IConcept {
     public String getCreatorId() {
         return creatorId;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#setCreatorId(java.lang.String)
      */
@@ -197,6 +216,7 @@ public class Concept implements IConcept {
     public void setCreatorId(String creatorId) {
         this.creatorId = creatorId;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#getEqualTo()
      */
@@ -204,6 +224,7 @@ public class Concept implements IConcept {
     public List<String> getEqualTo() {
         return equalTo;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#setEqualTo(java.util.List)
      */
@@ -211,6 +232,7 @@ public class Concept implements IConcept {
     public void setEqualTo(List<String> equalTo) {
         this.equalTo = equalTo;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#getWordnetIds()
      */
@@ -218,6 +240,7 @@ public class Concept implements IConcept {
     public List<String> getWordnetIds() {
         return wordnetIds;
     }
+    
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#setWordnetIds(java.util.List)
      */
@@ -225,10 +248,12 @@ public class Concept implements IConcept {
     public void setWordnetIds(List<String> wordnetIds) {
         this.wordnetIds = wordnetIds;
     }
+    
     @Override
     public IConceptType getType() {
         return type;
     }
+    
     @Override
     public void setType(IConceptType type) {
         this.type = type;
@@ -242,6 +267,7 @@ public class Concept implements IConcept {
         result = prime * result + ((uri == null) ? 0 : uri.hashCode());
         return result;
     }
+    
     @Override
     public boolean equals(Object obj) {
         if (this == obj)

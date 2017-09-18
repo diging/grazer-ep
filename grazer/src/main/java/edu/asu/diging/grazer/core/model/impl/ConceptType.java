@@ -11,7 +11,7 @@ import edu.asu.diging.grazer.core.model.IConceptType;
 @Table(name = "tbl_conceptpower_concepttype")
 public class ConceptType implements IConceptType {
 
-	@Id private String uri;
+    @Id private String uri;
     private String id;
     private String name;
     @Lob private String description;

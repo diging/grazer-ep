@@ -12,28 +12,28 @@ import edu.asu.diging.grazer.core.model.IConcept;
 @Service
 public class ConceptpowerCache implements IConceptpowerCache {
 	
-	@Autowired
-	private IConceptDatabaseConnection conceptDB;
+    @Autowired
+    private IConceptDatabaseConnection conceptDB;
 	
-	@Autowired
-	private IConceptpowerConnector connector;
+    @Autowired
+    private IConceptpowerConnector connector;
 	
-	@Autowired
-	private IASyncConceptUpdater conceptUpdater;
+    @Autowired
+    private IASyncConceptUpdater conceptUpdater;
 	
-	@Override
-	public IConcept getConceptByUri(String uri) {
+    @Override
+    public IConcept getConceptByUri(String uri) {
 		
-		IConcept concept = conceptDB.getConcept(uri);
-		if(concept != null) {
-			conceptUpdater.updateConcept(uri);
-			return concept;
-		}
+        IConcept concept = conceptDB.getConcept(uri);
+        if(concept != null) {
+            conceptUpdater.updateConcept(uri);
+            return concept;
+        }
 		
-		concept = connector.getConcept(uri);
-		if(concept != null) {
-			conceptDB.createOrUpdate(concept);
-		}
+        concept = connector.getConcept(uri);
+        if(concept != null) {
+            conceptDB.createOrUpdate(concept);
+        }
         return concept;   
-	}
+    }
 }

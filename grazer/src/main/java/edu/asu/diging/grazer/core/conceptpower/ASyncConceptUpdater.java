@@ -10,18 +10,18 @@ import edu.asu.diging.grazer.core.model.IConcept;
 @Service
 public class ASyncConceptUpdater implements IASyncConceptUpdater {
 	
-	@Autowired
-	private IConceptDatabaseConnection conceptDB;
+    @Autowired
+    private IConceptDatabaseConnection conceptDB;
 	
-	@Autowired
-	private IConceptpowerConnector connector;
+    @Autowired
+    private IConceptpowerConnector connector;
 	
-	@Override
-	@Async
-	public void updateConcept(String uri) {
-		IConcept concept = connector.getConcept(uri);
-		if(concept != null) {
-			conceptDB.createOrUpdate(concept);
-		}
-	}
+    @Override
+    @Async
+    public void updateConcept(String uri) {
+        IConcept concept = connector.getConcept(uri);
+        if(concept != null) {
+            conceptDB.createOrUpdate(concept);
+        }
+    }
 }

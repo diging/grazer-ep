@@ -14,58 +14,58 @@ import edu.asu.diging.grazer.core.conceptpower.impl.ConceptpowerConcept;
 @Component
 public class ConceptMapper implements IConceptMapper {
 	
-	/* (non-Javadoc)
-     * @see edu.asu.diging.grazer.core.conceptpower.impl.IConceptMapper#mapConceptpowerConceptToConcept
-     */
-	@Override
-	public IConcept mapConceptpowerConceptToConcept(ConceptpowerConcept conceptpowerConcept) {
-		IConcept concept = new Concept();
-		IConceptType conceptType = conceptpowerConcept.getType();
+    /* (non-Javadoc)
+    * @see edu.asu.diging.grazer.core.conceptpower.impl.IConceptMapper#mapConceptpowerConceptToConcept
+    */
+    @Override
+    public IConcept mapConceptpowerConceptToConcept(ConceptpowerConcept conceptpowerConcept) {
+        IConcept concept = new Concept();
+        IConceptType conceptType = conceptpowerConcept.getType();
 		
-		//ID
-		concept.setId(conceptpowerConcept.getId());
+        //ID
+        concept.setId(conceptpowerConcept.getId());
         
-		//URI
+        //URI
         concept.setUri(conceptpowerConcept.getId());
         
-		//WORD
+        //WORD
         concept.setWord(conceptpowerConcept.getLemma());
         
-		//POS
+        //POS
         concept.setPos(conceptpowerConcept.getPos());
         
-		//DESC
+        //DESC
         concept.setDescription(conceptpowerConcept.getDescription());
         
-		//CONCEPTLIST
+        //CONCEPTLIST
         concept.setConceptList(conceptpowerConcept.getConceptList());
         
-		//TYPEID
+        //TYPEID
         concept.setTypeId(conceptType.getUri() != null ? conceptType.getUri()  : "");
         
-		//DELETED
+        //DELETED
         
-		//ALTERNATIVEURIS
+        //ALTERNATIVEURIS
         concept.setAlternativeUris(conceptpowerConcept.getAlternativeIds());
         
-		//CREATORID
+        //CREATORID
         concept.setCreatorId(conceptpowerConcept.getCreatorId());
         
-		//EQUALTO
+        //EQUALTO
         if (conceptpowerConcept.getEqualTo() != null) {
             concept.setEqualTo(conceptpowerConcept.getEqualTo());
         } else {
             concept.setEqualTo(new ArrayList<>());
         }
         
-		//WORDNETIDS
+        //WORDNETIDS
         if (conceptpowerConcept.getWordnetId() != null) {
             concept.setWordnetIds(conceptpowerConcept.getWordnetId());
         } else {
             concept.setWordnetIds(new ArrayList<>());
         }
         
-		//SETTYPE
+        //SETTYPE
         IConceptType type = new ConceptType();
         type.setUri(conceptType.getUri());
         type.setId(conceptType.getId());

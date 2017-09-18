@@ -11,30 +11,32 @@ import edu.asu.diging.grazer.core.model.IConceptType;
 
 public class ConceptpowerConcept { 
 	
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
-		return result;
-	}
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result + ((id == null) ? 0 : id.hashCode());
+        return result;
+    }
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		ConceptpowerConcept other = (ConceptpowerConcept) obj;
-		if (id == null) {
-			if (other.id != null)
-				return false;
-		} else if (!id.equals(other.id))
-			return false;
-		return true;
-	}
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        ConceptpowerConcept other = (ConceptpowerConcept) obj;
+        if (id == null) {
+            if (other.id != null) {
+                return false;
+            }
+        } else if (!id.equals(other.id)) {
+            return false;
+        }
+        return true;
+    }
 
     private String id;
     @JsonProperty("concept_uri")
@@ -146,7 +148,7 @@ public class ConceptpowerConcept {
     }
     
     public List<String> getAlternativeIds() {
-    		List<String> ids = new ArrayList<>();
+        List<String> ids = new ArrayList<>();
         if (alternativeIds == null) {
             return ids;
         }
@@ -162,16 +164,16 @@ public class ConceptpowerConcept {
         return new ConceptAdapter(this);
     }
 
-	public List<String> getWordnetId() {
-		return wordnetIds;
-	}
+    public List<String> getWordnetId() {
+        return wordnetIds;
+    }
 	
-	public void setWordnetId(List<String> wordnetIds) {
-		this.wordnetIds = wordnetIds;
-	}
+    public void setWordnetId(List<String> wordnetIds) {
+        this.wordnetIds = wordnetIds;
+    }
 
-	public String getCreatorId() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    public String getCreatorId() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 }
