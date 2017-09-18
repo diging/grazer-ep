@@ -53,35 +53,34 @@ public class GraphManager implements IGraphManager {
     
     private List<String> transformationNames;
     private Cache cache;
-    
     private File[] files;
     
     @PostConstruct
     public void init() {
         
         File folder = new File(getClass().getResource(FOLDER_NAME).getFile());
-    		transformationNames = new ArrayList<>();        
+        transformationNames = new ArrayList<>();        
         
-    		FileFilter filter = new FileFilter() {
-    			public boolean accept(File file) {
-    				if (file.getName().endsWith(FILE_EXTENSION) && file.getName().startsWith(PREFIX)) {
-    					return true;
-    				}
-    				return false;
-    			}
-    		};
-    		
-    		if(folder.exists()) {
-    			if(folder.isDirectory()) {
-    			    files = folder.listFiles(filter);
-	        		if(files != null && files.length > 0) {
-	        			for(int i = 0; i < files.length; i++) {
-	        				// Removing prefixes PAT_ and TRA_ and .graphml at the end 
-		        			String file = files[i].getName().substring(4).replaceFirst("[.][^.]+$", "");
-		        			transformationNames.add(file);
-	        			}
-	        		}
-	        	}
+        FileFilter filter = new FileFilter() {
+            public boolean accept(File file) {
+                if (file.getName().endsWith(FILE_EXTENSION) && file.getName().startsWith(PREFIX)) {
+                    return true;
+                }
+                return false;
+            }
+        };
+
+        if(folder.exists()) {
+            if(folder.isDirectory()) {
+                files = folder.listFiles(filter);
+                    if(files != null && files.length > 0) {
+                        for(int i = 0; i < files.length; i++) {
+                            // Removing prefixes PAT_ and TRA_ and .graphml at the end 
+                            String file = files[i].getName().substring(4).replaceFirst("[.][^.]+$", "");
+                            transformationNames.add(file);
+                    }
+                }
+            }
         }
         cache = cacheManager.getCache("quadriga_graphs");
     }
@@ -172,3 +171,4 @@ public class GraphManager implements IGraphManager {
         return (Graph) result;
     }
 }
+
