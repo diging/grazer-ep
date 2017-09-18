@@ -73,11 +73,11 @@ public class GraphManager implements IGraphManager {
         if(folder.exists()) {
             if(folder.isDirectory()) {
                 files = folder.listFiles(filter);
-                    if(files != null && files.length > 0) {
-                        for(int i = 0; i < files.length; i++) {
-                            // Removing prefixes PAT_ and TRA_ and .graphml at the end 
-                            String file = files[i].getName().substring(4).replaceFirst("[.][^.]+$", "");
-                            transformationNames.add(file);
+                if(files != null && files.length > 0) {
+                    for(int i = 0; i < files.length; i++) {
+                        // Removing prefixes PAT_ and TRA_ and .graphml at the end 
+                        String file = files[i].getName().substring(4).replaceFirst("[.][^.]+$", "");
+                        transformationNames.add(file);
                     }
                 }
             }
