@@ -1,5 +1,6 @@
 package edu.asu.diging.grazer.core.rdf.impl;
 
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -156,6 +157,25 @@ public class RDFTripleService implements IRDFTripleService {
         });
         
         return statements;
+    }
+    
+    @Override
+    public List<RDFStatement> runQuery(String query) {
+        List<RDFStatement> statements = new ArrayList<>();
+        List<Map<String, String>> results = repoService.queryRepository(query);
+        
+        results.forEach(map -> {
+            RDFStatement statement = new RDFStatement();
+            statements.add(statement);
+            createStatement(map, statement);
+        });
+        
+        return statements;
+    }
+    
+    @Override
+    public void runSparqlQuery(String query, String mimeType, OutputStream stream) {
+        repoService.runSparqlQuery(stream, query, mimeType);
     }
 
     protected void createStatement(Map<String, String> map,

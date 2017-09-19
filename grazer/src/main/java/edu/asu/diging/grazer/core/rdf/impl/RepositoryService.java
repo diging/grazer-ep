@@ -1,7 +1,9 @@
 package edu.asu.diging.grazer.core.rdf.impl;
 
 import java.io.File;
+import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,9 +14,15 @@ import javax.annotation.PreDestroy;
 
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.query.BindingSet;
+import org.eclipse.rdf4j.query.Query;
 import org.eclipse.rdf4j.query.QueryLanguage;
+import org.eclipse.rdf4j.query.QueryResult;
+import org.eclipse.rdf4j.query.QueryResults;
 import org.eclipse.rdf4j.query.TupleQuery;
 import org.eclipse.rdf4j.query.TupleQueryResult;
+import org.eclipse.rdf4j.query.resultio.QueryResultFormat;
+import org.eclipse.rdf4j.query.resultio.QueryResultIO;
+import org.eclipse.rdf4j.query.resultio.QueryResultWriter;
 import org.eclipse.rdf4j.repository.Repository;
 import org.eclipse.rdf4j.repository.RepositoryConnection;
 import org.eclipse.rdf4j.repository.sail.SailRepository;
@@ -88,6 +96,21 @@ public class RepositoryService implements IRepositoryService {
                 }
             }
             return results;
+        }
+    }
+    
+    @Override
+    public void runSparqlQuery(OutputStream stream, String query, String mimeType) {
+        try (RepositoryConnection con = repository.getConnection()) {
+            TupleQuery qQuery = con.prepareTupleQuery(query);
+            TupleQueryResult result = qQuery.evaluate();
+            
+            QueryResultFormat format = QueryResultIO.getWriterFormatForMIMEType(mimeType).get();
+            
+            QueryResultWriter writer = QueryResultIO.createWriter(format, stream);
+            writer.startDocument();
+            writer.startHeader();
+            QueryResults.report(result, writer);
         }
     }
 

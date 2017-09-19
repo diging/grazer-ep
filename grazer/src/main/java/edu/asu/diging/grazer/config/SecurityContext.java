@@ -38,7 +38,7 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 // Anyone can access the urls
-                .antMatchers("/", "/person/**", "/concept/**", "/resources/**", "/login/authenticate", "/rest/**",
+                .antMatchers("/", "/person/**", "/concept/**", "/query**", "/resources/**", "/login/authenticate", "/rest/**",
                         "/logout").permitAll()
                 // The rest of the our application is protected.
                 .antMatchers("/users/**", "/admin/**").hasRole("ADMIN")
