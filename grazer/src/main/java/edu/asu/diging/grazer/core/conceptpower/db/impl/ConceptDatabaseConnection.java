@@ -161,5 +161,4 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
         }
         return false;
     }
-	
 }

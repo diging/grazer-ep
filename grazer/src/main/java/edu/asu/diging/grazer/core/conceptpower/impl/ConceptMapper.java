@@ -43,8 +43,6 @@ public class ConceptMapper implements IConceptMapper {
         //TYPEID
         concept.setTypeId(conceptType.getUri() != null ? conceptType.getUri()  : "");
         
-        //DELETED
-        
         //ALTERNATIVEURIS
         concept.setAlternativeUris(conceptpowerConcept.getAlternativeIds());
         
@@ -74,5 +72,5 @@ public class ConceptMapper implements IConceptMapper {
         concept.setType(type);
         
         return concept;
-	}
+    }
 }
