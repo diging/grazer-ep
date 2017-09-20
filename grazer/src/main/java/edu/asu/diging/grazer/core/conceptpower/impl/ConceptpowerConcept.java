@@ -54,7 +54,7 @@ public class ConceptpowerConcept {
     private String synonymIds;
     private List<String> wordnetIds;
     private ConceptpowerConceptType type;
-    private List<ConceptpowerAlternativeId> alternativeIds;
+    private List<String> alternativeIds;
 
     public String getId() {
         return id;
@@ -152,11 +152,12 @@ public class ConceptpowerConcept {
         if (alternativeIds == null) {
             return ids;
         }
-        alternativeIds.forEach(id -> ids.add(id.getConceptUri()));
-        return ids;
+        else {
+            return alternativeIds;
+        }
     }
 
-    public void setAlternativeIds(List<ConceptpowerAlternativeId> alternativeIds) {
+    public void setAlternativeIds(List<String> alternativeIds) {
         this.alternativeIds = alternativeIds;
     }
 
