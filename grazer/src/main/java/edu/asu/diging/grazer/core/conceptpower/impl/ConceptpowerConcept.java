@@ -148,13 +148,7 @@ public class ConceptpowerConcept {
     }
     
     public List<String> getAlternativeIds() {
-        List<String> ids = new ArrayList<>();
-        if (alternativeIds == null) {
-            return ids;
-        }
-        else {
-            return alternativeIds;
-        }
+        return alternativeIds;
     }
 
     public void setAlternativeIds(List<String> alternativeIds) {
