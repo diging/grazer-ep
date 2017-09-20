@@ -9,6 +9,7 @@ import javax.annotation.PostConstruct;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -21,6 +22,7 @@ import edu.asu.diging.grazer.core.rdf.IRDFTripleService;
 
 @Component
 @EnableScheduling
+@PropertySource("classpath:config.properties")
 public class TransformationCronJob {
     
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -39,7 +41,7 @@ public class TransformationCronJob {
         logger.info("TransformationCronJob is up and running.");
     }
     
-//    @Scheduled(cron = "0 29 17 * * ?")
+    @Scheduled(cron = "${cron_schedule}")
 //    @Scheduled(fixedDelay=360000)
     public void retrieveTransformations() {
         logger.info("Updating triples...");

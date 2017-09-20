@@ -2,8 +2,6 @@ package edu.asu.diging.grazer.web.rdf;
 
 import java.io.ByteArrayOutputStream;
 
-import org.eclipse.rdf4j.query.resultio.BooleanQueryResultFormat;
-import org.eclipse.rdf4j.query.resultio.QueryResultFormat;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -13,7 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.asu.diging.grazer.core.rdf.IRDFTripleService;
-import edu.asu.diging.grazer.web.rdf.util.IRDFCreator;
 
 @Controller
 public class QueryAPI {

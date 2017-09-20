@@ -14,7 +14,6 @@ import edu.asu.diging.grazer.core.rdf.IRDFTripleService;
 import edu.asu.diging.grazer.core.rdf.IUriCreator;
 import edu.asu.diging.grazer.core.rdf.impl.RDFStatement;
 import edu.asu.diging.grazer.web.rdf.util.IRDFCreator;
-import edu.asu.diging.grazer.web.rdf.util.impl.RDFCreator;
 
 @Controller
 public class ConceptAPI {
