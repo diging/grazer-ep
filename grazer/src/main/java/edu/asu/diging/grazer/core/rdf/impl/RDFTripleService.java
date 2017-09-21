@@ -26,6 +26,8 @@ public class RDFTripleService implements IRDFTripleService {
     private final String START_DATE = "http://schema.org/startDate";
     private final String END_DATE = "http://schema.org/endDate";
     private final String OCCUR_DATE = "http://dbpedia.org/ontology/date";
+    private final String LABEL = "http://www.w3.org/2000/01/rdf-schema#label";
+    private final String COMMENT = "http://www.w3.org/2000/01/rdf-schema#comment";
 
     @Autowired
     private IRepositoryService repoService;
@@ -63,13 +65,26 @@ public class RDFTripleService implements IRDFTripleService {
             
             List<String> contextUris = doesTripleExistInGraphs(subjectUri, relationship, objectUri);
             // if triple already exists, let's use the existing context uri
-            if (contextUri != null && contextUris.size() > 0) {
+            if (contextUris.size() > 0) {
                 contextUri = contextUris.get(0);
             } else {
                 // if not, add triple
                 statements.add(createStatement(subjectUri, relationship, objectUri, contextUri));
             }
             
+            // add labels and description of concept
+            if (!doesTripleExistInGraphs(subjectUri, LABEL, subjectConcept.getWord()).contains(contextUri)) {
+                statements.add(createStatement(subjectUri, LABEL, subjectConcept.getWord(), contextUri));
+            }
+            if (!doesTripleExistInGraphs(subjectUri, COMMENT, subjectConcept.getDescription()).contains(contextUri)) {
+                statements.add(createStatement(subjectUri, COMMENT, subjectConcept.getDescription(), contextUri));
+            }
+            if (!doesTripleExistInGraphs(objectUri, LABEL, objectConcept.getWord()).contains(contextUri)) {
+                statements.add(createStatement(objectUri, LABEL, objectConcept.getWord(), contextUri));
+            }
+            if (!doesTripleExistInGraphs(objectUri, COMMENT, objectConcept.getDescription()).contains(contextUri)) {
+                statements.add(createStatement(objectUri, COMMENT, objectConcept.getDescription(), contextUri));
+            }
 
             if (edge.getStartTime() != null
                     && !edge.getStartTime().trim().isEmpty()) {
@@ -104,7 +119,8 @@ public class RDFTripleService implements IRDFTripleService {
     }
     
     private List<String> doesTripleExistInGraphs(String subject, String predicate, String object) {
-        String query = "SELECT ?c { GRAPH ?c { <" + subject + "> <" + predicate + "> <" + object + "> } }";
+        String objectPart = object.startsWith("http://") ? "<" + object + ">" : "\"" + object + "\"";
+        String query = "SELECT ?c { GRAPH ?c { <" + subject + "> <" + predicate + "> " + objectPart + " } }";
         List<Map<String, String>> results = repoService.queryRepository(query);
         List<String> contexts = new ArrayList<>();
         results.forEach(map -> contexts.add(map.get("c")));

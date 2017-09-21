@@ -2,6 +2,7 @@ package edu.asu.diging.grazer.web.rdf.util.impl;
 
 import java.io.StringWriter;
 import java.util.List;
+import java.util.Optional;
 
 import org.eclipse.rdf4j.model.IRI;
 import org.eclipse.rdf4j.model.Model;
@@ -9,6 +10,7 @@ import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+import org.eclipse.rdf4j.query.resultio.QueryResultIO;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.Rio;
 import org.springframework.stereotype.Service;
@@ -41,10 +43,8 @@ public class RDFCreator implements IRDFCreator {
         }
 
         StringWriter writer = new StringWriter();
-        RDFFormat rdfFormat = RDFFormat.RDFXML;
-        if (format.equals(TURTLE)) {
-            rdfFormat = RDFFormat.TURTLE;
-        }
+        Optional<RDFFormat> optional = Rio.getWriterFormatForMIMEType(format);
+        RDFFormat rdfFormat = optional.isPresent() ? optional.get() : RDFFormat.TRIX;
         Rio.write(model, writer, rdfFormat);
         return writer.toString();
     }

@@ -30,7 +30,19 @@ public class ConceptAPI {
     @Autowired
     private IRDFCreator rdfCreator;
     
-    @RequestMapping(value = CONCEPT_PREFIX, produces = { IRDFCreator.RDFXML, IRDFCreator.TURTLE })
+    /**
+     * Endpoint to retrieve information about a concept. This method will query the triple store and return
+     * named graphs with stored statements. The following formats can be requested:
+     * <ul>
+     *  <li> Trix: application/xml, application/trix</li>
+     *  <li> Trig: application/trig </li>
+     *  <li> NQuads: application/n-quads </li>
+     * </ul>
+     * @param id
+     * @param accept
+     * @return
+     */
+    @RequestMapping(value = CONCEPT_PREFIX, produces = { IRDFCreator.XML, IRDFCreator.TRIX, IRDFCreator.TRIG, IRDFCreator.NQUADS })
     public ResponseEntity<String> getRelations(@PathVariable("id") String id, @RequestHeader("Accept") String accept) {
         List<RDFStatement> statements = tripleService.getStatements(uriCreator.getUri(id));
         return new ResponseEntity<String>(rdfCreator.getRDF(statements, accept), HttpStatus.OK);
