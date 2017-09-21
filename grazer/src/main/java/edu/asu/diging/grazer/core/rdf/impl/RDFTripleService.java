@@ -160,20 +160,6 @@ public class RDFTripleService implements IRDFTripleService {
     }
     
     @Override
-    public List<RDFStatement> runQuery(String query) {
-        List<RDFStatement> statements = new ArrayList<>();
-        List<Map<String, String>> results = repoService.queryRepository(query);
-        
-        results.forEach(map -> {
-            RDFStatement statement = new RDFStatement();
-            statements.add(statement);
-            createStatement(map, statement);
-        });
-        
-        return statements;
-    }
-    
-    @Override
     public void runSparqlQuery(String query, String mimeType, OutputStream stream) {
         repoService.runSparqlQuery(stream, query, mimeType);
     }
@@ -181,7 +167,7 @@ public class RDFTripleService implements IRDFTripleService {
     protected void createStatement(Map<String, String> map,
             RDFStatement statement) {
         for (String key : map.keySet()) {
-            if (key.equals("sub")) {
+            if (key.equals("subj")) {
                 statement.setSubject(map.get(key));
             } else if (key.equals("pred")) {
                 statement.setPredicate(map.get(key));

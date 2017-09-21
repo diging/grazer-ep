@@ -12,8 +12,6 @@ public interface IRDFTripleService {
 
     List<RDFStatement> getStatements(String conceptUri);
 
-    List<RDFStatement> runQuery(String query);
-
     void runSparqlQuery(String query, String mimeType, OutputStream stream);
 
 }
