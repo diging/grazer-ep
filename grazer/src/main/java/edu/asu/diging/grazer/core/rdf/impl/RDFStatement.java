@@ -1,5 +1,11 @@
 package edu.asu.diging.grazer.core.rdf.impl;
 
+/**
+ * Representation of a statement in the triple store.
+ * 
+ * @author jdamerow
+ *
+ */
 public class RDFStatement {
 
     private String subject;

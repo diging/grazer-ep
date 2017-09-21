@@ -29,6 +29,17 @@ import net.sf.ehcache.Cache;
 import net.sf.ehcache.CacheManager;
 import net.sf.ehcache.Element;
 
+/**
+ * And asynchronous implementation of the {@link IGraphManager} interface.
+ * 
+ * This class will read all pattern/transformation pairs in the "transformations" folder
+ * and send them to Quadriga when transformation of statements of a provided URI is requested.
+ * 
+ * This class uses a cache to cache transformation results.
+ * 
+ * @author jdamerow
+ *
+ */
 @Service
 public class GraphManager implements IGraphManager {
     
@@ -87,6 +98,10 @@ public class GraphManager implements IGraphManager {
     
     /* (non-Javadoc)
      * @see edu.asu.diging.grazer.core.graphs.impl.IGraphManager#getTransformedPersonGraph(java.lang.String)
+     */
+    /**
+     * Starts a new thread that transforms all statements that contain the given URI according to
+     * registered patterns.
      */
     @Override
     @Async

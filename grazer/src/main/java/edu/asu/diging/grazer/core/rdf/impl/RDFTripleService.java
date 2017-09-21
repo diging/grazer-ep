@@ -19,6 +19,13 @@ import edu.asu.diging.grazer.core.rdf.IRDFTripleService;
 import edu.asu.diging.grazer.core.rdf.IRepositoryService;
 import edu.asu.diging.grazer.core.rdf.IUriCreator;
 
+/**
+ * This class coordinates the storage and retrieval of transformation results into and from the
+ * backend triple store.
+ * 
+ * @author jdamerow
+ *
+ */
 @Service
 @PropertySource(value = "classpath:/relationships.properties")
 public class RDFTripleService implements IRDFTripleService {
