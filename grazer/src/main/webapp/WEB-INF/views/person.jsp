@@ -10,7 +10,7 @@
 
 	function getGraph() {
 		$.ajax({
-			url : '<c:url value="/person/${concept.id}/graph" />',
+			url : '<c:url value="/concept/${concept.id}/graph" />',
 			type : "GET",
 			success : function(result) {
 				if (result == null || result.trim() == '') {

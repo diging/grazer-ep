@@ -12,13 +12,11 @@ import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.impl.Concept;
-import edu.asu.diging.grazer.core.model.impl.Graph;
 import edu.asu.diging.grazer.core.quadriga.IQuadrigaConnector;
 
 @Service

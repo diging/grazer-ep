@@ -4,6 +4,13 @@ import edu.asu.diging.grazer.core.model.impl.Edge;
 import edu.asu.diging.grazer.core.model.impl.Graph;
 import edu.asu.diging.grazer.core.model.impl.Node;
 
+/**
+ * Implementations of this interface should provide a method to clone graphs according to the
+ * method specifications.
+ * 
+ * @author jdamerow
+ *
+ */
 public interface IGraphCloner {
 
     /**
