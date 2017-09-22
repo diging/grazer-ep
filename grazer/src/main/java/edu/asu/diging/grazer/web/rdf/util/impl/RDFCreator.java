@@ -10,7 +10,6 @@ import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
-import org.eclipse.rdf4j.query.resultio.QueryResultIO;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.Rio;
 import org.springframework.stereotype.Service;
@@ -38,8 +37,9 @@ public class RDFCreator implements IRDFCreator {
             if (statement.getContext() != null) {
                 IRI context = factory.createIRI(statement.getContext());
                 model.add(subject, predicate, object, context);
+            } else {
+                model.add(subject, predicate, object);
             }
-            model.add(subject, predicate, object);
         }
 
         StringWriter writer = new StringWriter();
