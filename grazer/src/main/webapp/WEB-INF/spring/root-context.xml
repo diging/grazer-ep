@@ -2,10 +2,8 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:se="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:util="http://www.springframework.org/schema/util"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xmlns:task="http://www.springframework.org/schema/task"
-	xmlns:cache="http://www.springframework.org/schema/cache"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:task="http://www.springframework.org/schema/task" xmlns:cache="http://www.springframework.org/schema/cache"
 	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -30,9 +28,13 @@
 	
 	<!--Reference to Quad Database connection file-->
 	<import resource="spring-dbconnectionmanager.xml" />
-	
+
+	<!-- <mvc:annotation-driven /> -->
+	<context:component-scan
+		base-package="edu.asu.diging.grazer.core,edu.asu.diging.grazer.config" />
+
 	<import resource="spring-security.xml" />
-	
+
 	<bean id="messageSource"
 		class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basename" value="classpath:locale/messages" />
@@ -45,17 +47,29 @@
    </bean>
 	
 	<aop:aspectj-autoproxy proxy-target-class="true" />
-	
-	<task:executor id="executor" pool-size="5"/>
-    <task:annotation-driven executor="executor" />
 
-    <cache:annotation-driven />
-    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
-        <property name="cacheManager"><ref bean="ehcache"/></property>
-    </bean>
+	<task:executor id="executor" pool-size="5" />
+	<!-- <task:scheduler id="scheduler" pool-size="5"/> -->
+	<task:annotation-driven executor="executor" />
 
-    <bean id="ehcache"
-        class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
-        p:config-location="classpath:ehcache.xml" />
-        
+	<cache:annotation-driven />
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		<property name="cacheManager">
+			<ref bean="ehcache" />
+		</property>
+	</bean>
+
+	<bean id="ehcache"
+		class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean"
+		p:config-location="classpath:ehcache.xml" />
+
+	<bean id="placeholderConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:config.properties</value>
+			</list>
+		</property>
+	</bean>
+
 </beans>
