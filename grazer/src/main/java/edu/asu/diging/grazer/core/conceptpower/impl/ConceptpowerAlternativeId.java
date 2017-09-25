@@ -2,9 +2,7 @@ package edu.asu.diging.grazer.core.conceptpower.impl;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
-import edu.asu.diging.grazer.core.conceptpower.IConceptAlternativeId;
-
-public class ConceptpowerAlternativeId implements IConceptAlternativeId {
+public class ConceptpowerAlternativeId {
 
     @JsonProperty("concept_id")
     private String conceptId;
