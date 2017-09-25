@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:beans="http://www.springframework.org/schema/beans"
 	xmlns:se="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:util="http://www.springframework.org/schema/util"
@@ -27,10 +26,10 @@
 	<tx:annotation-driven transaction-manager="transactionManager"/>
 	
 	<!-- Reference the hibernate -->
-	<beans:import resource="../hibernate/hibernate.cfg.xml"/>
+	<import resource="../hibernate/hibernate.cfg.xml"/>
 	
 	<!--Reference to Quad Database connection file-->
-	<beans:import resource="spring-dbconnectionmanager.xml" />
+	<import resource="spring-dbconnectionmanager.xml" />
 	
 	<import resource="spring-security.xml" />
 	

@@ -98,7 +98,7 @@ public class ConceptAdapter implements IConcept {
 
     @Override
     public List<String> getAlternativeUris() {
-        return concept.getAlternativeIds();
+        return null;//concept.getAlternativeIds();
     }
 
     @Override

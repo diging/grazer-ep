@@ -1,6 +1,5 @@
 package edu.asu.diging.grazer.core.conceptpower.impl;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -53,8 +52,10 @@ public class ConceptpowerConcept {
     @JsonProperty("synonym_ids")
     private String synonymIds;
     private List<String> wordnetIds;
+    
     private ConceptpowerConceptType type;
-    private List<String> alternativeIds;
+    
+    private List<ConceptpowerAlternativeId> alternativeIdList;
 
     public String getId() {
         return id;
@@ -147,12 +148,12 @@ public class ConceptpowerConcept {
         this.type = type;
     }
     
-    public List<String> getAlternativeIds() {
-        return alternativeIds;
+    public List<ConceptpowerAlternativeId> getAlternativeIdList() {
+        return alternativeIdList;
     }
 
-    public void setAlternativeIds(List<String> alternativeIds) {
-        this.alternativeIds = alternativeIds;
+    public void setAlternativeIdList(List<ConceptpowerAlternativeId> alternativeIdList) {
+        this.alternativeIdList = alternativeIdList;
     }
 
     public IConcept getAdapter() {

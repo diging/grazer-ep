@@ -1,7 +1,11 @@
 package edu.asu.diging.grazer.core.conceptpower.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
 
+import org.slf4j.Logger;
 import org.springframework.stereotype.Component;
 
 import edu.asu.diging.grazer.core.conceptpower.IConceptMapper;
@@ -44,7 +48,12 @@ public class ConceptMapper implements IConceptMapper {
         concept.setTypeId(conceptType.getUri() != null ? conceptType.getUri()  : "");
         
         //ALTERNATIVEURIS
-        concept.setAlternativeUris(conceptpowerConcept.getAlternativeIds());
+        concept.setAlternativeUris(null);
+        /*if(conceptpowerConcept.getAlternativeIdList() != null) {
+            concept.setAlternativeUris(Arrays.asList(conceptpowerConcept.getAlternativeIdList().toString()));
+        } else {
+            concept.setAlternativeUris(new ArrayList<>());
+        }*/
         
         //CREATORID
         concept.setCreatorId(conceptpowerConcept.getCreatorId());

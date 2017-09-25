@@ -18,6 +18,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
+import edu.asu.diging.grazer.core.conceptpower.impl.ConceptpowerAlternativeId;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.IConceptType;
 
@@ -25,7 +26,7 @@ import edu.asu.diging.grazer.core.model.IConceptType;
 @Table(name = "tbl_conceptpower_concept")
 public class Concept implements IConcept {
 
-    @Id @Index(name="uri_idx")private String uri;
+    @Id @Index(name="uri_idx") private String uri;
     private String id;
     private String word;
     private String pos;
