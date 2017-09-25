@@ -54,7 +54,6 @@ public class ConceptpowerConcept {
     private List<String> wordnetIds;
     
     private ConceptpowerConceptType type;
-    
     private List<ConceptpowerAlternativeId> alternativeIdList;
 
     public String getId() {

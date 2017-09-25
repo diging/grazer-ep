@@ -25,6 +25,7 @@ public class ConceptMapper implements IConceptMapper {
     public IConcept mapConceptpowerConceptToConcept(ConceptpowerConcept conceptpowerConcept) {
         IConcept concept = new Concept();
         IConceptType conceptType = conceptpowerConcept.getType();
+        ConceptpowerAlternativeId conceptAltId = conceptpowerConcept.getAlternativeIdList().get(0);
 		
         //ID
         concept.setId(conceptpowerConcept.getId());
@@ -48,12 +49,15 @@ public class ConceptMapper implements IConceptMapper {
         concept.setTypeId(conceptType.getUri() != null ? conceptType.getUri()  : "");
         
         //ALTERNATIVEURIS
-        concept.setAlternativeUris(null);
-        /*if(conceptpowerConcept.getAlternativeIdList() != null) {
+        //concept.setAlternativeUris(null);
+        
+        conceptAltId.setConceptId(conceptAltId.getConceptId());
+        conceptAltId.setConceptUri(conceptAltId.getConceptUri());
+        if(conceptpowerConcept.getAlternativeIdList() != null) {
             concept.setAlternativeUris(Arrays.asList(conceptpowerConcept.getAlternativeIdList().toString()));
         } else {
             concept.setAlternativeUris(new ArrayList<>());
-        }*/
+        }
         
         //CREATORID
         concept.setCreatorId(conceptpowerConcept.getCreatorId());
