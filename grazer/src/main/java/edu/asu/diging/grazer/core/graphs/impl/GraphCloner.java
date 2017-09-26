@@ -9,6 +9,12 @@ import edu.asu.diging.grazer.core.model.impl.Edge;
 import edu.asu.diging.grazer.core.model.impl.Graph;
 import edu.asu.diging.grazer.core.model.impl.Node;
 
+/**
+ * Helper class to clone graphs.
+ * 
+ * @author jdamerow
+ *
+ */
 @Service
 public class GraphCloner implements IGraphCloner {
 

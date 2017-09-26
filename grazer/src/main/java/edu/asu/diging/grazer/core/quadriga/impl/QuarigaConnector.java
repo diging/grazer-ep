@@ -17,7 +17,6 @@ import org.springframework.web.client.RestTemplate;
 
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.impl.Concept;
-import edu.asu.diging.grazer.core.model.impl.Graph;
 import edu.asu.diging.grazer.core.quadriga.IQuadrigaConnector;
 
 @Service
@@ -61,8 +60,7 @@ public class QuarigaConnector implements IQuadrigaConnector {
     }
     
     @Override
-    @Cacheable(value = "quadriga_graphs")
-    public Graph getTransformedNetworks(String transformationName, Map<String, String> properties) throws IOException {
+    public TransformationResponse getTransformedNetworks(String transformationName, Map<String, String> properties) throws IOException {
         Resource pathResource = new ClassPathResource(transformationFolder + PATTERN_PREFIX + transformationName + fileEnding);
         String pattern = IOUtils.toString(pathResource.getInputStream(), Charset.forName("UTF-8"));
         if (properties != null) {
@@ -78,6 +76,11 @@ public class QuarigaConnector implements IQuadrigaConnector {
         request.setPattern(pattern);
         request.setTransformation(transformation);
         
-        return restTemplate.postForObject(String.format("%s%s", quadrigaUrl, transformationEndpoint), request, Graph.class);
+        return restTemplate.postForObject(String.format("%s%s", quadrigaUrl, transformationEndpoint), request, TransformationResponse.class);
+    }
+    
+    @Override
+    public TransformationResponse checkForResult(TransformationResponse response) {
+        return restTemplate.getForObject(response.getResultUrl(), TransformationResponse.class);
     }
 }
