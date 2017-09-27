@@ -1,38 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>edu.asu.diging</groupId>
-    <artifactId> grazer</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>edu.asu.diging</groupId>
+	<artifactId> grazer</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
 
-    <properties>
-        <org.slf4j-version>1.7.5</org.slf4j-version>
-        <org.springframework-version>4.3.1.RELEASE</org.springframework-version>
-        <spring-security-version>4.1.3.RELEASE</spring-security-version>
-        <rdf4j.version>2.2.2</rdf4j.version>
+	<properties>
+		<org.slf4j-version>1.7.5</org.slf4j-version>
+		<org.springframework-version>4.3.1.RELEASE</org.springframework-version>
+		<spring-security-version>4.1.3.RELEASE</spring-security-version>
+		<rdf4j.version>2.2.2</rdf4j.version>
 
-        <admin.password>admin</admin.password>
+		<admin.password>admin</admin.password>
 
-        <log.level>info</log.level>
-        
-        <app.url>http://localhost:8080/grazer/</app.url>
-        
-        <database.url>jdbc:mysql://localhost:3306/grazer</database.url>
+		<log.level>info</log.level>
+
+		<app.url>http://localhost:8081/grazer/</app.url>
+
+		<quadriga.url>http://localhost:8080/quadriga/</quadriga.url>
+		<quadriga.concepts.endpoint>public/concepts</quadriga.concepts.endpoint>
+		<conceptpower.url>https://chps.asu.edu/conceptpower/rest/</conceptpower.url>
+
+		<tomcat.manager.path></tomcat.manager.path>
+		<tomcat.server.id></tomcat.server.id>
+		<tomcat.appname>ep-grazer</tomcat.appname>
+
+		<database.url>jdbc:mysql://localhost:3306/grazer</database.url>
 		<database.username>dbadmin</database.username>
 		<database.pw>dbadmin</database.pw>
-		
-		<quadriga.url>http://localhost:8080/quadriga/</quadriga.url>
-        <quadriga.concepts.endpoint>public/concepts</quadriga.concepts.endpoint>
-        <conceptpower.url>https://chps.asu.edu/conceptpower/rest/</conceptpower.url>
 
-        <rdf.store.dir></rdf.store.dir>
-
-        <tomcat.manager.path></tomcat.manager.path>
-        <tomcat.server.id></tomcat.server.id>
-        <tomcat.appname>ep-grazer</tomcat.appname>
-     </properties>   
+		<rdf.store.dir>/Users/mshah18/RDF_Triple</rdf.store.dir>
+	</properties>
 
 	<dependencies>
 		<!-- Spring -->
@@ -68,20 +68,20 @@
 			<artifactId>spring-context-support</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		
+
 		<!-- Testing -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-core</artifactId>
-            <version>2.10.0</version>
-        </dependency>
-		
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.12</version>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.mockito</groupId>
+			<artifactId>mockito-core</artifactId>
+			<version>2.10.0</version>
+		</dependency>
+
 		<!-- https://mvnrepository.com/artifact/org.springframework/spring-messaging -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -94,7 +94,7 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.8.9</version>
 		</dependency>
-		
+
 		<!-- Spring Security -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
@@ -110,7 +110,7 @@
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-taglibs</artifactId>
 			<version>${spring-security-version}</version>
-		</dependency>    
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-web</artifactId>
@@ -121,7 +121,7 @@
 			<artifactId>commons-httpclient</artifactId>
 			<version>3.1</version>
 		</dependency>
-		
+
 		<!-- Spring AOP + AspectJ -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -138,7 +138,7 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.8.9</version>
 		</dependency>
-		
+
 		<!-- Logging -->
 		<dependency>
 			<groupId>org.slf4j</groupId>
@@ -181,7 +181,7 @@
 			</exclusions>
 			<scope>runtime</scope>
 		</dependency>
-		
+
 		<!-- Tiles -->
 		<dependency>
 			<groupId>org.apache.tiles</groupId>
@@ -208,7 +208,7 @@
 			<artifactId>tiles-jsp</artifactId>
 			<version>3.0.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -219,7 +219,7 @@
 			<artifactId>javax.servlet-api</artifactId>
 			<version>3.1.0</version>
 		</dependency>
-		
+
 		<!-- https://mvnrepository.com/artifact/commons-io/commons-io -->
 		<dependency>
 			<groupId>commons-io</groupId>
@@ -240,14 +240,14 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		
+
 		<!-- MySQL database driver -->
 		<dependency>
 			<groupId>mysql</groupId>
 			<artifactId>mysql-connector-java</artifactId>
 			<version>5.1.25</version>
-		</dependency>    
-		
+		</dependency>
+
 		<!-- Hibernate and Dependent jars -->
 		<!-- Hibernate core -->
 		<dependency>
@@ -255,7 +255,7 @@
 			<artifactId>hibernate-core</artifactId>
 			<version>4.2.21.Final</version>
 		</dependency>
-		
+
 		<!-- Hibernate library dependecy start -->
 		<dependency>
 			<groupId>org.dom4j</groupId>
@@ -275,13 +275,13 @@
 			<version>1.0</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.hibernate.javax.persistence</groupId>
-		    <artifactId>hibernate-jpa-2.0-api</artifactId>
-		    <version>1.0.1.Final</version>
+			<groupId>org.hibernate.javax.persistence</groupId>
+			<artifactId>hibernate-jpa-2.0-api</artifactId>
+			<version>1.0.1.Final</version>
 		</dependency>
 
 		<!-- Hibernate library dependecy end -->
-		
+
 		<!-- Hibernate Validator -->
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -293,26 +293,26 @@
 			<artifactId>hibernate-validator</artifactId>
 			<version>5.0.1.Final</version>
 		</dependency>
-		
+
 		<!-- @Inject -->
 		<dependency>
 			<groupId>javax.inject</groupId>
 			<artifactId>javax.inject</artifactId>
 			<version>1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
-            	<artifactId>spring-orm</artifactId>
-            	<version>4.1.6.RELEASE</version>
-        </dependency>
-		<dependency>
-        		<groupId>org.springframework</groupId>
-        		<artifactId>spring-tx</artifactId>
-        		<version>4.2.9.RELEASE</version>
+			<artifactId>spring-orm</artifactId>
+			<version>4.1.6.RELEASE</version>
 		</dependency>
-        
-        <dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-tx</artifactId>
+			<version>4.2.9.RELEASE</version>
+		</dependency>
+
+		<dependency>
 			<groupId>org.eclipse.persistence</groupId>
 			<artifactId>eclipselink</artifactId>
 			<version>2.6.4</version>
@@ -322,32 +322,41 @@
 			<artifactId>jta</artifactId>
 			<version>1.1</version>
 		</dependency>
-		
+
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
 			<version>${org.springframework-version}</version>
 		</dependency>
-		
+
 		<!-- RDF4J triple store -->
-        <dependency>
-            <groupId>org.eclipse.rdf4j</groupId>
-            <artifactId>rdf4j-runtime</artifactId>
-            <version>${rdf4j.version}</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.eclipse.rdf4j/rdf4j-repository-sail -->
-        <dependency>
-            <groupId>org.eclipse.rdf4j</groupId>
-            <artifactId>rdf4j-sail-nativerdf</artifactId>
-            <version>${rdf4j.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>org.eclipse.rdf4j</groupId>
+			<artifactId>rdf4j-runtime</artifactId>
+			<version>${rdf4j.version}</version>
+		</dependency>
+		<!-- https://mvnrepository.com/artifact/org.eclipse.rdf4j/rdf4j-repository-sail -->
+		<dependency>
+			<groupId>org.eclipse.rdf4j</groupId>
+			<artifactId>rdf4j-sail-nativerdf</artifactId>
+			<version>${rdf4j.version}</version>
+		</dependency>
 	</dependencies>
-	
+
 	<build>
 		<finalName> grazer</finalName>
 		<resources>
 			<resource>
 				<directory>src/main/resources</directory>
+				<filtering>true</filtering>
+				<excludes>
+					<exclude>**/*.woff</exclude>
+					<exclude>**/*.ttf</exclude>
+					<exclude>**/*.woff2</exclude>
+				</excludes>
+			</resource>
+			<resource>
+				<directory>src/main/webapp</directory>
 				<filtering>true</filtering>
 				<excludes>
 					<exclude>**/*.woff</exclude>
@@ -375,83 +384,82 @@
 								<exclude>**/*.woff2</exclude>
 							</excludes>
 						</resource>
-                    </webResources>
-                </configuration>
-            </plugin>
-            <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <configuration>
-                    <source>1.8</source>
-                    <target>1.8</target>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.tomcat.maven</groupId>
-                <artifactId>tomcat7-maven-plugin</artifactId>
-                <version>2.2</version>
-                <configuration>
-                    <url>${tomcat.manager.path}</url>
-                    <server>${tomcat.server.id}</server>
-                    <path>/${tomcat.appname}</path>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-surefire-plugin</artifactId>
-                <version>2.20.1</version>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-war-plugin</artifactId>
-                <version>2.6</version>
-                <configuration>
-                    <webResources>
-                        <resource>
-                            <filtering>true</filtering>
-                            <directory>src/main/webapp</directory>
-                            <includes>
-                                <include>**/*</include>
-                                <!-- include any other file types you want 
-                                    to filter -->
-                            </includes>
-                            <excludes>
-                                <exclude>**/*.woff</exclude>
-                                <exclude>**/*.woff2</exclude>
-                                <exclude>**/*.ttf</exclude>
-                            </excludes>
-                        </resource>
-                    </webResources>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildnumber-maven-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <phase>initialize</phase>
-                        <goals>
-                            <goal>create</goal>
-                        </goals>
-                    </execution>
-                </executions>
-                <configuration>
-                    <doCheck>false</doCheck>
-                    <doUpdate>false</doUpdate>
-                    <revisionOnScmFailure></revisionOnScmFailure>
-                    <!-- <format>#{0} ({1,date})</format> -->
-                    <items>
-                        <item>buildNumber\d*</item>
-                        <item>timestamp</item>
-                    </items>
-                    <format>#{0} ({1,date,yyyy-MM-dd HH:mm:ss})</format>
-                </configuration>
-            </plugin>
-        </plugins>
-    </build>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.tomcat.maven</groupId>
+				<artifactId>tomcat7-maven-plugin</artifactId>
+				<version>2.2</version>
+				<configuration>
+					<url>${tomcat.manager.path}</url>
+					<server>${tomcat.server.id}</server>
+					<path>/${tomcat.appname}</path>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-surefire-plugin</artifactId>
+				<version>2.20.1</version>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.6</version>
+				<configuration>
+					<webResources>
+						<resource>
+							<filtering>true</filtering>
+							<directory>src/main/webapp</directory>
+							<includes>
+								<include>**/*</include>
+								<!-- include any other file types you want to filter -->
+							</includes>
+							<excludes>
+								<exclude>**/*.woff</exclude>
+								<exclude>**/*.woff2</exclude>
+								<exclude>**/*.ttf</exclude>
+							</excludes>
+						</resource>
+					</webResources>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.codehaus.mojo</groupId>
+				<artifactId>buildnumber-maven-plugin</artifactId>
+				<executions>
+					<execution>
+						<phase>initialize</phase>
+						<goals>
+							<goal>create</goal>
+						</goals>
+					</execution>
+				</executions>
+				<configuration>
+					<doCheck>false</doCheck>
+					<doUpdate>false</doUpdate>
+					<revisionOnScmFailure></revisionOnScmFailure>
+					<!-- <format>#{0} ({1,date})</format> -->
+					<items>
+						<item>buildNumber\d*</item>
+						<item>timestamp</item>
+					</items>
+					<format>#{0} ({1,date,yyyy-MM-dd HH:mm:ss})</format>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
 
-    <scm>
-        <connection>scm:svn:http://none</connection>
-        <url>scm:svn:https://none</url>
-    </scm>
+	<scm>
+		<connection>scm:svn:http://none</connection>
+		<url>scm:svn:https://none</url>
+	</scm>
 
 </project>

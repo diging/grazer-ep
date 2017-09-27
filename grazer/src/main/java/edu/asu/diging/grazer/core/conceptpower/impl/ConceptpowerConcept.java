@@ -54,7 +54,7 @@ public class ConceptpowerConcept {
     private List<String> wordnetIds;
     
     private ConceptpowerConceptType type;
-    private List<ConceptpowerAlternativeId> alternativeIdList;
+    private List<ConceptpowerAlternativeId> alternativeIds;
 
     public String getId() {
         return id;
@@ -147,12 +147,12 @@ public class ConceptpowerConcept {
         this.type = type;
     }
     
-    public List<ConceptpowerAlternativeId> getAlternativeIdList() {
-        return alternativeIdList;
+    public List<ConceptpowerAlternativeId> getAlternativeIds() {
+        return alternativeIds;
     }
 
-    public void setAlternativeIdList(List<ConceptpowerAlternativeId> alternativeIdList) {
-        this.alternativeIdList = alternativeIdList;
+    public void setAlternativeIds(List<ConceptpowerAlternativeId> alternativeIds) {
+        this.alternativeIds = alternativeIds;
     }
 
     public IConcept getAdapter() {

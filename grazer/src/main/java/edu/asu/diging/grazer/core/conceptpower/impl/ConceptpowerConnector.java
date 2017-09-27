@@ -2,6 +2,8 @@ package edu.asu.diging.grazer.core.conceptpower.impl;
 
 import java.util.Arrays;
 
+import javax.inject.Inject;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
