@@ -22,15 +22,15 @@ public class ConceptpowerCache implements IConceptpowerCache {
     private IASyncConceptUpdater conceptUpdater;
 	
     @Override
-    public IConcept getConceptByUri(String uri) {
+    public IConcept getConceptByUri(String id) {
 		
-        IConcept concept = conceptDB.getConcept(uri);
+        IConcept concept = conceptDB.getConcept(id);
         if(concept != null) {
             conceptUpdater.updateConcept(concept.getUri());
             return concept;
         }
 		
-        concept = connector.getConcept(uri);
+        concept = connector.getConcept(id);
         if(concept != null) {
             conceptDB.createOrUpdate(concept);
         }
