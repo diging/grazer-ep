@@ -155,10 +155,6 @@ public class ConceptpowerConcept {
         this.alternativeIds = alternativeIds;
     }
 
-    public IConcept getAdapter() {
-        return new ConceptAdapter(this);
-    }
-
     public List<String> getWordnetId() {
         return wordnetIds;
     }

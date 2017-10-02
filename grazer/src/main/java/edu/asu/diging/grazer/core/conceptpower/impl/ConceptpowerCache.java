@@ -26,7 +26,7 @@ public class ConceptpowerCache implements IConceptpowerCache {
 		
         IConcept concept = conceptDB.getConcept(uri);
         if(concept != null) {
-            conceptUpdater.updateConcept(uri);
+            conceptUpdater.updateConcept(concept.getUri());
             return concept;
         }
 		

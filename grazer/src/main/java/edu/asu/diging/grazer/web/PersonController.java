@@ -17,8 +17,6 @@ import edu.asu.diging.grazer.core.model.impl.Graph;
 @Controller
 public class PersonController {
     
-    private final String URI_PREFIX = "http://www.digitalhps.org/concepts/";
-    
     @Autowired
     private IGraphManager graphManager;
     
@@ -27,8 +25,8 @@ public class PersonController {
     
     @RequestMapping(value = "/concept/{personId}", produces = MediaType.TEXT_HTML_VALUE)
     public String showPerson(@PathVariable("personId") String personId, Model model) throws IOException {
-        String uri = URI_PREFIX + personId;
-        IConcept concept = cache.getConceptByUri(uri);
+        
+        IConcept concept = cache.getConceptByUri(personId);
         graphManager.transformGraph(concept.getUri());
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
@@ -37,8 +35,8 @@ public class PersonController {
     
     @RequestMapping("/concept/{personId}/graph")
     public String getPersonGraph(@PathVariable("personId") String personId, Model model) {
-        String uri = URI_PREFIX + personId;
-        IConcept concept = cache.getConceptByUri(uri);
+        
+        IConcept concept = cache.getConceptByUri(personId);
         
         Graph graph = graphManager.getTransfomationResult(concept.getUri());
         model.addAttribute("graph", graph);
