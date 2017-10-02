@@ -63,7 +63,7 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
                 sessionFactory.getCurrentSession().evict(objConcept);
                 sessionFactory.getCurrentSession().saveOrUpdate(concept);
             }
-            sessionFactory.getCurrentSession().saveOrUpdate(concept);
+            //sessionFactory.getCurrentSession().saveOrUpdate(concept);
         }
         
         // update type if there is one
