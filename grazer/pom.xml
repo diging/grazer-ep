@@ -17,7 +17,7 @@
 
 		<log.level>info</log.level>
 
-		<app.url>http://localhost:8081/grazer/</app.url>
+		<app.url>http://localhost:8080/grazer/</app.url>
 
 		<quadriga.url>http://localhost:8080/quadriga/</quadriga.url>
 		<quadriga.concepts.endpoint>public/concepts</quadriga.concepts.endpoint>

@@ -30,7 +30,7 @@ public class ConceptMapper implements IConceptMapper {
         concept.setId(conceptpowerConcept.getId());
         
         //URI
-        concept.setUri(conceptpowerConcept.getId());
+        concept.setUri(conceptpowerConcept.getConceptUri());
         
         //WORD
         concept.setWord(conceptpowerConcept.getLemma());
