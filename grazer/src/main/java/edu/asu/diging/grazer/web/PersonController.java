@@ -27,7 +27,7 @@ public class PersonController {
     
     @RequestMapping(value = "/concept/{personId}", produces = MediaType.TEXT_HTML_VALUE)
     public String showPerson(@PathVariable("personId") String personId, Model model) throws IOException {
-        	String uri = URI_PREFIX + personId;
+        String uri = URI_PREFIX + personId;
         IConcept concept = cache.getConceptByUri(uri);
         graphManager.transformGraph(concept.getUri());
         model.addAttribute("concept", concept);
