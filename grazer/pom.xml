@@ -457,9 +457,9 @@
 		</plugins>
 	</build>
 
-	<scm>
-	    <connection>scm:svn:http://none</connection>
-	    <url>scm:svn:https://none</url>
-	</scm>
+    <scm>
+        <connection>scm:svn:http://none</connection>
+        <url>scm:svn:https://none</url>
+    </scm>
 
 </project>
