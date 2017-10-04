@@ -40,7 +40,6 @@ public class PersonController {
         
         Graph graph = graphManager.getTransfomationResult(concept.getUri());
         model.addAttribute("graph", graph);
-        
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
         return "person/graph";
