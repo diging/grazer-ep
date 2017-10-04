@@ -18,8 +18,8 @@ public class ASyncConceptUpdater implements IASyncConceptUpdater {
 	
     @Override
     @Async
-    public void updateConcept(String uri) {
-        IConcept concept = connector.getConcept(uri);
+    public void updateConcept(String id) {
+        IConcept concept = connector.getConcept(id);
         if(concept != null) {
             conceptDB.createOrUpdate(concept);
         }

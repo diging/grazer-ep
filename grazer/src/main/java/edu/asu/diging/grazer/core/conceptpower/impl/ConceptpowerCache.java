@@ -22,11 +22,11 @@ public class ConceptpowerCache implements IConceptpowerCache {
     private IASyncConceptUpdater conceptUpdater;
 	
     @Override
-    public IConcept getConceptByUri(String id) {
+    public IConcept getConceptById(String id) {
 		
         IConcept concept = conceptDB.getConcept(id);
         if(concept != null) {
-            conceptUpdater.updateConcept(concept.getUri());
+            conceptUpdater.updateConcept(id);
             return concept;
         }
 		

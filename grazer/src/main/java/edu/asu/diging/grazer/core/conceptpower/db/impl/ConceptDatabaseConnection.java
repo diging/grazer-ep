@@ -26,12 +26,12 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
     protected SessionFactory sessionFactory;
 
     @Override
-    public IConcept getConcept(String uri) {
+    public IConcept getConcept(String id) {
 
-        Object objConcept = sessionFactory.getCurrentSession().get(Concept.class, uri);
+        Object objConcept = sessionFactory.getCurrentSession().get(Concept.class, id);
         if (objConcept == null) {
-            Query query = sessionFactory.getCurrentSession().createQuery("SELECT c from Concept c WHERE :uri in elements(c.alternativeUris)");
-            query.setParameter("uri", uri);
+            Query query = sessionFactory.getCurrentSession().createQuery("SELECT c from Concept c WHERE c.id = :id");
+            query.setParameter("id", id);
             List<?> results = query.list();
             if (results != null && !results.isEmpty()) {
                 // there shouldn't be more than one, but if there is just take the first one
@@ -55,14 +55,15 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
 
 	@Override
 	public void createOrUpdate(IConcept concept) {
-        Object objConcept = sessionFactory.getCurrentSession().get(Concept.class, concept.getUri());
+        Object objConcept = sessionFactory.getCurrentSession().get(Concept.class, concept.getId());
         // if concept exists, let's update it
         if (objConcept == null || isDifferent(concept, (IConcept)objConcept)) {
             logger.debug((objConcept == null ? "Adding " : "Updating: ") + concept.getUri());
             if (objConcept != null) {
                 sessionFactory.getCurrentSession().evict(objConcept);
-                sessionFactory.getCurrentSession().saveOrUpdate(concept);
             }
+            sessionFactory.getCurrentSession().saveOrUpdate(concept);
+            deleteConcept(concept.getId());
         }
         
         // update type if there is one
@@ -71,34 +72,26 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
             if (type == null || isDifferent(concept.getType(), type)) {
                 if (type != null) {
                     sessionFactory.getCurrentSession().evict(type);
-                    sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
+                    //sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
                 }
                 if (concept.getType() != null) {
                     sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
                 }
             }
         }
-        
-        // delete concepts that are represented by this one
-        List<String> alternativeUris = concept.getAlternativeUris();
-        for (String altUri : alternativeUris) {
-            if (!altUri.equals(concept.getUri())) {
-                deleteConcept(altUri);
-            }
-        }	
 	}
 
 	@Override
-	public void deleteConcept(String uri) {
-        Object concept = sessionFactory.getCurrentSession().get(Concept.class, uri);
+	public void deleteConcept(String id) {
+        Object concept = sessionFactory.getCurrentSession().get(Concept.class, id);
         if (concept != null) {
             sessionFactory.getCurrentSession().delete(concept);
         }
 	}
 
 	@Override
-	public IConceptType getType(String uri) {
-        Object objType = sessionFactory.getCurrentSession().get(ConceptType.class, uri);
+	public IConceptType getType(String id) {
+        Object objType = sessionFactory.getCurrentSession().get(ConceptType.class, id);
         if (objType != null) {
             return (IConceptType) objType;
         }

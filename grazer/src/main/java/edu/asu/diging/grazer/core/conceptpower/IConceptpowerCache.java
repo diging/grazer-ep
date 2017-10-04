@@ -4,5 +4,5 @@ import edu.asu.diging.grazer.core.model.IConcept;
 
 public interface IConceptpowerCache {
 
-    IConcept getConceptByUri(String uri);
+    IConcept getConceptById(String uri);
 }

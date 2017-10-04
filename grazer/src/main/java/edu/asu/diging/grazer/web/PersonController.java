@@ -26,7 +26,7 @@ public class PersonController {
     @RequestMapping(value = "/concept/{personId}", produces = MediaType.TEXT_HTML_VALUE)
     public String showPerson(@PathVariable("personId") String personId, Model model) throws IOException {
         
-        IConcept concept = cache.getConceptByUri(personId);
+        IConcept concept = cache.getConceptById(personId);
         graphManager.transformGraph(concept.getUri());
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
@@ -36,7 +36,7 @@ public class PersonController {
     @RequestMapping("/concept/{personId}/graph")
     public String getPersonGraph(@PathVariable("personId") String personId, Model model) {
         
-        IConcept concept = cache.getConceptByUri(personId);
+        IConcept concept = cache.getConceptById(personId);
         
         Graph graph = graphManager.getTransfomationResult(concept.getUri());
         model.addAttribute("graph", graph);
