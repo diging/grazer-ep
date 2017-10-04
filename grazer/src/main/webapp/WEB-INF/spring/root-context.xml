@@ -18,7 +18,6 @@
 	">
 
 	<mvc:annotation-driven />
-	<!--  <context:component-scan base-package="edu.asu.diging.grazer" />-->
 	
 	<!-- Enables the Spring Transaction programming model -->
 	<tx:annotation-driven transaction-manager="transactionManager"/>
@@ -40,11 +39,6 @@
 		<property name="basename" value="classpath:locale/messages" />
 		<property name="fallbackToSystemLocale" value="false" />
 	</bean>
-	
-	<!-- <bean id="transactionManager"
-        class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean> -->
 	
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 
