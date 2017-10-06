@@ -31,7 +31,6 @@
         <database.username>dbadmin</database.username>
         <database.pw>dbadmin</database.pw>
 
-        <rdf.store.dir>/Users/mshah18/RDF_Triple</rdf.store.dir>
     </properties>
 
     <dependencies>
@@ -348,15 +347,6 @@
         <resources>
             <resource>
                 <directory>src/main/resources</directory>
-                <filtering>true</filtering>
-                <excludes>
-                    <exclude>**/*.woff</exclude>
-                    <exclude>**/*.ttf</exclude>
-                    <exclude>**/*.woff2</exclude>
-                </excludes>
-            </resource>
-            <resource>
-                <directory>src/main/webapp</directory>
                 <filtering>true</filtering>
                 <excludes>
                     <exclude>**/*.woff</exclude>
