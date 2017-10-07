@@ -15,7 +15,7 @@
             type : "GET",
             success : function(result) {
                 if (result == null || result.length == 0) {
-                    //setTimeout(getPersons, 3000);
+                    setTimeout(getPersons, 3000);
                 } else {
                     $("#spinner").hide();
                     $("#count").text(result.length);
