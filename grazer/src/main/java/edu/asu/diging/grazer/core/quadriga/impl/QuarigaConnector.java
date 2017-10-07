@@ -8,7 +8,6 @@ import java.util.Map;
 
 import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
@@ -53,10 +52,17 @@ public class QuarigaConnector implements IQuadrigaConnector {
      * @see edu.asu.diging.grazer.core.quadriga.impl.IQuadrigaConnector#getPersons()
      */
     @Override
-    @Cacheable(value = "quadriga_persons")
-    public List<IConcept> getPersons() {
-        Concept[] concepts = restTemplate.getForObject(String.format("%s%s?types=%s&projects=%s", quadrigaUrl, conceptsEndpoint, personType, projectId), Concept[].class);
-        return Arrays.asList(concepts);
+    public PollResponse getPersons() {
+        return restTemplate.getForObject(String.format("%s%s?types=%s&projects=%s", quadrigaUrl, conceptsEndpoint, personType, projectId), PollResponse.class);
+    }
+   
+    @Override
+    public List<IConcept> checkPersonsResult(String url) {
+        IConcept[] concepts = restTemplate.getForObject(String.format("%s%s", quadrigaUrl, url), Concept[].class);
+        if (concepts != null) {
+            return Arrays.asList(concepts);
+        }
+        return null;
     }
     
     @Override
