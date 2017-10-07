@@ -18,6 +18,7 @@ import edu.asu.diging.grazer.core.graphs.IGraphManager;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.impl.Graph;
 import edu.asu.diging.grazer.core.quadriga.IQuadrigaConnector;
+import edu.asu.diging.grazer.core.quadriga.impl.PollResponse;
 import edu.asu.diging.grazer.core.rdf.IRDFTripleService;
 
 @Component
@@ -45,7 +46,17 @@ public class TransformationCronJob {
 //    @Scheduled(fixedDelay=360000)
     public void retrieveTransformations() {
         logger.info("Updating triples...");
-        List<IConcept> concepts = quadrigaConnector.getPersons();
+        PollResponse response = quadrigaConnector.getPersons();
+        List<IConcept> concepts = null;
+        while (concepts == null) {
+            try {
+                TimeUnit.SECONDS.sleep(30);
+            } catch (InterruptedException e) {
+                logger.error("Could not sleep.", e);
+                break;
+            }
+            concepts = quadrigaConnector.checkPersonsResult(response.getPollUrl());
+        }
         
         for (IConcept concept : concepts) {
             logger.info("Retrieving graph for " + concept.getUri());
