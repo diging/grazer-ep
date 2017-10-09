@@ -41,9 +41,53 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
  	<script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />"></script>
 	<script src="<c:url value="/resources/bootstrap/js/main.js" />"></script>
+    <script type="text/javascript">
+        // Get the modal
+        var modal = document.getElementById('myModal');
+        // When the user clicks anywhere outside of the modal, close it
+        window.onclick = function(event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
+	
   </head>
 
   <body>
+  <!-- Trigger the modal with a button -->
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Sign In</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+        <!-- Modal content-->
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">Sign In</h4>
+            </div>
+            <div class="modal-body">
+                <form action="#">
+                    <div>
+                        <label><b>Email</b></label>
+		                <input type="text" placeholder="Enter Username" name="username" required>
+		
+		                <label><b>Password</b></label>
+		                <input type="password" placeholder="Enter Password" name="psw" required>
+		            </div>
+		            <br/>
+		            <div>
+			            <button type="submit">Sign In</button>
+			            <button type="button" onclick="document.getElementById('myModal').style.display='none'" >Cancel</button>
+			        </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+  
+  
   <div style="opacity: 0.1; position: absolute; top: 10px; left: 10px; ">
     <img src="<c:url value="/resources/images/ep-logo.gif" />" />
   </div>
