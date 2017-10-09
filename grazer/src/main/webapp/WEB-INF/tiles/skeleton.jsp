@@ -40,74 +40,48 @@
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
  	<script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />"></script>
-	<script src="<c:url value="/resources/bootstrap/js/main.js" />"></script>
-    <script type="text/javascript">
-        // Get the modal
-        var modal = document.getElementById('myModal');
-        // When the user clicks anywhere outside of the modal, close it
-        window.onclick = function(event) {
-            if (event.target == modal) {
-                modal.style.display = "none";
-            }
-        }
-    </script>
-	
+	<script src="<c:url value="/resources/bootstrap/js/main.js" />"></script>	
   </head>
 
   <body>
-  <!-- Trigger the modal with a button -->
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Sign In</button>
-
-<!-- Modal -->
-<div class="modal fade" id="myModal" role="dialog">
-    <div class="modal-dialog">
-        <!-- Modal content-->
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Sign In</h4>
-            </div>
-            <div class="modal-body">
-                <form action="#">
-                    <div>
-                        <label><b>Email</b></label>
-		                <input type="text" placeholder="Enter Username" name="username" required>
-		
-		                <label><b>Password</b></label>
-		                <input type="password" placeholder="Enter Password" name="psw" required>
-		            </div>
-		            <br/>
-		            <div>
-			            <button type="submit">Sign In</button>
-			            <button type="button" onclick="document.getElementById('myModal').style.display='none'" >Cancel</button>
-			        </div>
-                </form>
-            </div>
-        </div>
+  
+    <div style="opacity: 0.1; position: absolute; top: 10px; left: 10px; ">
+      <img src="<c:url value="/resources/images/ep-logo.gif" />" />
     </div>
-</div>
-  
-  
-  <div style="opacity: 0.1; position: absolute; top: 10px; left: 10px; ">
-    <img src="<c:url value="/resources/images/ep-logo.gif" />" />
-  </div>
     <div class="container" style="padding-bottom: 150px;">
-
       <div class="page-header">
-      <nav>
+        <nav>
           <ul class="nav nav-pills pull-right">
-          <li role="presentation">
-          		<a href="<c:url value="/" />" >Home</a>
-          	</li>
+            <li role="presentation">
+              <a href="<c:url value="/" />" >Home</a>
+            </li>
           	
-          	<sec:authorize access="isAuthenticated()">
-          	<li role="presentation">
-         	 	<form action="<c:url value="/logout" />" method="POST">
-         	 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-  				<button class="btn-link" type="submit" title="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
-         	 	</form>
-         	 </li>
-          </sec:authorize>
+          	<sec:authorize access="not isAuthenticated()">
+              <li role="presentation">
+                <form action="<c:url value='/' />" method='POST'>
+                  <div class="form-group">
+                    <input type="text" class="form-control input-sm" name="username" placeholder="Username">
+                  </div>
+                  <div class="form-group">
+                    <input type="password" class="form-control input-sm" name="password" placeholder="Password">
+                  </div>
+                  <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-sm">Sign In</button>
+                  </div>
+                  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                </form>
+              </li>
+            </sec:authorize>
+          	
+          	
+            <sec:authorize access="isAuthenticated()">
+              <li role="presentation">
+                <form action="<c:url value="/logout" />" method="POST">
+                  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                  <button class="btn-link" type="submit" title="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
+                </form>
+              </li>
+            </sec:authorize>
           </ul>
          
         </nav>
@@ -115,9 +89,8 @@
         <h1><a class="appName" href="<c:url value="/" />">EP Grazer</a></h1>   
       </div>
       
-      
-	  <c:if test="${show_alert}" >
-	  <div class="alert alert-${alert_type}" role="alert">${alert_msg}</div>
+      <c:if test="${show_alert}" >
+	    <div class="alert alert-${alert_type}" role="alert">${alert_msg}</div>
 	  </c:if>
       <tiles:insertAttribute name="content" />
 
@@ -127,18 +100,17 @@
       <div class="container">
       
         <div class="row">
-        <div class="col-md-12">
-		<hr style="margin-bottom: 25px;">
-		<p class="text-muted pull-left">
+          <div class="col-md-12">
+		    <hr style="margin-bottom: 25px;">
+		    <p class="text-muted pull-left">
 		
-	    <p class="text-muted">
-	    Version: ${buildNumber}
-        </p>
-        </div>
+	        <p class="text-muted">
+	          Version: ${buildNumber}
+            </p>
+          </div>
         </div>
       </div>
     </footer>
     
-
-     </body>
+  </body>
 </html>
