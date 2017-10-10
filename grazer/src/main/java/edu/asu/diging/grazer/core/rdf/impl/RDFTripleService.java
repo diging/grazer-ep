@@ -1,11 +1,15 @@
 package edu.asu.diging.grazer.core.rdf.impl;
 
 import java.io.OutputStream;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
@@ -29,6 +33,8 @@ import edu.asu.diging.grazer.core.rdf.IUriCreator;
 @Service
 @PropertySource(value = "classpath:/relationships.properties")
 public class RDFTripleService implements IRDFTripleService {
+    
+    private final Logger logger = LoggerFactory.getLogger(getClass());
     
     private final String START_DATE = "http://schema.org/startDate";
     private final String END_DATE = "http://schema.org/endDate";
@@ -126,7 +132,13 @@ public class RDFTripleService implements IRDFTripleService {
     }
     
     private List<String> doesTripleExistInGraphs(String subject, String predicate, String object) {
-        String objectPart = object.startsWith("http://") ? "<" + object + ">" : "\"" + object + "\"";
+        String objectPart;
+        try {
+            objectPart = object.startsWith("http://") ? "<" + object + ">" : "\"" + URLEncoder.encode(object, "UTF-8") + "\"";
+        } catch (UnsupportedEncodingException e) {
+            logger.error("Could not encode string.", e);
+            objectPart = object.startsWith("http://") ? "<" + object + ">" : "\"" + URLEncoder.encode(object) + "\"";
+        }
         String query = "SELECT ?c { GRAPH ?c { <" + subject + "> <" + predicate + "> " + objectPart + " } }";
         List<Map<String, String>> results = repoService.queryRepository(query);
         List<String> contexts = new ArrayList<>();
