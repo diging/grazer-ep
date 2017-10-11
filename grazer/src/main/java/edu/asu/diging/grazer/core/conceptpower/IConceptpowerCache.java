@@ -2,7 +2,7 @@ package edu.asu.diging.grazer.core.conceptpower;
 
 import edu.asu.diging.grazer.core.model.IConcept;
 
-public interface IConceptpowerConnector {
+public interface IConceptpowerCache {
 
-    IConcept getConcept(String id);
+    IConcept getConceptById(String uri);
 }

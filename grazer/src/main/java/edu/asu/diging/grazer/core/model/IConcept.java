@@ -38,7 +38,7 @@ public interface IConcept {
 
     List<String> getAlternativeUris();
 
-    void setAlternativeUris(List<String> alternativeUris);
+    void setAlternativeUris(List<String> list);
 
     String getCreatorId();
 

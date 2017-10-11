@@ -8,7 +8,6 @@
     $(function() {
     	   getPersons();
     });
-
     function getPersons() {
         $.ajax({
             url : '<c:url value="/persons?pollUrl=${pollUrl}" />',
