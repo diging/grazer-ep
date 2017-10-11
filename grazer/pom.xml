@@ -23,6 +23,8 @@
         <quadriga.concepts.endpoint>public/concepts</quadriga.concepts.endpoint>
         <conceptpower.url>https://chps.asu.edu/conceptpower/rest/</conceptpower.url>
 
+        <rdf.store.dir></rdf.store.dir>
+        
         <tomcat.manager.path></tomcat.manager.path>
         <tomcat.server.id></tomcat.server.id>
         <tomcat.appname>ep-grazer</tomcat.appname>
