@@ -3,6 +3,7 @@ package edu.asu.diging.grazer.web;
 import java.io.IOException;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,8 +22,8 @@ public class PersonController {
     
     @Autowired
     private IGraphManager graphManager;
-
-    @RequestMapping("/person/{personId}")
+    
+    @RequestMapping(value = "/concept/{personId}", produces = MediaType.TEXT_HTML_VALUE)
     public String showPerson(@PathVariable("personId") String personId, Model model) throws IOException {
         
         IConcept concept = connector.getConcept(personId);
@@ -32,7 +33,7 @@ public class PersonController {
         return "person";
     }
     
-    @RequestMapping("/person/{personId}/graph")
+    @RequestMapping("/concept/{personId}/graph")
     public String getPersonGraph(@PathVariable("personId") String personId, Model model) {
         IConcept concept = connector.getConcept(personId);
        

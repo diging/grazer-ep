@@ -10,7 +10,7 @@
 		
 	<cache name="quadriga_graphs" eternal="false" maxElementsInMemory="500"
         overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
-        timeToLiveSeconds="3600" memoryStoreEvictionPolicy="LRU" />
+        timeToLiveSeconds="86400" memoryStoreEvictionPolicy="LRU" />
         
     <cache name="quadriga_persons" eternal="false" maxElementsInMemory="500"
         overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
