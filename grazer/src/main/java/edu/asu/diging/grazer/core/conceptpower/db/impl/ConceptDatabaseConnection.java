@@ -72,7 +72,6 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
             if (type == null || isDifferent(concept.getType(), type)) {
                 if (type != null) {
                     sessionFactory.getCurrentSession().evict(type);
-                    //sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
                 }
                 if (concept.getType() != null) {
                     sessionFactory.getCurrentSession().saveOrUpdate(concept.getType());
