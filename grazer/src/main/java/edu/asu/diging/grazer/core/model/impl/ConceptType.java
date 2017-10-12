@@ -1,13 +1,20 @@
 package edu.asu.diging.grazer.core.model.impl;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.Lob;
+import javax.persistence.Table;
+
 import edu.asu.diging.grazer.core.model.IConceptType;
 
+@Entity
+@Table(name = "tbl_conceptpower_concepttype")
 public class ConceptType implements IConceptType {
 
-    private String uri;
+    @Id private String uri;
     private String id;
     private String name;
-    private String description;
+    @Lob private String description;
     
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConceptType#getId()
