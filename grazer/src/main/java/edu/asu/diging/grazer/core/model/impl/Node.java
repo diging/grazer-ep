@@ -8,7 +8,7 @@ import javax.persistence.Id;
 @Entity
 public class Node {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long dbId;
 
     private String id;

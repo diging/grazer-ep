@@ -10,7 +10,7 @@ import javax.persistence.OneToOne;
 @Entity
 public class Edge {
 
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String source;

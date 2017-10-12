@@ -2,6 +2,9 @@ package edu.asu.diging.grazer.core.graphs.db.impl;
 
 import java.util.List;
 
+import javax.persistence.TypedQuery;
+import javax.print.DocFlavor.STRING;
+
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -36,6 +39,12 @@ public class GraphDBConnection implements IGraphDBConnection {
     public List<Graph> getGraphs(String conceptUri) {
         Query query = sessionFactory.getCurrentSession().createQuery("SELECT g from Graph g WHERE g.conceptUri = :uri");
         query.setParameter("uri", conceptUri);
+        return query.list();
+    }
+    
+    @Override
+    public List<String> getAllPersons() {
+        Query query = sessionFactory.getCurrentSession().createQuery("SELECT g.conceptUri from Graph g");
         return query.list();
     }
     

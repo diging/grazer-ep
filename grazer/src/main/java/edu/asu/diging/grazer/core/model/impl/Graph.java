@@ -17,7 +17,7 @@ import org.hibernate.annotations.LazyCollectionOption;
 @Entity
 public class Graph {
     
-    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     
     private String conceptUri;

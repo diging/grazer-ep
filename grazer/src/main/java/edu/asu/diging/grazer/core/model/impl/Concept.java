@@ -1,5 +1,6 @@
 package edu.asu.diging.grazer.core.model.impl;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import javax.persistence.CollectionTable;
@@ -7,12 +8,12 @@ import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Index;
 import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.annotations.Index;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
@@ -22,10 +23,12 @@ import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.IConceptType;
 
 @Entity
-@Table(name = "tbl_conceptpower_concept")
+@Table(name = "tbl_conceptpower_concept", indexes = {
+        @Index(columnList="id", name="IDX_ID")
+})
 public class Concept implements IConcept {
 
-    @Id @Index(name="uri_idx") private String uri;
+    @Id private String uri;
     private String id;
     private String word;
     private String pos;
@@ -33,6 +36,7 @@ public class Concept implements IConcept {
     private String conceptList;
     private String typeId;
     private boolean deleted;
+    private OffsetDateTime lastUpdated;
     
     @ElementCollection
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -288,5 +292,15 @@ public class Concept implements IConcept {
         } else if (!uri.equals(other.uri))
             return false;
         return true;
+    }
+
+    @Override
+    public OffsetDateTime getLastUpdated() {
+        return lastUpdated;
+    }
+
+    @Override
+    public void setLastUpdated(OffsetDateTime lastUpdated) {
+        this.lastUpdated = lastUpdated;
     }
 }
