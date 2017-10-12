@@ -1,6 +1,7 @@
 package edu.asu.diging.grazer.web;
 
 import java.io.IOException;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import edu.asu.diging.grazer.core.conceptpower.IConceptpowerCache;
+import edu.asu.diging.grazer.core.graphs.IGraphDBConnection;
 import edu.asu.diging.grazer.core.graphs.IGraphManager;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.impl.Graph;
@@ -18,7 +20,7 @@ import edu.asu.diging.grazer.core.model.impl.Graph;
 public class PersonController {
     
     @Autowired
-    private IGraphManager graphManager;
+    private IGraphDBConnection graphDbConnector;
     
     @Autowired
     private IConceptpowerCache cache;
@@ -27,7 +29,6 @@ public class PersonController {
     public String showPerson(@PathVariable("personId") String personId, Model model) throws IOException {
         
         IConcept concept = cache.getConceptById(personId);
-        graphManager.transformGraph(concept.getUri());
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
         return "person";
@@ -38,8 +39,8 @@ public class PersonController {
         
         IConcept concept = cache.getConceptById(personId);
         
-        Graph graph = graphManager.getTransfomationResult(concept.getUri());
-        model.addAttribute("graph", graph);
+        List<Graph> graph = graphDbConnector.getGraphs(concept.getUri());
+        model.addAttribute("graphs", graph);
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
         return "person/graph";

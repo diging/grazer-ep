@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import edu.asu.diging.grazer.core.graphs.IGraphDBConnection;
 import edu.asu.diging.grazer.core.graphs.IGraphManager;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.impl.Graph;
@@ -35,6 +36,9 @@ public class TransformationCronJob {
     private IGraphManager graphManager;
     
     @Autowired
+    private IGraphDBConnection graphDbConnector;
+    
+    @Autowired
     private IRDFTripleService tripleService;
     
     @PostConstruct
@@ -43,7 +47,7 @@ public class TransformationCronJob {
     }
     
     @Scheduled(cron = "${cron_schedule}")
-//    @Scheduled(fixedDelay=360000)
+//    @Scheduled(fixedDelay=1000000)
     public void retrieveTransformations() {
         logger.info("Updating triples...");
         PollResponse response = quadrigaConnector.getPersons();
@@ -76,7 +80,11 @@ public class TransformationCronJob {
                 }
                 graph = graphManager.getTransfomationResult(concept.getUri());
             }
+            // remove previously stored graphs before adding updated one
+            graphDbConnector.removeGraphs(concept.getUri());
             if (graph != null) {
+                graph.setConceptUri(concept.getUri());
+                graphDbConnector.store(graph);
                 tripleService.addGraph(graph);
             }
         }

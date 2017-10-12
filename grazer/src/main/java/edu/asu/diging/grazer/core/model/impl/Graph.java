@@ -2,9 +2,34 @@ package edu.asu.diging.grazer.core.model.impl;
 
 import java.util.List;
 
-public class Graph {
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToMany;
 
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+@Entity
+public class Graph {
+    
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+    
+    private String conceptUri;
+
+    @JoinColumn(name = "edgeId")
+    @OneToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Edge> edges;
+    
+    @JoinColumn(name = "nodeId")
+    @OneToMany(cascade = CascadeType.ALL)
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<Node> nodes;
     
     public List<Edge> getEdges() {
@@ -47,5 +72,11 @@ public class Graph {
         } else if (!nodes.equals(other.nodes))
             return false;
         return true;
+    }
+    public String getConceptUri() {
+        return conceptUri;
+    }
+    public void setConceptUri(String conceptUri) {
+        this.conceptUri = conceptUri;
     }
 }

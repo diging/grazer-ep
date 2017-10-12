@@ -1,6 +1,15 @@
 package edu.asu.diging.grazer.core.model.impl;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+@Entity
 public class Node {
+
+    @Id @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long dbId;
 
     private String id;
     private String uri;
