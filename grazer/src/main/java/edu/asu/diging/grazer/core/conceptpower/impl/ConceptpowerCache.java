@@ -36,4 +36,19 @@ public class ConceptpowerCache implements IConceptpowerCache {
         }
         return concept;   
     }
+    
+    @Override
+    public IConcept getConceptByUri(String uri) {
+        IConcept concept = conceptDB.getConceptByUri(uri);
+        if(concept != null) {
+            conceptUpdater.updateConcept(concept.getId());
+            return concept;
+        }
+        
+        concept = connector.getConcept(uri);
+        if(concept != null) {
+            conceptDB.createOrUpdate(concept);
+        }
+        return concept; 
+    }
 }

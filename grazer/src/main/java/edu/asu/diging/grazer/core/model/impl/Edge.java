@@ -1,6 +1,17 @@
 package edu.asu.diging.grazer.core.model.impl;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.OneToOne;
+
+@Entity
 public class Edge {
+
+    @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
 
     private String source;
     private String target;
@@ -11,7 +22,11 @@ public class Edge {
     private String endTime;
     private String occurred;
     
+    @OneToOne
+    @JoinColumn(name="sourceNodeId")
     private Node sourceNode;
+    @OneToOne
+    @JoinColumn(name="targetNodeId")
     private Node targetNode;
     
     public String getSource() {
