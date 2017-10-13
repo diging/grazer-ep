@@ -31,10 +31,7 @@ public class HomeController {
     private IConceptpowerCache conceptCache;
 
     @RequestMapping(value = "/")
-    public String home(Model model) {
-//        PollResponse poll = quadrigaConnector.getPersons();
-//        model.addAttribute("pollUrl", poll.getPollUrl());
-           
+    public String home(Model model) {           
         List<String> uris = graphDbConnection.getAllPersons();
         List<IConcept> concepts = new ArrayList<>();
         for (String uri : uris) {
@@ -42,6 +39,7 @@ public class HomeController {
             concepts.add(concept);
         }
         model.addAttribute("concepts", concepts);
+        model.addAttribute("count", concepts.size());
         return "home";
     }
     

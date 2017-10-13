@@ -5,7 +5,7 @@
 
 <h2>People mentioned in the Embryo Project</h2>
 
-<div>Total: <span id="count"></span></div>
+<div>Total: <span id="count">${count}</span></div>
 <div id="personList" class="list-group">
     <c:forEach items="${concepts}" var="concept">
     <a href="concept/${concept.id}" class="list-group-item">${concept.word}</a>
