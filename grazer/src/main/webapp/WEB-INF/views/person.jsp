@@ -14,7 +14,8 @@
 			type : "GET",
 			success : function(result) {
 				if (result == null || result.trim() == '') {
-					setTimeout(getGraph, 3000);
+					$("#spinner").hide();
+					$("#graphList").append("Sorry, there are no relationships yet.")
 				} else {
 					var list = $.parseHTML(result);
 					$("#spinner").hide();

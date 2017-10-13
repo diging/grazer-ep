@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:se="http://www.springframework.org/schema/security" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
+    xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:util="http://www.springframework.org/schema/util" xmlns:aop="http://www.springframework.org/schema/aop"
 	xmlns:task="http://www.springframework.org/schema/task" xmlns:cache="http://www.springframework.org/schema/cache"
+	xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:p="http://www.springframework.org/schema/p"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 	http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
@@ -13,7 +14,19 @@
 	http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
 	http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-3.0.xsd
 	http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache.xsd
+	http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
 	">
+
+	<mvc:annotation-driven />
+	
+	<!-- Enables the Spring Transaction programming model -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- Reference the hibernate -->
+	<import resource="../hibernate/hibernate.cfg.xml"/>
+	
+	<!--Reference to Quad Database connection file-->
+	<import resource="spring-dbconnectionmanager.xml" />
 
 	<!-- <mvc:annotation-driven /> -->
 	<context:component-scan
@@ -26,7 +39,7 @@
 		<property name="basename" value="classpath:locale/messages" />
 		<property name="fallbackToSystemLocale" value="false" />
 	</bean>
-
+	
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 
 	<task:executor id="executor" pool-size="5" />

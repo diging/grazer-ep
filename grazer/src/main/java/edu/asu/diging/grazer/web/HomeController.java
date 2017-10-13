@@ -1,5 +1,6 @@
 package edu.asu.diging.grazer.web;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -12,20 +13,33 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import edu.asu.diging.grazer.core.conceptpower.IConceptpowerCache;
+import edu.asu.diging.grazer.core.graphs.IGraphDBConnection;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.quadriga.IQuadrigaConnector;
-import edu.asu.diging.grazer.core.quadriga.impl.PollResponse;
 
 @Controller
 public class HomeController {
     
     @Autowired
     private IQuadrigaConnector quadrigaConnector;
+    
+    @Autowired
+    private IGraphDBConnection graphDbConnection;
+    
+    @Autowired
+    private IConceptpowerCache conceptCache;
 
     @RequestMapping(value = "/")
-    public String home(Model model) {
-        PollResponse poll = quadrigaConnector.getPersons();
-        model.addAttribute("pollUrl", poll.getPollUrl());
+    public String home(Model model) {           
+        List<String> uris = graphDbConnection.getAllPersons();
+        List<IConcept> concepts = new ArrayList<>();
+        for (String uri : uris) {
+            IConcept concept = conceptCache.getConceptByUri(uri);
+            concepts.add(concept);
+        }
+        model.addAttribute("concepts", concepts);
+        model.addAttribute("count", concepts.size());
         return "home";
     }
     

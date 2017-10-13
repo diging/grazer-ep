@@ -58,7 +58,7 @@ public class QuarigaConnector implements IQuadrigaConnector {
    
     @Override
     public List<IConcept> checkPersonsResult(String url) {
-        IConcept[] concepts = restTemplate.getForObject(String.format("%s%s", quadrigaUrl, url), Concept[].class);
+        Concept[] concepts = restTemplate.getForObject(String.format("%s%s", quadrigaUrl, url), Concept[].class);
         if (concepts != null) {
             return Arrays.asList(concepts);
         }

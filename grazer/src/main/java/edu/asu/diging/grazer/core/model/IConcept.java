@@ -1,5 +1,6 @@
 package edu.asu.diging.grazer.core.model;
 
+import java.time.OffsetDateTime;
 import java.util.List;
 
 public interface IConcept {
@@ -38,7 +39,7 @@ public interface IConcept {
 
     List<String> getAlternativeUris();
 
-    void setAlternativeUris(List<String> alternativeUris);
+    void setAlternativeUris(List<String> list);
 
     String getCreatorId();
 
@@ -55,5 +56,9 @@ public interface IConcept {
     void setType(IConceptType type);
 
     IConceptType getType();
+
+    void setLastUpdated(OffsetDateTime lastUpdated);
+
+    OffsetDateTime getLastUpdated();
 
 }
