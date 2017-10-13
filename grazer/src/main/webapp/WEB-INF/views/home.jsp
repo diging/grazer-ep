@@ -31,6 +31,39 @@
     }
 </script>
 
+
+<div id="headerwrap">
+	<div class="container">
+		<div class="row centered">
+			<div class="col-lg-12">
+				<c:if test="${not empty successmsg }">
+					<div class="alert alert-success alert-dismissible" role="alert">
+						<button type="button" class="close" data-dismiss="alert"
+							aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+						${ successmsg }
+					</div>
+				</c:if>
+				<c:if test="${not empty error}">
+				<div class="alert alert-danger alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert"
+                            aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        Your login attempt was not successful, try again.<br /> 
+                    </div>
+				</c:if>
+			</div>
+
+		</div>
+	</div>
+	<!--/ .container -->
+</div>
+<!--/ #headerwrap -->
+
+
+
 <h2>People mentioned in the Embryo Project</h2>
 
 <ul id="graphList" class="list-group">

@@ -43,7 +43,93 @@
 	<script src="<c:url value="/resources/bootstrap/js/main.js" />"></script>	
   </head>
 
-  <body>
+  <body data-spy="scroll" data-offset="0" data-target="#navigation">
+  <tiles:importAttribute name="currentPage" scope="request" />
+
+	<div id="navigation" class="navbar navbar-default">
+		<div class="container-fluid">
+			<div>
+				<div class="navbar-collapse collapse navbar-right">
+					<ul class="nav navbar-nav">
+						<tiles:insertAttribute name="navigation" />
+					</ul>
+				</div>
+				<!--/.nav-collapse -->
+				<sec:authorize access="not isAuthenticated()">
+					<form name='f' action="<c:url value='/' />" method='POST'
+						class="navbar-form navbar-right">
+						<div class="form-group">
+							<input type="text" class="form-control input-sm" name="username"
+								placeholder="Username">
+						</div>
+						<div class="form-group">
+							<input type="password" class="form-control input-sm"
+								name="password" placeholder="Password">
+						</div>
+						<div class="form-group">
+							<button type="submit" class="btn btn-primary btn-sm">Sign
+								In</button>
+						</div>
+					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					</form>
+				</sec:authorize>
+			</div>
+		</div>
+	</div>
+
+	<sec:authorize access="isAuthenticated()">
+		<div class="container">
+			<div class="row" style="padding-top: 15px;">
+				<div class="col-md-10">
+					Welcome <i class="fa fa-user"></i><span style="margin-left: 5px;"><sec:authentication
+							property="principal.username" /></span>!
+				</div>
+				<div class="col-md-2">
+				<form action="<c:url value='/logout' />" method='POST' class="pull-right">
+				<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+					<div>
+						<button type="submit" class="btn btn-link" style="color:#800000"><i
+					class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
+					</div>
+				</form>
+				</div>
+			</div>
+			<hr>
+		</div>
+	</sec:authorize>
+
+	<c:choose>
+		<c:when test="${show_success_alert}">
+			<div class="row" style="margin-top: 20px;">
+				<div class="col-md-offset-1 col-md-10">
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						${success_alert_msg}
+					</div>
+				</div>
+			</div>
+		</c:when>
+		<c:when test="${show_error_alert}">
+			<div class="row" style="margin-top: 20px;">
+				<div class="col-md-offset-1 col-md-10">
+					<div class="alert alert-danger">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						${error_alert_msg}
+					</div>
+				</div>
+			</div>
+		</c:when>
+		<c:when test="${show_info_alert}">
+			<div class="row" style="margin-top: 20px;">
+				<div class="col-md-offset-1 col-md-10">
+					<div class="alert alert-info">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						${info_alert_msg}
+					</div>
+				</div>
+			</div>
+		</c:when>
+	</c:choose>
   
     <div style="opacity: 0.1; position: absolute; top: 10px; left: 10px; ">
       <img src="<c:url value="/resources/images/ep-logo.gif" />" />
@@ -56,7 +142,7 @@
               <a href="<c:url value="/" />" >Home</a>
             </li>
           	
-          	<sec:authorize access="not isAuthenticated()">
+          	<!--<sec:authorize access="not isAuthenticated()">
               <li role="presentation">
                 <form action="<c:url value='/' />" method='POST'>
                   <div class="form-group">
@@ -81,7 +167,7 @@
                   <button class="btn-link" type="submit" title="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
                 </form>
               </li>
-            </sec:authorize>
+            </sec:authorize>-->
           </ul>
          
         </nav>
@@ -89,9 +175,9 @@
         <h1><a class="appName" href="<c:url value="/" />">EP Grazer</a></h1>   
       </div>
       
-      <c:if test="${show_alert}" >
+      <!--<c:if test="${show_alert}" >
 	    <div class="alert alert-${alert_type}" role="alert">${alert_msg}</div>
-	  </c:if>
+	  </c:if>-->
       <tiles:insertAttribute name="content" />
 
     </div> <!-- /container -->
