@@ -11,7 +11,8 @@
     	</property>
     	<property name="hibernateProperties">
     		<value>
-    			hibernate.dialect=org.hibernate.dialect.MySQLDialect
+    			hibernate.dialect=org.hibernate.dialect.MySQL5Dialect
+                hibernate.dialect.storage_engine = InnoDB
            		hibernate.show_sql=false
            		hibernate.hbm2ddl.auto = update
     		</value>
