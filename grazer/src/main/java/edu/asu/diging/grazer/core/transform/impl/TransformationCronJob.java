@@ -10,6 +10,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
@@ -46,8 +47,8 @@ public class TransformationCronJob {
         logger.info("TransformationCronJob is up and running.");
     }
     
+    @Async
     @Scheduled(cron = "${cron_schedule}")
-//    @Scheduled(fixedDelay=1000000)
     public void retrieveTransformations() {
         logger.info("Updating triples...");
         PollResponse response = quadrigaConnector.getPersons();
