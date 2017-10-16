@@ -8,6 +8,10 @@
 <script>
 //# sourceURL=graph.js
 $(document).ready(function() {
+	var cy;
+	var highlightSize = "50px";
+    var nodeSize = "15px";
+    
 	$.ajax({
         url : '<c:url value="/persons/network" />',
         type : "GET",
@@ -18,7 +22,7 @@ $(document).ready(function() {
             } else {
             	   $("#spinner").hide();
                 data = JSON.stringify(result);
-	            var cy = cytoscape({
+	            cy = cytoscape({
 	            		container: $('#network'),
 	            		elements: result,
 	            		style: [ // the stylesheet for the graph
@@ -26,8 +30,8 @@ $(document).ready(function() {
 	            		      selector: 'node',
 	            		      style: {
 	            		        'background-color': '#7bafa6',
-	            		        'width': '15px',
-	            		        'height': '15px',
+	            		        'width': nodeSize,
+	            		        'height': nodeSize,
 	            		        'label': 'data(label)'
 	            		      }
 	            		    },
@@ -47,7 +51,14 @@ $(document).ready(function() {
 	            		    nodeDimensionsIncludeLabels: true,
 	            		  }
 	            	});
-	            //$("#array").text(data);
+	            
+	            cy.on('tap', 'node', function(){
+	            	  window.location.href = "concept/" + this.data('id');
+	            	})
+	            
+	            	cy.ready(function() {
+                    $(".person-entry").hover(highligthPersonInGraph, removeHighlight);
+                });
             	}
         },
         error: function() {
@@ -55,6 +66,28 @@ $(document).ready(function() {
             $("#network").append("Sorry, could not load network.")
         }
     });
+	
+	function highligthPersonInGraph() {
+		var id = $(this).data("concept-id");
+		var node = cy.getElementById(id);
+		cy.animate({
+            fit: {
+                eles: node,
+                padding: 230,
+            }
+        });
+		node.animate({
+			css: { 'width': highlightSize, 'height' : highlightSize},
+		});
+		
+	}
+	function removeHighlight() {
+		var id = $(this).data("concept-id");
+        var node = cy.getElementById(id);
+        node.animate({
+            css: { 'width': nodeSize, 'height' : nodeSize}
+        });
+	}
 	
 })
 
@@ -67,7 +100,7 @@ $(document).ready(function() {
 <div>Total: <span id="count">${count}</span></div>
 <div id="personList" class="list-group">
     <c:forEach items="${concepts}" var="concept">
-    <a href="concept/${concept.id}" class="list-group-item">${concept.word}</a>
+    <a href="concept/${concept.id}" class="list-group-item person-entry" data-concept-id="${concept.id}">${concept.word}</a>
     </c:forEach>
 </div>
 </div>
