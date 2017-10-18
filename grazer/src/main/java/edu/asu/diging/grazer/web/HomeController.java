@@ -1,13 +1,11 @@
 package edu.asu.diging.grazer.web;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,7 +47,7 @@ public class HomeController {
     private String personType;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String home(Model model, Principal principal) {   
+    public String home(Model model) {   
         List<String> uris = graphDbConnection.getAllPersons();
         List<IConcept> concepts = new ArrayList<>();
         for (String uri : uris) {

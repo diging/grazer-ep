@@ -39,63 +39,56 @@
     <![endif]-->
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
- 	<script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />"></script>
-	<script src="<c:url value="/resources/bootstrap/js/main.js" />"></script>	
+    <script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />"></script>
+    <script src="<c:url value="/resources/bootstrap/js/main.js" />"></script>	
   </head>
 
   <body data-spy="scroll" data-offset="0" data-target="#navigation">
-  <tiles:importAttribute name="currentPage" scope="request" />
+    <tiles:importAttribute name="currentPage" scope="request" />
 
-	<div id="navigation" class="navbar navbar-default">
-		<div class="container-fluid">
-			<div>
-				<div class="navbar-collapse collapse navbar-right">
-					<ul class="nav navbar-nav">
-						<tiles:insertAttribute name="navigation" />
-					</ul>
-				</div>
-				<!--/.nav-collapse -->
-				<sec:authorize access="isAuthenticated()">
-					<div class="container">
-						<div class="row" style="padding-top: 15px;">
-							<div class="col-md-10">
-								Welcome <i class="fa fa-user"></i><span style="margin-left: 5px;"><sec:authentication
-										property="principal.username" /></span>!
-							</div>
-							<div class="col-md-2">
-							<form action="<c:url value='/logout' />" method='POST' class="pull-right">
-							<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-								<div>
-									<button type="submit" class="btn btn-link" style="color:#800000"><i
-								class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
-								</div>
-							</form>
-							</div>
-						</div>
-						<hr>
-					</div>
-				</sec:authorize>
-				<sec:authorize access="not isAuthenticated()">
-					<form name='f' action="<c:url value='/login' />" method='POST'
-						class="navbar-form navbar-right">
-						<div class="form-group">
-							<input type="text" class="form-control input-sm" name="username"
-								placeholder="Username">
-						</div>
-						<div class="form-group">
-							<input type="password" class="form-control input-sm"
-								name="password" placeholder="Password">
-						</div>
-						<div class="form-group">
-							<button type="submit" class="btn btn-primary btn-sm">Sign
-								In</button>
-						</div>
-					<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-					</form>
-				</sec:authorize>
-			</div>
-		</div>
-	</div>
+    <div id="navigation" class="navbar navbar-default">
+      <div class="container-fluid">
+        <div>
+          <div class="navbar-collapse collapse navbar-right">
+            <ul class="nav navbar-nav">
+              <tiles:insertAttribute name="navigation" />
+            </ul>
+          </div>
+          <!--/.nav-collapse -->
+          <sec:authorize access="isAuthenticated()">
+            <div class="container">
+              <div class="row" style="padding-top: 15px;">
+                <div class="col-md-10">
+                  Welcome <i class="fa fa-user"></i><span style="margin-left: 5px;"><sec:authentication property="principal.username" /></span>!
+                </div>
+                <div class="col-md-2">
+                  <form action="<c:url value='/logout' />" method='POST' class="pull-right">
+                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                    <div>
+                      <button type="submit" class="btn btn-link" style="color:#800000"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </sec:authorize>
+          <sec:authorize access="not isAuthenticated()">
+            <form name='f' action="<c:url value='/login' />" method='POST' class="navbar-form navbar-right">
+              <div class="form-group">
+                <input type="text" class="form-control input-sm" name="username" placeholder="Username">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control input-sm" name="password" placeholder="Password">
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-sm">Sign In</button>
+              </div>
+              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+          </sec:authorize>
+        </div>
+      </div>
+    </div>
 
     <div style="opacity: 0.1; position: absolute; top: 10px; left: 10px; ">
       <img src="<c:url value="/resources/images/ep-logo.gif" />" />
@@ -117,20 +110,17 @@
     </div> <!-- /container -->
     
     <footer class="footer">
-      <div class="container">
-      
+      <div class="container">  
         <div class="row">
           <div class="col-md-12">
 		    <hr style="margin-bottom: 25px;">
 		    <p class="text-muted pull-left">
-		
-	        <p class="text-muted">
-	          Version: ${buildNumber}
-            </p>
+	          <p class="text-muted">
+	            Version: ${buildNumber}
+              </p>
           </div>
         </div>
       </div>
-    </footer>
-    
+    </footer> 
   </body>
 </html>

@@ -8,11 +8,11 @@
 <script>
 //# sourceURL=graph.js
 $(document).ready(function() {
-	var cy;
-	var highlightSize = "50px";
+    var cy;
+    var highlightSize = "50px";
     var nodeSize = "15px";
     
-	$.ajax({
+    $.ajax({
         url : '<c:url value="/persons/network" />',
         type : "GET",
         success : function(result) {
