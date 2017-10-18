@@ -1,6 +1,7 @@
 package edu.asu.diging.grazer.core.transform.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -50,6 +51,15 @@ public class TransformationCronJob {
     @Async
     @Scheduled(cron = "${cron_schedule}")
     public void retrieveTransformations() {
+        runTransformations(new ArrayList<>());
+    }
+    
+    @Async
+    public void retrieveTransformations(List<String> excludes) {
+        runTransformations(excludes);
+    }
+    
+    private void runTransformations(List<String> excludes) {
         logger.info("Updating triples...");
         PollResponse response = quadrigaConnector.getPersons();
         List<IConcept> concepts = null;
@@ -64,6 +74,10 @@ public class TransformationCronJob {
         }
         
         for (IConcept concept : concepts) {
+            if (excludes.contains(concept.getId()) || excludes.contains(concept.getUri())) {
+                logger.info("Skipping graph for " + concept.getUri());
+                continue;
+            }
             logger.info("Retrieving graph for " + concept.getUri());
             try {
                 graphManager.transformGraph(concept.getUri());
