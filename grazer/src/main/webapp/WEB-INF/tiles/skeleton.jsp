@@ -113,11 +113,12 @@
       <div class="container">  
         <div class="row">
           <div class="col-md-12">
-		    <hr style="margin-bottom: 25px;">
-		    <p class="text-muted pull-left">
-	          <p class="text-muted">
-	            Version: ${buildNumber}
+            <hr style="margin-bottom: 25px;">
+            <p class="text-muted pull-left">
+              <p class="text-muted">
+                Version: ${buildNumber}
               </p>
+            </p>
           </div>
         </div>
       </div>

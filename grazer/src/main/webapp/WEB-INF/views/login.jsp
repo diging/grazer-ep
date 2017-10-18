@@ -24,8 +24,8 @@
                         </button>
                         Your login attempt was not successful, try again.<br /> 
                     </div>
-				</c:if>
-			</div>
+                </c:if>
+            </div>
         </div>
     </div>
     <!--/ .container -->
