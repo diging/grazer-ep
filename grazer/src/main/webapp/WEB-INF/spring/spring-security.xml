@@ -12,7 +12,7 @@
 
     <http auto-config="true" use-expressions="true" disable-url-rewriting="true">
         <form-login login-page="/login" default-target-url="/home"
-            authentication-failure-url="/" authentication-success-handler-ref="authSuccessHandler" />
+            authentication-failure-url="/loginfailed" authentication-success-handler-ref="authSuccessHandler" />
         <logout logout-success-url="/" invalidate-session="true" />
     </http>
         

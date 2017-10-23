@@ -41,6 +41,7 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
     <script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />"></script>
     <script src="<c:url value="/resources/bootstrap/js/main.js" />"></script>	
+    <script src="<c:url value="/resources/js/jquery-alert.js" />"></script>
   </head>
 
   <body data-spy="scroll" data-offset="0" data-target="#navigation">
@@ -89,6 +90,65 @@
         </div>
       </div>
     </div>
+    <div id="headerwrap">
+      <div class="container">
+        <div class="row centered">
+          <div class="col-lg-12">
+            <script>console.log("Hi how are you");</script>
+            <c:choose>
+            <c:when test="${not empty error }">
+            <!--<c:if test="${not empty error}">-->
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"
+                  aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                Your login attempt was not successful, try again.<br /> Caused :
+                  ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+              </div>
+            <!--</c:if>-->
+            </c:when>
+            </c:choose>
+          </div>
+        </div>
+      </div>
+      <!--/ .container -->
+    </div>
+    <!--/ #headerwrap -->
+    
+    
+    <c:choose>
+      <c:when test="${show_success_alert}">
+        <div class="row" style="margin-top: 20px;">
+				<div class="col-md-offset-1 col-md-10">
+					<div class="alert alert-success">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						${success_alert_msg}
+					</div>
+				</div>
+			</div>
+		</c:when>
+		<c:when test="${show_error_alert}">
+			<div class="row" style="margin-top: 20px;">
+				<div class="col-md-offset-1 col-md-10">
+					<div class="alert alert-danger">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						${error_alert_msg}
+					</div>
+				</div>
+			</div>
+		</c:when>
+		<c:when test="${show_info_alert}">
+			<div class="row" style="margin-top: 20px;">
+				<div class="col-md-offset-1 col-md-10">
+					<div class="alert alert-info">
+						<button type="button" class="close" data-dismiss="alert">&times;</button>
+						${info_alert_msg}
+					</div>
+				</div>
+			</div>
+		</c:when>
+	</c:choose>
 
     <div style="opacity: 0.1; position: absolute; top: 10px; left: 10px; ">
       <img src="<c:url value="/resources/images/ep-logo.gif" />" />
