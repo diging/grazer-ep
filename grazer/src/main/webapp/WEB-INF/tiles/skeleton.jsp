@@ -45,24 +45,13 @@
   </head>
 
   <body data-spy="scroll" data-offset="0" data-target="#navigation">
-    <tiles:importAttribute name="currentPage" scope="request" />
-
     <div id="navigation" class="navbar navbar-default">
       <div class="container-fluid">
-        <div>
-          <div class="navbar-collapse collapse navbar-right">
-            <ul class="nav navbar-nav">
-              <tiles:insertAttribute name="navigation" />
-            </ul>
-          </div>
-          <!--/.nav-collapse -->
           <sec:authorize access="isAuthenticated()">
             <div class="container">
               <div class="row" style="padding-top: 15px;">
                 <div class="col-md-10">
                   Welcome <i class="fa fa-user"></i><span style="margin-left: 5px;"><sec:authentication property="principal.username" /></span>!
-                </div>
-                <div class="col-md-2">
                   <form action="<c:url value='/logout' />" method='POST' class="pull-right">
                     <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                     <div>
@@ -94,7 +83,6 @@
       <div class="container">
         <div class="row centered">
           <div class="col-lg-12">
-            <script>console.log("Hi how are you");</script>
             <c:choose>
             <c:when test="${not empty error }">
             <!--<c:if test="${not empty error}">-->
@@ -115,40 +103,6 @@
       <!--/ .container -->
     </div>
     <!--/ #headerwrap -->
-    
-    
-    <c:choose>
-      <c:when test="${show_success_alert}">
-        <div class="row" style="margin-top: 20px;">
-				<div class="col-md-offset-1 col-md-10">
-					<div class="alert alert-success">
-						<button type="button" class="close" data-dismiss="alert">&times;</button>
-						${success_alert_msg}
-					</div>
-				</div>
-			</div>
-		</c:when>
-		<c:when test="${show_error_alert}">
-			<div class="row" style="margin-top: 20px;">
-				<div class="col-md-offset-1 col-md-10">
-					<div class="alert alert-danger">
-						<button type="button" class="close" data-dismiss="alert">&times;</button>
-						${error_alert_msg}
-					</div>
-				</div>
-			</div>
-		</c:when>
-		<c:when test="${show_info_alert}">
-			<div class="row" style="margin-top: 20px;">
-				<div class="col-md-offset-1 col-md-10">
-					<div class="alert alert-info">
-						<button type="button" class="close" data-dismiss="alert">&times;</button>
-						${info_alert_msg}
-					</div>
-				</div>
-			</div>
-		</c:when>
-	</c:choose>
 
     <div style="opacity: 0.1; position: absolute; top: 10px; left: 10px; ">
       <img src="<c:url value="/resources/images/ep-logo.gif" />" />
