@@ -17,10 +17,6 @@
     <definition name="home" extends="base.definition">
         <put-attribute name="content" value="/WEB-INF/views/home.jsp" />	
     </definition>
-	
-    <definition name="login" extends="base.definition">
-        <put-attribute name="content" value="/WEB-INF/views/login.jsp" />
-    </definition>
     
     <definition name="person" extends="base.definition">
         <put-attribute name="content" value="/WEB-INF/views/person.jsp" />    
