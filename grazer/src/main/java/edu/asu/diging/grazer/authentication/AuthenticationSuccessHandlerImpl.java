@@ -16,7 +16,6 @@ public class AuthenticationSuccessHandlerImpl extends SavedRequestAwareAuthentic
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
             Authentication authentication) throws IOException, ServletException {
-        Object obj = authentication.getPrincipal();
         super.onAuthenticationSuccess(request, response, authentication);
     }
 }
