@@ -49,17 +49,6 @@ public class HomeController {
     @Value("${concepts.type.person}")
     private String personType;
     
-    @RequestMapping(value = "home", method = RequestMethod.GET)
-    public String validUserHandle(ModelMap model, Principal principal,
-            Authentication authentication) {
-
-        // Get the LDAP-authenticated userid
-        String sUserId = principal.getName();       
-        model.addAttribute("username", sUserId);
-        return "home";
-
-    }
-    
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(ModelMap model) {
         return "home";
