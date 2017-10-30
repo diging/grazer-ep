@@ -1,4 +1,4 @@
-package edu.asu.diging.grazer.dao;
+package edu.asu.diging.grazer.dao.impl;
 
 import java.util.List;
 
@@ -7,8 +7,8 @@ import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import edu.asu.diging.grazer.core.document.Document;
-import edu.asu.diging.grazer.core.document.impl.IDocument;
+import edu.asu.diging.grazer.core.document.impl.Document;
+import edu.asu.diging.grazer.core.document.IDocument;
 
 @Component
 public class DocumentDAO {
