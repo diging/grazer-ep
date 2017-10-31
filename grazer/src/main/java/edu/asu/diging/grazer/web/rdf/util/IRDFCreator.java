@@ -15,4 +15,6 @@ public interface IRDFCreator {
 
     String getRDF(List<RDFStatement> statements, String format);
 
+    String createList(String subject, List<String> list, String format);
+
 }

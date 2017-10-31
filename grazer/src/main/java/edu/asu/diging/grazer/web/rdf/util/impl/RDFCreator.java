@@ -1,6 +1,7 @@
 package edu.asu.diging.grazer.web.rdf.util.impl;
 
 import java.io.StringWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -10,8 +11,11 @@ import org.eclipse.rdf4j.model.Value;
 import org.eclipse.rdf4j.model.ValueFactory;
 import org.eclipse.rdf4j.model.impl.LinkedHashModel;
 import org.eclipse.rdf4j.model.impl.SimpleValueFactory;
+import org.eclipse.rdf4j.model.util.RDFCollections;
 import org.eclipse.rdf4j.rio.RDFFormat;
 import org.eclipse.rdf4j.rio.Rio;
+import org.eclipse.rdf4j.rio.WriterConfig;
+import org.eclipse.rdf4j.rio.helpers.BasicWriterSettings;
 import org.springframework.stereotype.Service;
 
 import edu.asu.diging.grazer.core.rdf.impl.RDFStatement;
@@ -55,5 +59,23 @@ public class RDFCreator implements IRDFCreator {
             return factory.createIRI(value);
         }
         return factory.createLiteral(value);
+    }
+    
+    @Override
+    public String createList(String subject, List<String> list, String format) {
+        ValueFactory factory = SimpleValueFactory.getInstance();
+        IRI subjectIri = factory.createIRI(subject);
+        
+        List<IRI> listIri = new ArrayList<>();
+        list.forEach(e -> listIri.add(factory.createIRI(e)));
+        Model rdfList = RDFCollections.asRDF(listIri, subjectIri, new LinkedHashModel());
+        
+        StringWriter writer = new StringWriter();
+        Optional<RDFFormat> optional = Rio.getWriterFormatForMIMEType(format);
+        RDFFormat rdfFormat = optional.isPresent() ? optional.get() : RDFFormat.TRIX;
+        WriterConfig config = new WriterConfig();
+        config.set(BasicWriterSettings.PRETTY_PRINT, true);
+        Rio.write(rdfList, writer, rdfFormat, config);
+        return writer.toString();
     }
 }
