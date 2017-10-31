@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import edu.asu.diging.grazer.core.graphs.IGraphDBConnection;
 import edu.asu.diging.grazer.core.rdf.IRDFTripleService;
 import edu.asu.diging.grazer.core.rdf.IUriCreator;
 import edu.asu.diging.grazer.core.rdf.impl.RDFStatement;
@@ -20,6 +21,7 @@ public class ConceptAPI {
     
     public final static String ID_PLACEHOLDER = "{id}";
     public final static String CONCEPT_PREFIX = "/concept/" + ID_PLACEHOLDER;
+    public final static String CONCEPTS_PREFIX = "/";
     
     @Autowired
     private IRDFTripleService tripleService;
@@ -29,6 +31,10 @@ public class ConceptAPI {
     
     @Autowired
     private IRDFCreator rdfCreator;
+    
+    @Autowired
+    private IGraphDBConnection graphDbConnection;
+    
     
     /**
      * Endpoint to retrieve information about a concept. This method will query the triple store and return
@@ -46,5 +52,14 @@ public class ConceptAPI {
     public ResponseEntity<String> getRelations(@PathVariable("id") String id, @RequestHeader("Accept") String accept) {
         List<RDFStatement> statements = tripleService.getStatements(uriCreator.getUri(id));
         return new ResponseEntity<String>(rdfCreator.getRDF(statements, accept), HttpStatus.OK);
+    }
+    
+    @RequestMapping(value = CONCEPTS_PREFIX, produces = { IRDFCreator.XML, IRDFCreator.TRIX, IRDFCreator.TRIG, IRDFCreator.NQUADS, IRDFCreator.RDFXML, IRDFCreator.TURTLE })
+    public ResponseEntity<String> getPersons(@RequestHeader("Accept") String accept) {
+        List<String> uris = graphDbConnection.getAllPersons();
+        
+        String list = rdfCreator.createList(uriCreator.getBaseUri(), uris, accept);
+        
+        return new ResponseEntity<String>(list, HttpStatus.OK);
     }
 }
