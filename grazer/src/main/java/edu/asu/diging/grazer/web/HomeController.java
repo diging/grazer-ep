@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -63,8 +64,8 @@ public class HomeController {
 
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String home(Model model) {   
+    @RequestMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
+    public String home(Model model) {           
         List<String> uris = graphDbConnection.getAllPersons();
         List<IConcept> concepts = new ArrayList<>();
         for (String uri : uris) {

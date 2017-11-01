@@ -30,4 +30,9 @@ public class UriCreator implements IUriCreator {
         String prefix = env.getProperty("grazer.base.url");
         return prefix + "context/" + id;
     }
+    
+    @Override
+    public String getBaseUri() {
+        return env.getProperty("grazer.base.url");
+    }
 }

@@ -6,4 +6,6 @@ public interface IUriCreator {
 
     String getContextUri(String id);
 
+    String getBaseUri();
+
 }
