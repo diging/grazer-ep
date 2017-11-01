@@ -11,6 +11,12 @@
     <context:component-scan base-package="edu.asu.diging.grazer.authentication" />
 
     <http auto-config="true" use-expressions="true" disable-url-rewriting="true">
+        <headers disabled="true"/>
+          
+        <intercept-url pattern="/transformation-input-form**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/save-transformation**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/error**" access="hasRole('ROLE_ADMIN')" />
+    
         <form-login login-page="/login" default-target-url="/home"
             authentication-failure-url="/loginfailed" authentication-success-handler-ref="authSuccessHandler" />
         <logout logout-success-url="/" invalidate-session="true" />

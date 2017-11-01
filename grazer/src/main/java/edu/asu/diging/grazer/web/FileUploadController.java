@@ -35,17 +35,19 @@ public class FileUploadController {
                 {
                     if(!multipartFile.isEmpty()) {
                         multipartFile.transferTo(testFile);
-                        // Here, you can save the product details in database  
-                        model.addAttribute("transformation", transformation);
-                        return "viewProductDetail";
                     }
-                } catch (IOException e)
-                {
+                    else {
+                        return "error";
+                    }
+                } catch (IOException e) {
                     e.printStackTrace();
                 }
+                
             }
         }
-        return "error";
+        // Here, you can save the product details in database  
+        model.addAttribute("transformation", transformation);
+        return "viewProductDetail";
         
     }
      
