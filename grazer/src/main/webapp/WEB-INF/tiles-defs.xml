@@ -22,8 +22,16 @@
         <put-attribute name="content" value="/WEB-INF/views/person.jsp" />    
     </definition>
     
-    <definition name="upload" extends="base.definition">
-        <put-attribute name="content" value="/WEB-INF/views/upload.jsp" />    
+    <definition name="productForm" extends="base.definition">
+        <put-attribute name="content" value="/WEB-INF/views/productForm.jsp" />    
+    </definition>
+    
+    <definition name="viewProductDetail" extends="base.definition">
+        <put-attribute name="content" value="/WEB-INF/views/viewProductDetail.jsp" />    
+    </definition>
+    
+    <definition name="error" extends="base.definition">
+        <put-attribute name="content" value="/WEB-INF/views/error.jsp" />    
     </definition>
     
     <definition name="person/graph" template="/WEB-INF/views/personGraph.jsp">  
