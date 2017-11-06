@@ -11,19 +11,20 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartFile;
 
-import edu.asu.diging.grazer.core.domain.Product;
+import edu.asu.diging.grazer.core.domain.IProduct;
+import edu.asu.diging.grazer.core.domain.impl.Product;
 
 @Controller
 public class FileUploadController {
     
     @RequestMapping("/save-transformation")
-    public String uploadResources(@ModelAttribute Product transformation,
+    public String uploadResources(@ModelAttribute IProduct transformation,
                                  Model model)
     {
         //Get the uploaded files and store them
         List<MultipartFile> files = transformation.getFiles();
         List<String> fileNames = new ArrayList<String>();
-        if (null != files && files.size() > 0)
+        if (files != null && !files.get(0).isEmpty() & !files.get(1).isEmpty() )
         {
             for (MultipartFile multipartFile : files) {
  
@@ -33,18 +34,18 @@ public class FileUploadController {
                 File testFile = new File("/Users/mshah18/Desktop/test/" + fileName); 
                 try
                 {
-                    if(!multipartFile.isEmpty()) {
-                        multipartFile.transferTo(testFile);
-                    }
-                    else {
-                        return "error";
-                    }
+                    multipartFile.transferTo(testFile);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
                 
             }
         }
+        else {
+            return "error";
+        }
+        
+        
         // Here, you can save the product details in database  
         model.addAttribute("transformation", transformation);
         return "viewProductDetail";

@@ -20,8 +20,12 @@
                     <form:input id="description" path="description" />
                 </p>
                 <p>
-                    <label for="file">Transformation Files: </label>
-                    <input type="file" name="files" multiple="multiple"/>
+                    <label for="file">Transformation File: </label>
+                    <input type="file" name="files"/>
+                </p>
+                <p>
+                    <label for="file">Pattern File: </label>
+                    <input type="file" name="files">
                 </p>
                 <p id="buttons">
                     <input id="reset" type="reset" tabindex="4">
