@@ -18,7 +18,7 @@ import edu.asu.diging.grazer.core.domain.impl.Product;
 public class FileUploadController {
     
     @RequestMapping("/save-transformation")
-    public String uploadResources(@ModelAttribute IProduct transformation,
+    public String uploadResources(@ModelAttribute Product transformation,
                                  Model model)
     {
         //Get the uploaded files and store them
