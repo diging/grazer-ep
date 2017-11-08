@@ -33,16 +33,16 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
                 .deleteCookies("JSESSIONID")
                 .logoutUrl("/logout")
                 .logoutSuccessUrl("/")
-                .and().exceptionHandling().accessDeniedPage("/403");
+                .and().exceptionHandling().accessDeniedPage("/403")
                 // Configures url based authorization
-                //.and()
-                //.authorizeRequests()
+                .and()
+                .authorizeRequests()
                 // Anyone can access the urls
-                //.antMatchers("/", "/persons/**", "/person/**", "/concept/**", "/query**", "/info", "/resources/**", "/login/authenticate", "/rest/**",
-                //        "/logout").permitAll()
+                .antMatchers("/", "/persons/**", "/person/**", "/concept/**", "/query**", "/info", "/resources/**", "/login/authenticate", "/rest/**",
+                        "/logout").permitAll()
                 // The rest of the our application is protected.
-                //.antMatchers("/users/**", "/admin/**", "/api/**").hasRole("ADMIN")
-                //.anyRequest().hasRole("USER").and().httpBasic();
+                .antMatchers("/users/**", "/admin/**", "/api/**").hasRole("ADMIN")
+                .anyRequest().hasRole("USER").and().httpBasic();
     }
 
     @Bean
