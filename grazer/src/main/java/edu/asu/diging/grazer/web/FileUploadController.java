@@ -5,56 +5,55 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import edu.asu.diging.grazer.core.domain.IProduct;
-import edu.asu.diging.grazer.core.domain.impl.Product;
+import edu.asu.diging.grazer.core.domain.impl.FileImpl;
+import edu.asu.diging.grazer.core.fileupload.service.IFileUploadService;
 
 @Controller
 public class FileUploadController {
     
+    @Autowired
+    private IFileUploadService service;
+    
     @RequestMapping("/save-transformation")
-    public String uploadResources(@ModelAttribute Product transformation,
-                                 Model model)
-    {
-        //Get the uploaded files and store them
-        List<MultipartFile> files = transformation.getFiles();
+    public String uploadResources(@ModelAttribute FileImpl transformation,
+                                 Model model, @RequestParam CommonsMultipartFile[] files) {
+
+        List<byte[]> data = new ArrayList<byte[]>();
         List<String> fileNames = new ArrayList<String>();
-        if (files != null && !files.get(0).isEmpty() & !files.get(1).isEmpty() )
-        {
-            for (MultipartFile multipartFile : files) {
+        for (CommonsMultipartFile multipartFile : files) {
  
-                String fileName = multipartFile.getOriginalFilename();
-                fileNames.add(fileName);
-                
-                File testFile = new File("/Users/mshah18/Desktop/test/" + fileName); 
-                try
-                {
-                    multipartFile.transferTo(testFile);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-                
-            }
+            data.add(multipartFile.getBytes());
+            String fileName = multipartFile.getOriginalFilename();
+            fileNames.add(fileName);    
+            File testFile = new File("/Users/mshah18/Desktop/test/" + fileName); 
+            try {
+                multipartFile.transferTo(testFile);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }      
         }
-        else {
-            return "error";
-        }
+        transformation.setData(data);
+        service.save(transformation);
         
-        
-        // Here, you can save the product details in database  
+        // Here, you can save the file details in database  
         model.addAttribute("transformation", transformation);
-        return "viewProductDetail";
-        
+        return "fileUploadSuccess";    
     }
      
     @RequestMapping(value = "transformation-input-form")
-    public String inputProduct(Model model) {
-        model.addAttribute("transformation", new Product());
-        return "productForm";
+    public String inputFile(Model model) {
+        model.addAttribute("transformation", new FileImpl());
+        return "fileUploadForm";
     }
 }

@@ -12,20 +12,20 @@
                 <legend>Add a file</legend>
                 <p>
                     <label for="label">Transformation Label: </label>
-                    <form:input id="label" path="label" cssErrorClass="error" />
+                    <form:input id="label" path="label" cssErrorClass="error" required="required"/>
                     <form:errors path="label" cssClass="error" />
                 </p>
                 <p>
                     <label for="description">Description: </label>
-                    <form:input id="description" path="description" />
+                    <form:input id="description" path="description" required="required"/>
                 </p>
                 <p>
                     <label for="file">Transformation File: </label>
-                    <input type="file" name="files"/>
+                    <input type="file" name="files" accept=".graphml" required="required"/>
                 </p>
                 <p>
                     <label for="file">Pattern File: </label>
-                    <input type="file" name="files">
+                    <input type="file" name="files" required="required"/>
                 </p>
                 <p id="buttons">
                     <input id="reset" type="reset" tabindex="4">

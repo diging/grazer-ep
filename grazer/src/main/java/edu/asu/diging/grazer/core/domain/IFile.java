@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public interface IProduct {
+public interface IFile {
 
     String getLabel();
 
@@ -14,10 +14,10 @@ public interface IProduct {
     String getDescription();
 
     void setDescription(String description);
+    
+    List<byte[]> getData();
 
-    List<MultipartFile> getFiles();
-
-    void setFiles(List<MultipartFile> files);
+    void setData(List<byte[]> data);
 
     String getUploader();
 
@@ -27,8 +27,5 @@ public interface IProduct {
 
     void setDate(Date date);
 
-    String getId();
-
-    void setId(String id);
 
 }

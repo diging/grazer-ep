@@ -17,8 +17,8 @@
         <intercept-url pattern="/save-transformation**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/error**" access="hasRole('ROLE_ADMIN')" />
     
-        <form-login login-page="/login" default-target-url="/home"
-            authentication-failure-url="/loginfailed" authentication-success-handler-ref="authSuccessHandler" />
+        <form-login login-page="/login" default-target-url="/"
+            authentication-failure-url="/loginfailed" />
         <logout logout-success-url="/" invalidate-session="true" />
     </http>
         

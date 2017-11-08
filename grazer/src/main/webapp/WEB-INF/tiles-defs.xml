@@ -22,12 +22,12 @@
         <put-attribute name="content" value="/WEB-INF/views/person.jsp" />    
     </definition>
     
-    <definition name="productForm" extends="base.definition">
-        <put-attribute name="content" value="/WEB-INF/views/productForm.jsp" />    
+    <definition name="fileUploadForm" extends="base.definition">
+        <put-attribute name="content" value="/WEB-INF/views/fileUploadForm.jsp" />    
     </definition>
     
-    <definition name="viewProductDetail" extends="base.definition">
-        <put-attribute name="content" value="/WEB-INF/views/viewProductDetail.jsp" />    
+    <definition name="fileUploadSuccess" extends="base.definition">
+        <put-attribute name="content" value="/WEB-INF/views/fileUploadSuccess.jsp" />    
     </definition>
     
     <definition name="error" extends="base.definition">

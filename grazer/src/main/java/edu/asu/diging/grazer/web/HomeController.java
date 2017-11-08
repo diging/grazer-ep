@@ -13,8 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
@@ -49,17 +49,6 @@ public class HomeController {
     @Value("${concepts.type.person}")
     private String personType;
     
-    @RequestMapping(value = "home", method = RequestMethod.GET)
-    public String validUserHandle(ModelMap model, Principal principal,
-            Authentication authentication) {
-
-        // Get the LDAP-authenticated userid
-        String sUserId = principal.getName();       
-        model.addAttribute("username", sUserId);
-        return "home";
-
-    }
-    
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(ModelMap model) {
         return "home";
@@ -74,8 +63,8 @@ public class HomeController {
 
     }
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String home(Model model) {   
+    @RequestMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
+    public String home(Model model) {           
         List<String> uris = graphDbConnection.getAllPersons();
         List<IConcept> concepts = new ArrayList<>();
         for (String uri : uris) {

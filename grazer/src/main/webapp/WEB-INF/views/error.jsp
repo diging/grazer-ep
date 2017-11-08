@@ -1,1 +1,0 @@
-<p>Cannot upload empty file.. Please try again </p>
