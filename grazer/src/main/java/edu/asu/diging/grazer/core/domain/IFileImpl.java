@@ -3,9 +3,7 @@ package edu.asu.diging.grazer.core.domain;
 import java.util.Date;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
-
-public interface IFile {
+public interface IFileImpl {
 
     String getLabel();
 
@@ -18,6 +16,10 @@ public interface IFile {
     List<byte[]> getData();
 
     void setData(List<byte[]> data);
+    
+    List<String> getfileNames();
+
+    void setfileNames(List<String> fileNames);
 
     String getUploader();
 

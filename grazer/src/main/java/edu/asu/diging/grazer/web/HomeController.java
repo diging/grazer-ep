@@ -1,6 +1,5 @@
 package edu.asu.diging.grazer.web;
 
-import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;

@@ -11,20 +11,28 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
 
-import edu.asu.diging.grazer.core.domain.IFile;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+
+import edu.asu.diging.grazer.core.domain.IFileImpl;
 
 @Entity
 @Table(name="tbl_files")
-public class FileImpl implements IFile
+public class FileImpl implements IFileImpl
 {
  
     @Id private String label;
     private String description;
     private String uploader;
     private Date date;
+    @ElementCollection
+    @CollectionTable(name="tbl_file_names", joinColumns=@JoinColumn(name="label"))
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<String> fileNames;
     
     @ElementCollection
     @CollectionTable(name="tbl_uploaded_files", joinColumns=@JoinColumn(name="label"))
+    @LazyCollection(LazyCollectionOption.FALSE)
     @Column(name="files")
     private List<byte[]> data;
      
@@ -68,6 +76,16 @@ public class FileImpl implements IFile
     @Override
     public void setData(List<byte[]> data) {
         this.data = data;
+    }
+    
+    @Override
+    public List<String> getfileNames() {
+        return fileNames;
+    }
+    
+    @Override
+    public void setfileNames(List<String> fileNames) {
+        this.fileNames = fileNames;
     }
     
     /* (non-Javadoc)

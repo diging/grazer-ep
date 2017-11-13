@@ -23,9 +23,9 @@
                     <label for="file">Transformation File: </label>
                     <input type="file" name="files" accept=".graphml" required="required"/>
                 </p>
-                <p>
+                <p>    
                     <label for="file">Pattern File: </label>
-                    <input type="file" name="files" required="required"/>
+                    <input type="file" name="files" accept=".graphml" required="required"/>
                 </p>
                 <p id="buttons">
                     <input id="reset" type="reset" tabindex="4">
@@ -33,6 +33,23 @@
                 </p>
             </fieldset>
         </form:form>
+        
+        <h3>File List</h3>
+        <c:if test="${!empty fileList}">
+            <c:forEach items="${fileList}" var="file">
+                File Label: ${file.label}
+                <br>
+                File Description: ${file.description}
+                <br>
+                Files: <br>
+                <c:forEach items="${file.fileNames}" var="fileName">
+                    ${fileName}
+                    <a href="${pageContext.request.contextPath}/download/${file.label}/${fileName}"><i class="fa fa-download" aria-hidden="true"></i></a> 
+                    <br>
+                </c:forEach>
+                <br><br>
+            </c:forEach>
+        </c:if>
     </div>
 </body>
 </html>
