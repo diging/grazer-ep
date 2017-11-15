@@ -26,7 +26,7 @@ import edu.asu.diging.grazer.core.model.IConceptType;
 @Table(name = "tbl_conceptpower_concept", indexes = {
         @Index(columnList="id", name="IDX_ID")
 })
-public class Concept implements IConcept {
+public class Concept implements IConcept, Comparable<IConcept>{
 
     @Id private String uri;
     private String id;
@@ -303,4 +303,11 @@ public class Concept implements IConcept {
     public void setLastUpdated(OffsetDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
+
+    @Override
+    public int compareTo(IConcept o) {
+        // TODO Auto-generated method stub
+        return 0;
+    }
+
 }
