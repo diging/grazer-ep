@@ -24,9 +24,9 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
        http.formLogin()
-                .loginPage("/")
-                .loginProcessingUrl("/login/authenticate")
-                .failureUrl("/?error=bad_credentials")
+                .loginPage("/login")
+                //.loginProcessingUrl("/login/authenticate")
+                .failureUrl("/loginfailed")
                 // Configures the logout function
                 .and()
                 .logout()
@@ -38,10 +38,10 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 // Anyone can access the urls
-                .antMatchers("/", "/persons/**", "/person/**", "/concept/**", "/query**", "/info", "/resources/**", "/login/authenticate", "/rest/**",
+                .antMatchers("/", "/persons/**", "/person/**", "/concept/**", "/query**", "/info", "/resources/**", "/login/", "/loginfailed", "/rest/**",
                         "/logout").permitAll()
                 // The rest of the our application is protected.
-                .antMatchers("/users/**", "/admin/**", "/api/**").hasRole("ADMIN")
+                .antMatchers("/users/**", "/admin/**", "/api/**", "/transformation-input-form**", "/save-transformation**", "/error**").hasRole("ROLE_ADMIN")
                 .anyRequest().hasRole("USER").and().httpBasic();
     }
 
