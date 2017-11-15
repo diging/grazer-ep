@@ -26,10 +26,6 @@
         <put-attribute name="content" value="/WEB-INF/views/fileUploadForm.jsp" />    
     </definition>
     
-    <definition name="fileUploadSuccess" extends="base.definition">
-        <put-attribute name="content" value="/WEB-INF/views/fileUploadSuccess.jsp" />    
-    </definition>
-    
     <definition name="error" extends="base.definition">
         <put-attribute name="content" value="/WEB-INF/views/error.jsp" />    
     </definition>

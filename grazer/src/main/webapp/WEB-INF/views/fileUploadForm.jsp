@@ -36,19 +36,30 @@
         
         <h3>File List</h3>
         <c:if test="${!empty fileList}">
-            <c:forEach items="${fileList}" var="file">
-                File Label: ${file.label}
-                <br>
-                File Description: ${file.description}
-                <br>
-                Files: <br>
-                <c:forEach items="${file.fileNames}" var="fileName">
-                    ${fileName}
-                    <a href="${pageContext.request.contextPath}/download/${file.label}/${fileName}"><i class="fa fa-download" aria-hidden="true"></i></a> 
-                    <br>
-                </c:forEach>
-                <br><br>
-            </c:forEach>
+            <table class="table table-striped]">
+                <thead>
+                    <tr>
+                        <th>Label</th>
+                        <th>Description</th>
+                        <th>Files</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <c:forEach items="${fileList}" var="file">
+                        <tr> 
+                            <td> ${file.label} </td>
+                            <td> ${file.description} </td>
+                            <td> 
+                                <c:forEach items="${file.fileNames}" var="fileName">
+                                    ${fileName} 
+                                    <a href="${pageContext.request.contextPath}/download/${file.id}/${fileName}"> <i class="fa fa-download" aria-hidden="true"></i></a>
+                                    <br>
+                                </c:forEach>
+                            </td>
+                        </tr>
+                    </c:forEach>
+                </tbody>
+            </table>
         </c:if>
     </div>
 </body>

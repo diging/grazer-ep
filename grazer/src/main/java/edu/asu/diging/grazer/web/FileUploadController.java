@@ -26,6 +26,8 @@ import edu.asu.diging.grazer.core.fileupload.db.impl.FileUploadDatabaseConnectio
 @Controller
 public class FileUploadController {
     
+    private final String FILE_EXTENSION = ".graphml";
+    
     @Autowired
     private FileUploadDatabaseConnection connection;
     
@@ -57,11 +59,11 @@ public class FileUploadController {
         return "fileUploadForm";
     }
     
-    @RequestMapping(value = "/download/{label}/{fileName}")
-    public String download(@PathVariable("label") String label, @PathVariable("fileName") String fileName, HttpServletResponse response) {
+    @RequestMapping(value = "/download/{id}/{fileName}")
+    public String download(@PathVariable("id") int id, @PathVariable("fileName") String fileName, HttpServletResponse response) {
         
-        fileName = fileName + ".graphml";
-        FileImpl file = connection.get(label);
+        fileName = fileName + FILE_EXTENSION;
+        FileImpl file = connection.get(id);
         List<String> fileNames = file.getfileNames();
         for(int i = 0; i < fileNames.size(); i++) {
             if(fileName.equals(fileNames.get(i))) {

@@ -5,6 +5,8 @@ import java.util.List;
 
 public interface IFileImpl {
 
+    int getId();
+    
     String getLabel();
 
     void setLabel(String label);

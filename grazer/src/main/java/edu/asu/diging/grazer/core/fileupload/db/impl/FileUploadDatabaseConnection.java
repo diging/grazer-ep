@@ -17,13 +17,17 @@ public class FileUploadDatabaseConnection implements IFileUploadDatabaseConnecti
     protected SessionFactory sessionFactory;
     
     /* (non-Javadoc)
-     * @see edu.asu.diging.grazer.fileupload.db.impl.IFileUploadDatabaseConnection#save(edu.asu.diging.grazer.core.domain.impl.FileImpl)
+     * @see edu.asu.diging.grazer.core.fileupload.db.IFileUploadDatabaseConnection#save(edu.asu.diging.grazer.core.domain.impl.FileImpl)
      */
     @Override
     public void save(FileImpl transformationFile) {
         sessionFactory.getCurrentSession().save(transformationFile);
     }
     
+    /* (non-Javadoc)
+     * @see edu.asu.diging.grazer.core.fileupload.db.IFileUploadDatabaseConnection#list()
+     */
+    @Override
     @SuppressWarnings("unchecked")
     public List<FileImpl> list() {
         List<FileImpl> files = null;
@@ -35,12 +39,11 @@ public class FileUploadDatabaseConnection implements IFileUploadDatabaseConnecti
         return files;
     }
     
-    public FileImpl get(String label) {
-        return (FileImpl)sessionFactory.getCurrentSession().get(FileImpl.class, label);
-    }
-    
-    public void remove(String label) {
-        FileImpl file = (FileImpl)sessionFactory.getCurrentSession().get(FileImpl.class, label);
-        sessionFactory.getCurrentSession().delete(file);
+    /* (non-Javadoc)
+     * @see edu.asu.diging.grazer.core.fileupload.db.IFileUploadDatabaseConnection#get(java.lang.String)
+     */
+    @Override
+    public FileImpl get(int id) {
+        return (FileImpl)sessionFactory.getCurrentSession().get(FileImpl.class, id);
     }
 }

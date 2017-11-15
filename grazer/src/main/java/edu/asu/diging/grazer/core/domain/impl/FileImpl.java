@@ -7,6 +7,8 @@ import javax.persistence.CollectionTable;
 import javax.persistence.Column;
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
@@ -21,21 +23,28 @@ import edu.asu.diging.grazer.core.domain.IFileImpl;
 public class FileImpl implements IFileImpl
 {
  
-    @Id private String label;
+    @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private int id;
+    private String label;
     private String description;
     private String uploader;
     private Date date;
+    
     @ElementCollection
-    @CollectionTable(name="tbl_file_names", joinColumns=@JoinColumn(name="label"))
+    @CollectionTable(name="tbl_file_names", joinColumns=@JoinColumn(name="id"))
     @LazyCollection(LazyCollectionOption.FALSE)
     private List<String> fileNames;
     
     @ElementCollection
-    @CollectionTable(name="tbl_uploaded_files", joinColumns=@JoinColumn(name="label"))
+    @CollectionTable(name="tbl_uploaded_files", joinColumns=@JoinColumn(name="id"))
     @LazyCollection(LazyCollectionOption.FALSE)
     @Column(name="files")
     private List<byte[]> data;
      
+    @Override
+    public int getId() {
+        return id;
+    }
+    
     /* (non-Javadoc)
      * @see edu.asu.diging.grazer.core.domain.IFile#getLabel()
      */
