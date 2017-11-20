@@ -50,15 +50,13 @@
           <sec:authorize access="isAuthenticated()">
             <div class="container">
               <div class="row" style="padding-top: 15px;">
-                <div class="col-md-10">
-                  Welcome <i class="fa fa-user"></i><span style="margin-left: 5px;"><sec:authentication property="principal.username" /></span>!
-                  <form action="<c:url value='/logout' />" method='POST' class="pull-right">
-                    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                    <div>
-                      <button type="submit" class="btn btn-link" style="color:#800000"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
-                    </div>
-                  </form>
-                </div>
+                Welcome <i class="fa fa-user"></i><span style="margin-left: 5px;"><sec:authentication property="principal.username" /></span>!
+                <form action="<c:url value='/logout' />" method='POST' class="pull-right">
+                  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                  <div>
+                    <button type="submit" class="btn btn-link" style="color:#800000"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
+                  </div>
+                </form>
               </div>
             </div>
           </sec:authorize>
