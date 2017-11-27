@@ -59,6 +59,7 @@ $(document).ready(function() {
 	            	cy.ready(function() {
                     $(".person-entry").hover(highligthPersonInGraph, removeHighlight);
                 });
+	            
             	}
         },
         error: function() {
@@ -70,12 +71,6 @@ $(document).ready(function() {
 	function highligthPersonInGraph() {
 		var id = $(this).data("concept-id");
 		var node = cy.getElementById(id);
-		cy.animate({
-            fit: {
-                eles: node,
-                padding: 230,
-            }
-        });
 		node.animate({
 			css: { 'width': highlightSize, 'height' : highlightSize},
 		});
@@ -84,31 +79,53 @@ $(document).ready(function() {
 	function removeHighlight() {
 		var id = $(this).data("concept-id");
         var node = cy.getElementById(id);
+        cy.animate({
+            fit: {
+                eles: node,
+                padding: 230,
+            }
+        });
         node.animate({
             css: { 'width': nodeSize, 'height' : nodeSize}
         });
 	}
-	
 })
 
+</script>
+<script type="text/javascript">
+        $(function() {
+            var offset = $("#graph").offset();
+            var topPadding = 15;
+            $(window).scroll(function() {
+                if ($(window).scrollTop() > offset.top) {
+                    $("#graph").stop().animate({
+                        marginTop: $(window).scrollTop() - offset.top + topPadding
+                    });
+                } else {
+                    $("#graph").stop().animate({
+                        marginTop: 0
+                    });
+                };
+            });
+        });
+        window.onresize = function(){ location.reload(); }
 </script>
 
 <h2>People mentioned in the Embryo Project</h2>
 
 <div class="row">
-<div class="col-md-5">
-<div>Total: <span id="count">${count}</span></div>
-<div id="personList" class="list-group">
-    <c:forEach items="${concepts}" var="concept">
-    <a href="concept/${concept.id}" class="list-group-item person-entry" data-concept-id="${concept.id}">${concept.word}</a>
-    </c:forEach>
-</div>
-</div>
-
-<div class="col-md-7">
-<div id="network" style="min-width: 500px; min-height: 500px;">
-<div id="spinner" class="text-center"><div class="fa fa-spinner fa-spin"></div> Loading graph...</div>
-</div>
-</div>
+	<div class="col-md-5">
+		<div>Total: <span id="count">${count}</span></div>
+		<div id="personList" class="list-group">
+		    <c:forEach items="${concepts}" var="concept">
+		    <a href="concept/${concept.id}" class="list-group-item person-entry" data-concept-id="${concept.id}">${concept.word}</a>
+		    </c:forEach>
+		</div>
+	</div>
+	<div class="col-md-7" id="graph">
+		<div id="network" style="min-width: 500px; min-height: 500px;">
+		<div id="spinner" class="text-center"><div class="fa fa-spinner fa-spin"></div> Loading graph...</div>
+		</div>
+	</div>
 </div>
 <div class="col-md-12" id="array"></div>
