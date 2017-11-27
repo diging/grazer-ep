@@ -52,11 +52,10 @@ $(document).ready(function() {
 					}
 				});
 	            
-	            cy.on('tap', 'node', function(){
+				cy.on('tap', 'node', function(){
 					window.location.href = "concept/" + this.data('id');
-	            	})
-	            
-				cy.ready(function() {
+				})
+	            cy.ready(function() {
 					$(".person-entry").hover(highligthPersonInGraph, removeHighlight);
 				});  
             	}
