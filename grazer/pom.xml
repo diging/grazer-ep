@@ -12,8 +12,11 @@
         <org.springframework-version>4.3.1.RELEASE</org.springframework-version>
         <spring-security-version>4.1.3.RELEASE</spring-security-version>
         <rdf4j.version>2.2.2</rdf4j.version>
+        
         <hibernate.version>5.2.11.Final</hibernate.version>
-
+        <hibernate.dialect>org.hibernate.dialect.MySQL5Dialect</hibernate.dialect>
+        <hibernate.dialect.storage_engine>InnoDB</hibernate.dialect.storage_engine>
+        
         <admin.password>admin</admin.password>
 
         <log.level>info</log.level>

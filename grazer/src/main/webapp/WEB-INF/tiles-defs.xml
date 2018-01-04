@@ -4,26 +4,25 @@
        "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
 <tiles-definitions>
 
-	<!-- Base definitions -->
-	<definition name="base.definition" template="/WEB-INF/tiles/skeleton.jsp">
-		<put-attribute name="title" value="" />
-		<put-attribute name="navigation" value="" />
-		<put-attribute name="content" value="" />
-		<put-attribute name="header" value="" />
-		<put-attribute name="pageName" value="" />
-		<put-attribute name="currentPage" value="home" />
-	</definition>
+    <!-- Base definitions -->
+    <definition name="base.definition" template="/WEB-INF/tiles/skeleton.jsp">
+        <put-attribute name="title" value="" />
+        <put-attribute name="navigation" value="" />
+        <put-attribute name="content" value="" />
+        <put-attribute name="header" value="" />
+        <put-attribute name="pageName" value="" />
+        <put-attribute name="currentPage" value="home" />
+    </definition>
 	
-	<definition name="home" extends="base.definition">
-		<put-attribute name="content" value="/WEB-INF/views/home.jsp" />	
-	</definition>
-	
-	<definition name="person" extends="base.definition">
+    <definition name="home" extends="base.definition">
+        <put-attribute name="content" value="/WEB-INF/views/home.jsp" />	
+    </definition>
+    
+    <definition name="person" extends="base.definition">
         <put-attribute name="content" value="/WEB-INF/views/person.jsp" />    
     </definition>
     
     <definition name="person/graph" template="/WEB-INF/views/personGraph.jsp">  
     </definition>
-	
 	
 </tiles-definitions>
