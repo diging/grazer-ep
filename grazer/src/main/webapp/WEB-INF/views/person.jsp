@@ -33,9 +33,7 @@
 <div>
 	<c:forEach var="listVar" items="${concept.getEqualTo() }"> 
 		<c:if test="${not empty listVar }">
-			<c:if test="${listVar != '[]'}">
-	    			<a href="${listVar}" target="_blank"> <i class="fa fa-external-link" aria-hidden="true"></i>       ${listVar} </a><br/>
-	    		</c:if>
+	    		<a href="${listVar}" target="_blank"> <i class="fa fa-external-link" aria-hidden="true"></i>       ${listVar} </a><br/>
 		</c:if>
 	</c:forEach>
 </div>
