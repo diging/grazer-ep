@@ -1,6 +1,8 @@
 package edu.asu.diging.grazer.web;
 
 import java.io.IOException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,8 @@ import edu.asu.diging.grazer.core.conceptpower.IConceptpowerCache;
 import edu.asu.diging.grazer.core.graphs.IGraphDBConnection;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.impl.Graph;
+import edu.asu.diging.grazer.core.wikidata.IWikipediaConnector;
+import edu.asu.diging.grazer.core.wikidata.impl.WikidataStatement;
 
 @Controller
 public class PersonController {
@@ -24,12 +28,25 @@ public class PersonController {
     @Autowired
     private IConceptpowerCache cache;
     
+    @Autowired
+    private IWikipediaConnector wikiConnector;
+    
     @RequestMapping(value = "/concept/{personId}", produces = MediaType.TEXT_HTML_VALUE)
     public String showPerson(@PathVariable("personId") String personId, Model model) throws IOException {
         
         IConcept concept = cache.getConceptById(personId);
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
+        
+        List<WikidataStatement> statements = wikiConnector.getWikidataStatements(concept);
+        Collections.sort(statements, new Comparator<WikidataStatement>() {
+
+            @Override
+            public int compare(WikidataStatement o1, WikidataStatement o2) {
+                return o1.getPredicate().getLabel().compareTo(o2.getPredicate().getLabel());
+            }
+        });
+        model.addAttribute("wikipedia", statements);
         return "person";
     }
     

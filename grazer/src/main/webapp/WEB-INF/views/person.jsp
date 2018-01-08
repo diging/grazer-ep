@@ -39,6 +39,23 @@
 </div>
 <br/>
 
+<div class="col-md-8">
 <ul id="graphList" class="list-group">
 <div id="spinner"><div class="fa fa-spinner fa-spin"></div> Loading relationships... Hang tight, this might take a few minutes.</div>
 </ul>
+</div>
+
+<div class="col-md-4">
+<div class="panel panel-default">
+  <div class="panel-heading">Wikidata Statements</div>
+  <div class="panel-body">
+    <ul>
+    <c:forEach var="statement" items="${wikipedia}">
+	<li><strong>${statement.predicate.label}</strong>: ${statement.object.label}</li>
+	</c:forEach>
+	</ul>
+  </div>
+</div>
+
+</div>
+

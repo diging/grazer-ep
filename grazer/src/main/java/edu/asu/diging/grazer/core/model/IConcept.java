@@ -61,4 +61,8 @@ public interface IConcept {
 
     OffsetDateTime getLastUpdated();
 
+    void setSimilarTo(List<String> similarTo);
+
+    List<String> getSimilarTo();
+
 }
