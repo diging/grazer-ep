@@ -49,11 +49,20 @@
 <div class="panel panel-default">
   <div class="panel-heading">Wikidata Statements</div>
   <div class="panel-body">
+    <c:if test="${wikidata_error}">
+    <div class="alert alert-danger" role="alert">An error occurred retrieving statements from Wikidata.</div>
+    </c:if>
+    
+    <c:if test="${not wikidata_error}">
+    <c:if test="${empty wikipedia}">
+    <div class="alert alert-warning" role="alert">Could not find any statements. This could either mean that there are no statements in Wikidata or Conceptpower has no Wikipedia link for the concept.</div>
+    </c:if>
     <ul>
-    <c:forEach var="statement" items="${wikipedia}">
-	<li><strong>${statement.predicate.label}</strong>: ${statement.object.label}</li>
-	</c:forEach>
+	    <c:forEach var="statement" items="${wikipedia}">
+		<li><strong>${statement.predicate.label}</strong>: ${statement.object.label}</li>
+		</c:forEach>
 	</ul>
+	</c:if>
   </div>
 </div>
 
