@@ -35,11 +35,18 @@ import org.wikidata.wdtk.wikibaseapi.apierrors.MediaWikiApiErrorException;
 import edu.asu.diging.grazer.core.exception.WikidataException;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.wikidata.IWikidataFetcherFactory;
-import edu.asu.diging.grazer.core.wikidata.IWikipediaConnector;
+import edu.asu.diging.grazer.core.wikidata.IWikidataConnector;
 
+/**
+ * Implementation of {@link IWikidataConnector} using the Wikidata Toolkit.
+ * See https://github.com/Wikidata/Wikidata-Toolkit and https://www.mediawiki.org/wiki/Wikidata_Toolkit
+ * 
+ * @author jdamerow
+ *
+ */
 @Service
 @PropertySource("classpath:/config.properties")
-public class WikidataConnector implements IWikipediaConnector {
+public class WikidataConnector implements IWikidataConnector {
 
     private final String LANGUAGE = "en";
     

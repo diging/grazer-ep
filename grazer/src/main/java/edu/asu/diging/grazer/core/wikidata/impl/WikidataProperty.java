@@ -1,5 +1,11 @@
 package edu.asu.diging.grazer.core.wikidata.impl;
 
+/**
+ * This class represents a property in Wikidata.
+ * 
+ * @author jdamerow
+ *
+ */
 public class WikidataProperty {
 
     private String id;

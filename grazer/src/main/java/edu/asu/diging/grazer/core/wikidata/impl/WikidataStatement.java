@@ -1,5 +1,11 @@
 package edu.asu.diging.grazer.core.wikidata.impl;
 
+/**
+ * This class represents a statement in Wikidata.
+ * 
+ * @author jdamerow
+ *
+ */
 public class WikidataStatement {
 
     private WikidataConcept subject;

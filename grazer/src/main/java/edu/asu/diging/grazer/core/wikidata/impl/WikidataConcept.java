@@ -1,5 +1,11 @@
 package edu.asu.diging.grazer.core.wikidata.impl;
 
+/**
+ * This class represents a concept in Wikidata.
+ * 
+ * @author jdamerow
+ *
+ */
 public class WikidataConcept {
 
     private String id;

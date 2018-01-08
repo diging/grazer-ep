@@ -19,7 +19,7 @@ import edu.asu.diging.grazer.core.exception.WikidataException;
 import edu.asu.diging.grazer.core.graphs.IGraphDBConnection;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.impl.Graph;
-import edu.asu.diging.grazer.core.wikidata.IWikipediaConnector;
+import edu.asu.diging.grazer.core.wikidata.IWikidataConnector;
 import edu.asu.diging.grazer.core.wikidata.impl.WikidataStatement;
 
 @Controller
@@ -34,7 +34,7 @@ public class PersonController {
     private IConceptpowerCache cache;
     
     @Autowired
-    private IWikipediaConnector wikiConnector;
+    private IWikidataConnector wikiConnector;
     
     @RequestMapping(value = "/concept/{personId}", produces = MediaType.TEXT_HTML_VALUE)
     public String showPerson(@PathVariable("personId") String personId, Model model) throws IOException {
