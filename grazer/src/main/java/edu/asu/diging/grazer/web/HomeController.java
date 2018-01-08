@@ -70,6 +70,14 @@ public class HomeController {
             IConcept concept = conceptCache.getConceptByUri(uri);
             concepts.add(concept);
         }
+        
+        Collections.sort(concepts, new Comparator<IConcept>() {
+            @Override
+            public int compare(final IConcept concept1, final IConcept concept2) {
+                return concept1.getWord().compareTo(concept2.getWord());
+            }
+        });
+        
         model.addAttribute("concepts", concepts);
         model.addAttribute("count", concepts.size());
         return "home";
