@@ -54,6 +54,12 @@ public class Concept implements IConcept{
     
     @ElementCollection
     @LazyCollection(LazyCollectionOption.FALSE)
+    @CollectionTable(name="tbl_conceptpower_similarTo", joinColumns=@JoinColumn(name="id"))
+    @Column(name="similarTo")
+    private List<String> similarTo;
+    
+    @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
     @CollectionTable(name="tbl_conceptpower_wordnetids", joinColumns=@JoinColumn(name="id"))
     @Column(name="wordnetids")
     private List<String> wordnetIds;
@@ -237,6 +243,16 @@ public class Concept implements IConcept{
         this.equalTo = equalTo;
     }
     
+    @Override
+    public List<String> getSimilarTo() {
+        return similarTo;
+    }
+
+    @Override
+    public void setSimilarTo(List<String> similarTo) {
+        this.similarTo = similarTo;
+    }
+
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#getWordnetIds()
      */
