@@ -15,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import edu.asu.diging.grazer.core.model.IConcept;
-import edu.asu.diging.grazer.core.model.impl.Concept;
 import edu.asu.diging.grazer.core.quadriga.IQuadrigaConnector;
 
 @Service
@@ -58,7 +57,7 @@ public class QuarigaConnector implements IQuadrigaConnector {
    
     @Override
     public List<IConcept> checkPersonsResult(String url) {
-        Concept[] concepts = restTemplate.getForObject(String.format("%s%s", quadrigaUrl, url), Concept[].class);
+        IConcept[] concepts = restTemplate.getForObject(String.format("%s%s", quadrigaUrl, url), IConcept[].class);
         if (concepts != null) {
             return Arrays.asList(concepts);
         }
