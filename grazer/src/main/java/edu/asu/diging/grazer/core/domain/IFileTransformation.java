@@ -21,14 +21,6 @@ public interface IFileTransformation {
 
     void setDescription(String description);
     
-    /*List<byte[]> getData();
-
-    void setData(List<byte[]> data);
-    
-    List<String> getFileNames();
-
-    void setfileNames(List<String> fileNames);*/
-    
     IFileData getFile();
     
     void setFile(IFileData file);

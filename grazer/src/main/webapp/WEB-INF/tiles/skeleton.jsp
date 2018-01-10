@@ -117,8 +117,8 @@
         <h1><a class="appName" href="<c:url value="/" />">EP Grazer</a></h1>   
       </div>
       <c:if test="${show_alert}" >
- 	    <div class="alert alert-${alert_type}" role="alert">${alert_msg}</div>
- 	  </c:if>
+        <div class="alert alert-${alert_type}" role="alert">${alert_msg}</div>
+      </c:if>
       <tiles:insertAttribute name="content" />
 
     </div> <!-- /container -->
