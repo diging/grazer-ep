@@ -2,14 +2,36 @@ package edu.asu.diging.grazer.core.fileupload.db;
 
 import java.util.List;
 
-import edu.asu.diging.grazer.core.domain.impl.FileImpl;
+import edu.asu.diging.grazer.core.domain.impl.FileTransformationImpl;
 
+/**
+ * This class uploads the metadata of the files to the database.
+ * 
+ * @author mshah18
+ *
+ */
 public interface IFileUploadDatabaseConnection {
 
-    void save(FileImpl transformationFile);
+    /**
+     * Saves the details of the files in the database
+     * 
+     * @param transformationFile
+     */
+    void save(FileTransformationImpl transformationFile);
 
-    List<FileImpl> list();
+    /**
+     * Displays all the files stored in the database on the web page.
+     * 
+     * @return
+     */
+    List<FileTransformationImpl> list();
 
-    FileImpl get(int id);
+    /**
+     * Retrieves the files from the database.
+     * 
+     * @param id
+     * @return
+     */
+    FileTransformationImpl get(int id);
 
 }

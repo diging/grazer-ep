@@ -1,38 +1,34 @@
 package edu.asu.diging.grazer.web;
 
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.io.IOUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import edu.asu.diging.grazer.core.domain.impl.FileImpl;
+import edu.asu.diging.grazer.core.domain.IFileData;
+import edu.asu.diging.grazer.core.domain.impl.FileDataImpl;
+import edu.asu.diging.grazer.core.domain.impl.FileTransformationImpl;
 import edu.asu.diging.grazer.core.fileupload.db.impl.FileUploadDatabaseConnection;
+import edu.asu.diging.grazer.core.fileupload.service.impl.FileUploadServiceImpl;
+import edu.asu.diging.grazer.core.fileupload.service.IFileUploadService;
 
 @Controller
 public class FileUploadController {
     
-    private final String FILE_EXTENSION = ".graphml";
-    
     @Autowired
     private FileUploadDatabaseConnection connection;
     
-    @RequestMapping("/save-transformation")
-    public String uploadResources(@ModelAttribute FileImpl transformation,
+    @RequestMapping(value = "/transformation/save", method = RequestMethod.POST)
+    public String uploadResources(@ModelAttribute FileTransformationImpl transformation,
                                  Model model, @RequestParam CommonsMultipartFile[] files) {
 
         List<byte[]> data = new ArrayList<byte[]>();
@@ -42,45 +38,27 @@ public class FileUploadController {
             fileNames.add(multipartFile.getOriginalFilename()); 
         }
         
-        transformation.setfileNames(fileNames);
-        transformation.setData(data);
+        IFileUploadService service = new FileUploadServiceImpl();
+        service.uploadFiles(data, fileNames);
+        
+        IFileData file = new FileDataImpl();
+        file.setfileNames(fileNames);
+        file.setData(data);
+        
+        transformation.setFile(file);
         transformation.setDate(new Date());
         transformation.setUploader(SecurityContextHolder.getContext().getAuthentication().getName());   
         connection.save(transformation);
         
         model.addAttribute("transformation", transformation);
-        return "redirect:/transformation-input-form";    
+        return "redirect:/transformation/add";    
     }
      
-    @RequestMapping(value = "transformation-input-form")
+    @RequestMapping(value = "/transformation/add")
     public String inputFile(Model model) {
-        model.addAttribute("transformation", new FileImpl());
+        model.addAttribute("transformation", new FileTransformationImpl());
         model.addAttribute("fileList", connection.list());
         return "fileUploadForm";
-    }
-    
-    @RequestMapping(value = "/download/{id}/{fileName}")
-    public String download(@PathVariable("id") int id, @PathVariable("fileName") String fileName, HttpServletResponse response) {
-        
-        fileName = fileName + FILE_EXTENSION;
-        FileImpl file = connection.get(id);
-        List<String> fileNames = file.getfileNames();
-        for(int i = 0; i < fileNames.size(); i++) {
-            if(fileName.equals(fileNames.get(i))) {
-                try {
-                    response.setContentType("APPLICATION/OCTET-STREAM");
-                    response.setHeader("Content-Disposition", "attachment;filename=\"" +fileName+ "\"");
-                    OutputStream out = response.getOutputStream();
-                    ByteArrayInputStream in = new ByteArrayInputStream(file.getData().get(i));
-                    IOUtils.copy(in, out);
-                    out.flush();
-                    out.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return null;
     }
     
 }

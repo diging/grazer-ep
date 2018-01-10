@@ -1,26 +1,22 @@
 package edu.asu.diging.grazer.core.domain.impl;
 
 import java.util.Date;
-import java.util.List;
 
-import javax.persistence.CollectionTable;
-import javax.persistence.Column;
-import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
-import org.hibernate.annotations.LazyCollection;
-import org.hibernate.annotations.LazyCollectionOption;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import edu.asu.diging.grazer.core.domain.IFileImpl;
+import edu.asu.diging.grazer.core.domain.IFileData;
+import edu.asu.diging.grazer.core.domain.IFileTransformation;
 
 @Entity
 @Table(name="tbl_files")
-public class FileImpl implements IFileImpl
+public class FileTransformationImpl implements IFileTransformation
 {
  
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private int id;
@@ -29,16 +25,8 @@ public class FileImpl implements IFileImpl
     private String uploader;
     private Date date;
     
-    @ElementCollection
-    @CollectionTable(name="tbl_file_names", joinColumns=@JoinColumn(name="id"))
-    @LazyCollection(LazyCollectionOption.FALSE)
-    private List<String> fileNames;
-    
-    @ElementCollection
-    @CollectionTable(name="tbl_uploaded_files", joinColumns=@JoinColumn(name="id"))
-    @LazyCollection(LazyCollectionOption.FALSE)
-    @Column(name="files")
-    private List<byte[]> data;
+    @JsonDeserialize(as=FileDataImpl.class)
+    @Transient private IFileData file;
      
     @Override
     public int getId() {
@@ -77,24 +65,12 @@ public class FileImpl implements IFileImpl
         this.description = description;
     }
     
-    @Override
-    public List<byte[]> getData() {
-        return data;
+    public IFileData getFile() {
+        return file;
     }
-    
-    @Override
-    public void setData(List<byte[]> data) {
-        this.data = data;
-    }
-    
-    @Override
-    public List<String> getfileNames() {
-        return fileNames;
-    }
-    
-    @Override
-    public void setfileNames(List<String> fileNames) {
-        this.fileNames = fileNames;
+
+    public void setFile(IFileData file) {
+        this.file = file;
     }
     
     /* (non-Javadoc)
