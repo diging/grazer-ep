@@ -21,9 +21,9 @@ public interface IFileTransformation {
 
     void setDescription(String description);
     
-    IFileData getFile();
+    IFile getFile();
     
-    void setFile(IFileData file);
+    void setFile(IFile file);
     
     String getUploader();
 

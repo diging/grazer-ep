@@ -11,7 +11,7 @@ import javax.persistence.Transient;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import edu.asu.diging.grazer.core.domain.IFileData;
+import edu.asu.diging.grazer.core.domain.IFile;
 import edu.asu.diging.grazer.core.domain.IFileTransformation;
 
 @Entity
@@ -25,8 +25,8 @@ public class FileTransformationImpl implements IFileTransformation
     private String uploader;
     private Date date;
     
-    @JsonDeserialize(as=FileDataImpl.class)
-    @Transient private IFileData file;
+    @JsonDeserialize(as=FileImpl.class)
+    @Transient private IFile file;
      
     @Override
     public int getId() {
@@ -65,11 +65,11 @@ public class FileTransformationImpl implements IFileTransformation
         this.description = description;
     }
     
-    public IFileData getFile() {
+    public IFile getFile() {
         return file;
     }
 
-    public void setFile(IFileData file) {
+    public void setFile(IFile file) {
         this.file = file;
     }
     

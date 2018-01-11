@@ -1,5 +1,6 @@
-package edu.asu.diging.grazer.core.fileupload.service;
+    package edu.asu.diging.grazer.core.fileupload.service;
 
+import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
@@ -15,12 +16,12 @@ import edu.asu.diging.grazer.core.domain.impl.FileTransformationImpl;
 public interface IFileUploadService {
 
     /**
-     * Receives a list of byte arrays and fileNames which it uploads to the server.
+     * Receives a hashMap of fileNames and byte arrays of the file data which it uploads to the server.
      * 
      * @param data
      * @param fileNames
      */
-    void uploadFiles(List<byte[]> data, List<String> fileNames);
+    void uploadFiles(HashMap<String, byte[]> fileMap);
     
     /**
      * Saves the information about the files and sends it to the FileUploadDatabaseConnection.

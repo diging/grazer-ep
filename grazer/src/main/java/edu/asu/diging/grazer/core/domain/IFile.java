@@ -1,6 +1,6 @@
 package edu.asu.diging.grazer.core.domain;
 
-import java.util.List;
+import java.util.HashMap;
 
 /**
  * 
@@ -10,14 +10,10 @@ import java.util.List;
  * @author mshah18
  *
  */
-public interface IFileData {
+public interface IFile {
 
-    List<byte[]> getData();
-
-    void setData(List<byte[]> data);
-
-    List<String> getFileNames();
-
-    void setfileNames(List<String> fileNames);
+    HashMap<String, byte[]> getFiles();
+    
+    void setFiles(HashMap<String, byte[]> files);
 
 }

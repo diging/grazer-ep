@@ -6,6 +6,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
@@ -18,7 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import edu.asu.diging.grazer.core.domain.impl.FileDataImpl;
+import edu.asu.diging.grazer.core.domain.impl.FileImpl;
 import edu.asu.diging.grazer.core.domain.impl.FileTransformationImpl;
 import edu.asu.diging.grazer.core.fileupload.db.impl.FileUploadDatabaseConnection;
 import edu.asu.diging.grazer.core.fileupload.service.IFileUploadService;
@@ -33,23 +34,19 @@ public class FileUploadServiceImpl implements IFileUploadService {
     private FileUploadDatabaseConnection connection;
     
     @Autowired
-    private FileDataImpl file;
+    private FileImpl file;
     
     @Autowired
     private Environment env;
     
-    /* (non-Javadoc)
-     * @see edu.asu.diging.grazer.core.fileupload.service.impl.IFileUploadService#uploadFiles(java.util.List, java.util.List)
-     */
-    @Override
-    public void uploadFiles(List<byte[]> data, List<String> fileNames) {
+    public void uploadFiles(HashMap<String, byte[]> filesMap) {
         
-        for(int i = 0; i < fileNames.size(); i++) {
+        for(String key: filesMap.keySet()) {
             try {      
                 int num = 1;
                 
                 String dir = env.getProperty("transformation.file.dir");
-                String serverFileName = dir + File.separator + fileNames.get(i);
+                String serverFileName = dir + File.separator + key;
                 String extension = FilenameUtils.getExtension(serverFileName);
                 String serverFileNameWithoutExt = FilenameUtils.removeExtension(serverFileName);
                 
@@ -60,11 +57,11 @@ public class FileUploadServiceImpl implements IFileUploadService {
                 }
 
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-                stream.write(data.get(i));
+                stream.write(filesMap.get(key));
                 stream.close();
                 logger.info("Server File Location = " + serverFile.getAbsolutePath());
             } catch(IOException e) {
-                logger.error("You failed to upload " + fileNames.get(i) + e.getMessage());
+                logger.error("You failed to upload " + key + e.getMessage());
             } 
         }
     }
@@ -72,17 +69,13 @@ public class FileUploadServiceImpl implements IFileUploadService {
     @Override
     public void save(CommonsMultipartFile[] files, FileTransformationImpl transformationFile) {
         
-        List<byte[]> data = new ArrayList<byte[]>();
-        List<String> fileNames = new ArrayList<String>();
+        HashMap<String, byte[]> filesMap = new HashMap<String, byte[]>();
+        
         for (CommonsMultipartFile multipartFile : files) {
-            data.add(multipartFile.getBytes());
-            fileNames.add(multipartFile.getOriginalFilename()); 
+            filesMap.put(multipartFile.getOriginalFilename(), multipartFile.getBytes());
         }
         
-        uploadFiles(data, fileNames);
-        
-        file.setfileNames(fileNames);
-        file.setData(data);
+        uploadFiles(filesMap);
         
         transformationFile.setFile(file); 
         transformationFile.setDate(new Date());
