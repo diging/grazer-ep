@@ -106,7 +106,6 @@ $(document).ready(function() {
                 };
             });
         });
-        window.onresize = function(){ location.reload(); }
 </script>
 
 <h2>People mentioned in the Embryo Project</h2>
