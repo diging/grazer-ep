@@ -3,7 +3,7 @@ package edu.asu.diging.grazer.core.domain;
 import java.util.Date;
 
 /**
- * This class stores all the details about the transformation files 
+ * This class stores all the details about a transformation file and pattern file 
  * i.e their IDs, labels, descriptions, file names, data uploaded, and uploader.
  * 
  * @author mshah18

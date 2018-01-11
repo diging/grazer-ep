@@ -13,7 +13,6 @@
             <value>
                 hibernate.show_sql=false
                 hibernate.hbm2ddl.auto = update
-                hibernate.connection.SetBigStringTryClob = true
             </value>
         </property>
         <property name="packagesToScan">

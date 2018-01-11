@@ -4,7 +4,9 @@ import java.util.List;
 
 /**
  * 
- * This class stores the file name and file data which is in byte format.
+ * This class stores the file names and file data of one pattern file and its 
+ * corresponding transformation file. 
+ * 
  * @author mshah18
  *
  */

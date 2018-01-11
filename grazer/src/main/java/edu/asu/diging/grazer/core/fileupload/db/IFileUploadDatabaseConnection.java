@@ -5,7 +5,8 @@ import java.util.List;
 import edu.asu.diging.grazer.core.domain.impl.FileTransformationImpl;
 
 /**
- * This class uploads the metadata of the files to the database.
+ * This class saves the metadata of the files to the database, 
+ * displays it and retrieves the metadata from the database.
  * 
  * @author mshah18
  *

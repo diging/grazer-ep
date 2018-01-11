@@ -4,9 +4,11 @@ import java.util.List;
 
 import javax.persistence.Table;
 
+import org.springframework.stereotype.Component;
+
 import edu.asu.diging.grazer.core.domain.IFileData;
 
-@Table(name="tbl_files")
+@Component
 public class FileDataImpl implements IFileData {
 
     private List<String> fileNames;

@@ -28,6 +28,7 @@
         <conceptpower.url>https://chps.asu.edu/conceptpower/rest/</conceptpower.url>
 
         <rdf.store.dir></rdf.store.dir>
+        <transformation.file.dir></transformation.file.dir>
         <cron.job.schedule>0 00 21 * * SUN</cron.job.schedule>
 
         <tomcat.manager.path></tomcat.manager.path>
