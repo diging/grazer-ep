@@ -26,7 +26,7 @@ import edu.asu.diging.grazer.core.model.IConceptType;
 @Table(name = "tbl_conceptpower_concept", indexes = {
         @Index(columnList="id", name="IDX_ID")
 })
-public class Concept implements IConcept {
+public class Concept implements IConcept{
 
     @Id private String uri;
     private String id;
@@ -51,6 +51,12 @@ public class Concept implements IConcept {
     @CollectionTable(name="tbl_conceptpower_equalto", joinColumns=@JoinColumn(name="id"))
     @Column(name="equalto")
     private List<String> equalTo;
+    
+    @ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
+    @CollectionTable(name="tbl_conceptpower_similarTo", joinColumns=@JoinColumn(name="id"))
+    @Column(name="similarTo")
+    private List<String> similarTo;
     
     @ElementCollection
     @LazyCollection(LazyCollectionOption.FALSE)
@@ -237,6 +243,16 @@ public class Concept implements IConcept {
         this.equalTo = equalTo;
     }
     
+    @Override
+    public List<String> getSimilarTo() {
+        return similarTo;
+    }
+
+    @Override
+    public void setSimilarTo(List<String> similarTo) {
+        this.similarTo = similarTo;
+    }
+
     /* (non-Javadoc)
      * @see edu.asu.spring.quadriga.conceptpower.db.impl.IConcept#getWordnetIds()
      */
@@ -303,4 +319,5 @@ public class Concept implements IConcept {
     public void setLastUpdated(OffsetDateTime lastUpdated) {
         this.lastUpdated = lastUpdated;
     }
+
 }

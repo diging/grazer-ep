@@ -1,6 +1,7 @@
 package edu.asu.diging.grazer.core.conceptpower.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Component;
@@ -58,6 +59,12 @@ public class ConceptMapper implements IConceptMapper {
             concept.setEqualTo(conceptpowerConcept.getEqualTo());
         } else {
             concept.setEqualTo(new ArrayList<>());
+        }
+        
+        if (conceptpowerConcept.getSimilarTo() != null) {
+            concept.setSimilarTo(Arrays.asList(conceptpowerConcept.getSimilarTo().split(",")));
+        } else {
+            concept.setSimilarTo(new ArrayList<>());
         }
         
         //WORDNETIDS
