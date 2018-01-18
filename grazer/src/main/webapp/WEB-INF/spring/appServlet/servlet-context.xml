@@ -41,5 +41,9 @@
         <!-- setting maximum upload size -->
         <beans:property name="maxUploadSize" value="100000000" />
     </beans:bean>
+    <beans:bean id="formValidator" class="edu.asu.diging.grazer.web.validator.FormValidator" />
+    <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <beans:property name="basename" value="classpath:message" />
+    </beans:bean>
 
 </beans:beans>

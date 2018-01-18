@@ -17,11 +17,12 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import edu.asu.diging.grazer.core.domain.impl.FileImpl;
-import edu.asu.diging.grazer.core.domain.impl.FileTransformationImpl;
-import edu.asu.diging.grazer.core.fileupload.db.impl.FileUploadDatabaseConnection;
+import edu.asu.diging.grazer.core.domain.impl.TransformationFileImpl;
+import edu.asu.diging.grazer.core.domain.impl.FileMetadataImpl;
+import edu.asu.diging.grazer.core.fileupload.db.impl.FileMetadataDatabaseConnection;
 import edu.asu.diging.grazer.core.fileupload.service.IFileUploadService;
 
 @Service
@@ -31,15 +32,15 @@ public class FileUploadServiceImpl implements IFileUploadService {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
     @Autowired
-    private FileUploadDatabaseConnection connection;
+    private FileMetadataDatabaseConnection connection;
     
     @Autowired
-    private FileImpl file;
+    private TransformationFileImpl file;
     
     @Autowired
     private Environment env;
     
-    public void uploadFiles(HashMap<String, byte[]> filesMap) {
+    /*public void uploadFiles(HashMap<String, byte[]> filesMap) {
         
         for(String key: filesMap.keySet()) {
             try {      
@@ -61,23 +62,27 @@ public class FileUploadServiceImpl implements IFileUploadService {
                 stream.close();
                 logger.info("Server File Location = " + serverFile.getAbsolutePath());
             } catch(IOException e) {
-                logger.error("You failed to upload " + key + e.getMessage());
+                logger.error("You failed to upload " + key, e);
             } 
         }
-    }
+    }*/
 
-    @Override
-    public void save(CommonsMultipartFile[] files, FileTransformationImpl transformationFile) {
+    public void uploadFiles(CommonsMultipartFile[] filesMap) {
         
-        HashMap<String, byte[]> filesMap = new HashMap<String, byte[]>();
+    }
+    
+    @Override
+    public void save(CommonsMultipartFile[] files, FileMetadataImpl transformationFile) {
+        
+        /*HashMap<String, byte[]> filesMap = new HashMap<String, byte[]>();
         
         for (CommonsMultipartFile multipartFile : files) {
             filesMap.put(multipartFile.getOriginalFilename(), multipartFile.getBytes());
-        }
+        }*/
         
-        uploadFiles(filesMap);
+        uploadFiles(files);
         
-        transformationFile.setFile(file); 
+        transformationFile.setFiles(file); 
         transformationFile.setDate(new Date());
         transformationFile.setUploader(SecurityContextHolder.getContext().getAuthentication().getName());
         
@@ -85,12 +90,12 @@ public class FileUploadServiceImpl implements IFileUploadService {
     }
 
     @Override
-    public List<FileTransformationImpl> list() {
+    public List<FileMetadataImpl> list() {
         return connection.list();
     }
 
     @Override
-    public FileTransformationImpl get(int id) {
+    public FileMetadataImpl get(int id) {
         return connection.get(id);
     }
 }

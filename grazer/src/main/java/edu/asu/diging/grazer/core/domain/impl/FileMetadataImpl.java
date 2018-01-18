@@ -1,6 +1,7 @@
 package edu.asu.diging.grazer.core.domain.impl;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -9,24 +10,29 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.web.multipart.MultipartFile;
+
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import edu.asu.diging.grazer.core.domain.IFile;
-import edu.asu.diging.grazer.core.domain.IFileTransformation;
+import edu.asu.diging.grazer.core.domain.ITransformationFile;
+import edu.asu.diging.grazer.core.domain.IFileMetadata;
 
 @Entity
 @Table(name="tbl_files")
-public class FileTransformationImpl implements IFileTransformation
+public class FileMetadataImpl implements IFileMetadata
 {
  
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private int id;
+    @NotEmpty
     private String label;
     private String description;
     private String uploader;
     private Date date;
     
-    @JsonDeserialize(as=FileImpl.class)
-    @Transient private IFile file;
+    @NotEmpty
+    //private List<MultipartFile> file;
+    @Transient private ITransformationFile file;
      
     @Override
     public int getId() {
@@ -65,11 +71,11 @@ public class FileTransformationImpl implements IFileTransformation
         this.description = description;
     }
     
-    public IFile getFile() {
+    public ITransformationFile getFiles() {
         return file;
     }
 
-    public void setFile(IFile file) {
+    public void setFiles(ITransformationFile file) {
         this.file = file;
     }
     

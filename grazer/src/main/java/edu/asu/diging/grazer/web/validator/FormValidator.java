@@ -1,0 +1,32 @@
+package edu.asu.diging.grazer.web.validator;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.PropertySource;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
+
+import edu.asu.diging.grazer.core.domain.impl.FileMetadataImpl;
+import edu.asu.diging.grazer.core.fileupload.service.impl.FileUploadServiceImpl;
+
+@Component
+@PropertySource(value = "classpath:validation.properties")
+public class FormValidator implements Validator {
+
+    @Autowired
+    FileUploadServiceImpl service;
+    
+    @Override
+    public boolean supports(Class<?> clazz) {
+        return FileMetadataImpl.class.equals(clazz);
+    }
+    
+    @Override
+    public void validate(Object target, Errors errors) {
+        
+        FileMetadataImpl fileMetadata = (FileMetadataImpl) target;
+        
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "label", "NotEmpty.fileUploadForm.label");
+    }
+}

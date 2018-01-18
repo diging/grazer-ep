@@ -5,7 +5,7 @@ import java.util.List;
 
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import edu.asu.diging.grazer.core.domain.impl.FileTransformationImpl;
+import edu.asu.diging.grazer.core.domain.impl.FileMetadataImpl;
 
 /**
  * Service class that connects FileUploadController to FileUploadDatabaseConnection
@@ -21,21 +21,21 @@ public interface IFileUploadService {
      * @param data
      * @param fileNames
      */
-    void uploadFiles(HashMap<String, byte[]> fileMap);
+    void uploadFiles(CommonsMultipartFile[] fileMap);
     
     /**
      * Saves the information about the files and sends it to the FileUploadDatabaseConnection.
      * @param files
      * @param transformationFile
      */
-    void save(CommonsMultipartFile[] files, FileTransformationImpl transformationFile);
+    void save(CommonsMultipartFile[] files, FileMetadataImpl transformationFile);
     
     /**
      * Returns a list of the file metadata stored in the database
      * @return
      */
-    List<FileTransformationImpl> list();
+    List<FileMetadataImpl> list();
     
-    FileTransformationImpl get(int id);
+    FileMetadataImpl get(int id);
 
 }

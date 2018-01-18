@@ -1,6 +1,9 @@
 package edu.asu.diging.grazer.core.domain;
 
 import java.util.Date;
+import java.util.List;
+
+import org.springframework.web.multipart.MultipartFile;
 
 /**
  * This class stores all the details about a transformation file and pattern file 
@@ -9,7 +12,7 @@ import java.util.Date;
  * @author mshah18
  *
  */
-public interface IFileTransformation {
+public interface IFileMetadata {
 
     int getId();
     
@@ -21,9 +24,9 @@ public interface IFileTransformation {
 
     void setDescription(String description);
     
-    IFile getFile();
+    ITransformationFile getFiles();
     
-    void setFile(IFile file);
+    void setFiles(ITransformationFile file);
     
     String getUploader();
 

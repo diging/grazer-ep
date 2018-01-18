@@ -8,12 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.asu.diging.grazer.core.domain.impl.FileTransformationImpl;
-import edu.asu.diging.grazer.core.fileupload.db.IFileUploadDatabaseConnection;
+import edu.asu.diging.grazer.core.domain.impl.FileMetadataImpl;
+import edu.asu.diging.grazer.core.fileupload.db.IFileMetadataDatabaseConnection;
 
 @Component
 @Transactional
-public class FileUploadDatabaseConnection implements IFileUploadDatabaseConnection {
+public class FileMetadataDatabaseConnection implements IFileMetadataDatabaseConnection {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
     
@@ -24,7 +24,7 @@ public class FileUploadDatabaseConnection implements IFileUploadDatabaseConnecti
      * @see edu.asu.diging.grazer.core.fileupload.db.IFileUploadDatabaseConnection#save(edu.asu.diging.grazer.core.domain.impl.FileTransformationImpl)
      */
     @Override
-    public void save(FileTransformationImpl transformationFile) {
+    public void save(FileMetadataImpl transformationFile) {
         sessionFactory.getCurrentSession().save(transformationFile);
     }
     
@@ -33,10 +33,10 @@ public class FileUploadDatabaseConnection implements IFileUploadDatabaseConnecti
      */
     @Override
     @SuppressWarnings("unchecked")
-    public List<FileTransformationImpl> list() {
-        List<FileTransformationImpl> files = null;
+    public List<FileMetadataImpl> list() throws NullPointerException{
+        List<FileMetadataImpl> files = null;
         try {
-            files = (List<FileTransformationImpl>) sessionFactory.getCurrentSession().createQuery("from FileTransformationImpl").list();
+            files = (List<FileMetadataImpl>) sessionFactory.getCurrentSession().createQuery("from FileMetadataImpl").list();
         } catch(NullPointerException e) {
             logger.error("No files stored in database", e);
         }
@@ -47,7 +47,7 @@ public class FileUploadDatabaseConnection implements IFileUploadDatabaseConnecti
      * @see edu.asu.diging.grazer.core.fileupload.db.IFileUploadDatabaseConnection#get(java.lang.String)
      */
     @Override
-    public FileTransformationImpl get(int id) {
-        return (FileTransformationImpl)sessionFactory.getCurrentSession().get(FileTransformationImpl.class, id);
+    public FileMetadataImpl get(int id) {
+        return (FileMetadataImpl)sessionFactory.getCurrentSession().get(FileMetadataImpl.class, id);
     }
 }

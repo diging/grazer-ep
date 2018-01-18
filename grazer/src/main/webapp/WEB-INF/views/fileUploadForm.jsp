@@ -4,22 +4,26 @@
     <form:form commandName="transformation" action="/grazer/transformation/save?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Add a file</legend>
-            <div class="form-group">
-                <label for="label">Transformation Label: </label>
-                <form:input class="form-control" id="label" path="label" cssErrorClass="error" required="required"/>
-                <form:errors path="label" cssClass="error" />
+            <spring:bind path="label">
+            <div class="form-group ${status.error ? 'has-error' : ''}">
+                <label for="label" class="control-label">Transformation Label: </label>
+                <form:input class="form-control" id="label" path="label" cssErrorClass="error" type="text"/>
+                <form:errors path="label" cssClass="error" class="control-label" />
             </div>
+            </spring:bind>
             <div class="form-group">
                 <label for="description">Description: </label>
-                <form:input class="form-control" id="description" path="description" required="required"/>
+                <form:input class="form-control" id="description" path="description" />
             </div>
             <div class="form-group">
                 <label for="file">Transformation File: </label>
-                <input class="form-control" type="file" name="files" accept=".graphml" required="required"/>
+                <input class="form-control" type="file" name="files" accept=".graphml" />
+                <!--<form:errors path="files" cssClass="error" class="control-label" />-->
             </div>
             <div class="form-group">    
                 <label for="file">Pattern File: </label>
-                <input class="form-control" type="file" name="files" accept=".graphml" required="required"/>
+                <input class="form-control" type="file" name="files" accept=".graphml" />
+                <!--<form:errors path="files" cssClass="error" class="control-label" />-->
             </div>
             <div id="buttons">
                 <input class="btn btn-default" id="reset" type="reset" tabindex="4">
