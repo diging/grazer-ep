@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
-import edu.asu.diging.grazer.core.domain.impl.FileMetadataImpl;
+import edu.asu.diging.grazer.core.domain.impl.TransformationFilesMetadataImpl;
 import edu.asu.diging.grazer.core.fileupload.db.IFileMetadataDatabaseConnection;
 
 @Component
@@ -24,7 +24,7 @@ public class FileMetadataDatabaseConnection implements IFileMetadataDatabaseConn
      * @see edu.asu.diging.grazer.core.fileupload.db.IFileUploadDatabaseConnection#save(edu.asu.diging.grazer.core.domain.impl.FileTransformationImpl)
      */
     @Override
-    public void save(FileMetadataImpl transformationFile) {
+    public void save(TransformationFilesMetadataImpl transformationFile) {
         sessionFactory.getCurrentSession().save(transformationFile);
     }
     
@@ -33,10 +33,10 @@ public class FileMetadataDatabaseConnection implements IFileMetadataDatabaseConn
      */
     @Override
     @SuppressWarnings("unchecked")
-    public List<FileMetadataImpl> list() throws NullPointerException{
-        List<FileMetadataImpl> files = null;
+    public List<TransformationFilesMetadataImpl> list() throws NullPointerException{
+        List<TransformationFilesMetadataImpl> files = null;
         try {
-            files = (List<FileMetadataImpl>) sessionFactory.getCurrentSession().createQuery("from FileMetadataImpl").list();
+            files = (List<TransformationFilesMetadataImpl>) sessionFactory.getCurrentSession().createQuery("from FileMetadataImpl").list();
         } catch(NullPointerException e) {
             logger.error("No files stored in database", e);
         }
@@ -47,7 +47,7 @@ public class FileMetadataDatabaseConnection implements IFileMetadataDatabaseConn
      * @see edu.asu.diging.grazer.core.fileupload.db.IFileUploadDatabaseConnection#get(java.lang.String)
      */
     @Override
-    public FileMetadataImpl get(int id) {
-        return (FileMetadataImpl)sessionFactory.getCurrentSession().get(FileMetadataImpl.class, id);
+    public TransformationFilesMetadataImpl get(int id) {
+        return (TransformationFilesMetadataImpl)sessionFactory.getCurrentSession().get(TransformationFilesMetadataImpl.class, id);
     }
 }

@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+//import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import edu.asu.diging.grazer.core.domain.impl.FileMetadataImpl;
+import edu.asu.diging.grazer.core.domain.impl.TransformationFilesMetadataImpl;
 import edu.asu.diging.grazer.core.fileupload.service.impl.FileUploadServiceImpl;
 import edu.asu.diging.grazer.web.validator.FormValidator;
 
@@ -33,7 +33,7 @@ public class FileUploadController {
     private FileUploadServiceImpl service;
     
     @Autowired
-    FormValidator formValidator;
+    private FormValidator formValidator;
 
     @InitBinder
     protected void initBinder(WebDataBinder binder) {
@@ -41,24 +41,25 @@ public class FileUploadController {
     }
     
     @RequestMapping(value = "/transformation/save", method = RequestMethod.POST)
-    public String uploadResources(@Valid @ModelAttribute FileMetadataImpl transformation,
+    public String uploadResources(@Valid @ModelAttribute TransformationFilesMetadataImpl transformation,
             BindingResult result, Model model, @RequestParam CommonsMultipartFile[] files) {
 
         if (result.hasErrors()) {
             logger.info("Error" + result);
             model.addAttribute("transformation", transformation);
-            return "redirect:/transformation/add";
+            return "fileUploadForm";
         } else {
             logger.info("sucess");
+            //service.save(transformation.getFiles(), transformation);
             service.save(files, transformation);
-            model.addAttribute("transformation", new FileMetadataImpl());
+            model.addAttribute("transformation", new TransformationFilesMetadataImpl());
             return "redirect:/transformation/add";    
         }
     }
      
     @RequestMapping(value = "/transformation/add")
     public String inputFile(Model model) {
-        model.addAttribute("transformation", new FileMetadataImpl());
+        model.addAttribute("transformation", new TransformationFilesMetadataImpl());
         model.addAttribute("fileList", service.list());
         return "fileUploadForm";
     }

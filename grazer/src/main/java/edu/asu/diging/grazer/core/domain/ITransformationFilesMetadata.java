@@ -1,5 +1,7 @@
 package edu.asu.diging.grazer.core.domain;
 
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -12,7 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
  * @author mshah18
  *
  */
-public interface IFileMetadata {
+public interface ITransformationFilesMetadata {
 
     int getId();
     
@@ -24,17 +26,17 @@ public interface IFileMetadata {
 
     void setDescription(String description);
     
-    ITransformationFile getFiles();
+    ITransformationFiles getFiles();
     
-    void setFiles(ITransformationFile file);
+    void setFiles(ITransformationFiles files);
     
     String getUploader();
 
     void setUploader(String uploader);
 
-    Date getDate();
+    OffsetDateTime getDate();
 
-    void setDate(Date date);
+    void setDate(OffsetDateTime date);
 
 
 }

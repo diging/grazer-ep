@@ -40,10 +40,19 @@
         class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
         <!-- setting maximum upload size -->
         <beans:property name="maxUploadSize" value="100000000" />
+        <beans:property name="resolveLazily" value="true"/>
     </beans:bean>
-    <beans:bean id="formValidator" class="edu.asu.diging.grazer.web.validator.FormValidator" />
-    <beans:bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+    <beans:bean id="formValidator" 
+        class="edu.asu.diging.grazer.web.validator.FormValidator" />
+    <beans:bean id="messageSource" 
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <beans:property name="basename" value="classpath:message" />
     </beans:bean>
-
+    <beans:bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
+        <beans:property name="converters">
+            <beans:list>
+                <bean class="edu.asu.diging.grazer.web.validator.converter.linkedListToFileConverter" />
+            </beans:list>
+        </beans:property>
+    </beans:bean>
 </beans:beans>

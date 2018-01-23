@@ -2,7 +2,7 @@ package edu.asu.diging.grazer.core.fileupload.db;
 
 import java.util.List;
 
-import edu.asu.diging.grazer.core.domain.impl.FileMetadataImpl;
+import edu.asu.diging.grazer.core.domain.impl.TransformationFilesMetadataImpl;
 
 /**
  * This class saves the metadata of the files to the database, 
@@ -18,14 +18,14 @@ public interface IFileMetadataDatabaseConnection {
      * 
      * @param transformationFile
      */
-    void save(FileMetadataImpl transformationFile);
+    void save(TransformationFilesMetadataImpl transformationFile);
 
     /**
      * Displays all the files stored in the database on the web page.
      * 
      * @return
      */
-    List<FileMetadataImpl> list();
+    List<TransformationFilesMetadataImpl> list();
 
     /**
      * Retrieves the files from the database.
@@ -33,6 +33,6 @@ public interface IFileMetadataDatabaseConnection {
      * @param id
      * @return
      */
-    FileMetadataImpl get(int id);
+    TransformationFilesMetadataImpl get(int id);
 
 }

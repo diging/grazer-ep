@@ -1,5 +1,6 @@
 package edu.asu.diging.grazer.core.domain.impl;
 
+import java.time.OffsetDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -15,12 +16,12 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 
-import edu.asu.diging.grazer.core.domain.ITransformationFile;
-import edu.asu.diging.grazer.core.domain.IFileMetadata;
+import edu.asu.diging.grazer.core.domain.ITransformationFiles;
+import edu.asu.diging.grazer.core.domain.ITransformationFilesMetadata;
 
 @Entity
 @Table(name="tbl_files")
-public class FileMetadataImpl implements IFileMetadata
+public class TransformationFilesMetadataImpl implements ITransformationFilesMetadata
 {
  
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private int id;
@@ -28,11 +29,11 @@ public class FileMetadataImpl implements IFileMetadata
     private String label;
     private String description;
     private String uploader;
-    private Date date;
+    private OffsetDateTime date;
     
-    @NotEmpty
+    //@NotEmpty
     //private List<MultipartFile> file;
-    @Transient private ITransformationFile file;
+    @Transient private ITransformationFiles files;
      
     @Override
     public int getId() {
@@ -71,12 +72,12 @@ public class FileMetadataImpl implements IFileMetadata
         this.description = description;
     }
     
-    public ITransformationFile getFiles() {
-        return file;
+    public ITransformationFiles getFiles() {
+        return files;
     }
 
-    public void setFiles(ITransformationFile file) {
-        this.file = file;
+    public void setFiles(ITransformationFiles files) {
+        this.files = files;
     }
     
     /* (non-Javadoc)
@@ -99,7 +100,7 @@ public class FileMetadataImpl implements IFileMetadata
      * @see edu.asu.diging.grazer.core.domain.IFile#getDate()
      */
     @Override
-    public Date getDate() {
+    public OffsetDateTime getDate() {
         return date;
     }
     
@@ -107,7 +108,7 @@ public class FileMetadataImpl implements IFileMetadata
      * @see edu.asu.diging.grazer.core.domain.IFile#setDate(java.util.Date)
      */
     @Override
-    public void setDate(Date date) {
+    public void setDate(OffsetDateTime date) {
         this.date = date;
     }
 }

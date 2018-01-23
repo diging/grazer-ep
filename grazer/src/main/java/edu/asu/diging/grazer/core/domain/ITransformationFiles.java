@@ -13,15 +13,19 @@ import org.springframework.web.multipart.MultipartFile;
  * @author mshah18
  *
  */
-public interface ITransformationFile {
+public interface ITransformationFiles {
 
     
-    MultipartFile getTransformationFile();
+    HashMap<String, byte[]> getFile();
+    
+    void setFile(HashMap<String, byte[]> files);
+    
+    /*MultipartFile getTransformationFile();
     
     void setTransformationFile(MultipartFile transformationFile);
     
     MultipartFile getPatternFile();
     
-    void setPatternFile(MultipartFile patternFile);
+    void setPatternFile(MultipartFile patternFile);*/
 
 }

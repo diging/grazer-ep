@@ -7,7 +7,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import edu.asu.diging.grazer.core.domain.impl.FileMetadataImpl;
+import edu.asu.diging.grazer.core.domain.impl.TransformationFilesMetadataImpl;
 import edu.asu.diging.grazer.core.fileupload.service.impl.FileUploadServiceImpl;
 
 @Component
@@ -19,13 +19,13 @@ public class FormValidator implements Validator {
     
     @Override
     public boolean supports(Class<?> clazz) {
-        return FileMetadataImpl.class.equals(clazz);
+        return TransformationFilesMetadataImpl.class.equals(clazz);
     }
     
     @Override
     public void validate(Object target, Errors errors) {
         
-        FileMetadataImpl fileMetadata = (FileMetadataImpl) target;
+        TransformationFilesMetadataImpl fileMetadata = (TransformationFilesMetadataImpl) target;
         
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "label", "NotEmpty.fileUploadForm.label");
     }

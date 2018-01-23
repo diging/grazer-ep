@@ -3,9 +3,11 @@
 import java.util.HashMap;
 import java.util.List;
 
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import edu.asu.diging.grazer.core.domain.impl.FileMetadataImpl;
+import edu.asu.diging.grazer.core.domain.ITransformationFiles;
+import edu.asu.diging.grazer.core.domain.impl.TransformationFilesMetadataImpl;
 
 /**
  * Service class that connects FileUploadController to FileUploadDatabaseConnection
@@ -21,21 +23,21 @@ public interface IFileUploadService {
      * @param data
      * @param fileNames
      */
-    void uploadFiles(CommonsMultipartFile[] fileMap);
+    void uploadFiles(HashMap<String, byte[]> filesMap);
     
     /**
      * Saves the information about the files and sends it to the FileUploadDatabaseConnection.
      * @param files
      * @param transformationFile
      */
-    void save(CommonsMultipartFile[] files, FileMetadataImpl transformationFile);
+    void save(CommonsMultipartFile[] files, TransformationFilesMetadataImpl transformationFile);
     
     /**
      * Returns a list of the file metadata stored in the database
      * @return
      */
-    List<FileMetadataImpl> list();
+    List<TransformationFilesMetadataImpl> list();
     
-    FileMetadataImpl get(int id);
+    TransformationFilesMetadataImpl get(int id);
 
 }

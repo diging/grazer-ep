@@ -17,12 +17,12 @@
             </div>
             <div class="form-group">
                 <label for="file">Transformation File: </label>
-                <input class="form-control" type="file" name="files" accept=".graphml" />
+                <input class="form-control" type="file" name="files" accept=".graphml" path="files.file"/>
                 <!--<form:errors path="files" cssClass="error" class="control-label" />-->
             </div>
             <div class="form-group">    
                 <label for="file">Pattern File: </label>
-                <input class="form-control" type="file" name="files" accept=".graphml" />
+                <input class="form-control" type="file" name="files" accept=".graphml" path="files.file"/>
                 <!--<form:errors path="files" cssClass="error" class="control-label" />-->
             </div>
             <div id="buttons">

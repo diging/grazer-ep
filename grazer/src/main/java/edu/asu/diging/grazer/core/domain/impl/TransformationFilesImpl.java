@@ -8,26 +8,26 @@ import javax.persistence.Table;
 import org.springframework.stereotype.Component;
 import org.springframework.web.multipart.MultipartFile;
 
-import edu.asu.diging.grazer.core.domain.ITransformationFile;
+import edu.asu.diging.grazer.core.domain.ITransformationFiles;
 
 @Component
-public class TransformationFileImpl implements ITransformationFile {
+public class TransformationFilesImpl implements ITransformationFiles {
     
-    //private HashMap<String, byte[]> files;
-    //private List<MultipartFile> files;
+    private HashMap<String, byte[]> file;
+    //private List<MultipartFile> transFile;
 
-    //@Override
-    //public List<MultipartFile> getFiles() {
-    //    return files;
-    //}
+    @Override
+    public HashMap<String, byte[]> getFile() {
+        return file;
+    }
 
-    //@Override
-    //public void setFiles(List<MultipartFile> files) {
-    //   this.files = files;
+    @Override
+    public void setFile(HashMap<String, byte[]> transFile) {
+       this.file = transFile;
         
-    //}
+    }
     
-    private MultipartFile transformationFile;
+    /*private MultipartFile transformationFile;
     private MultipartFile patternFile;
     
     public MultipartFile getTransformationFile() {
@@ -44,5 +44,5 @@ public class TransformationFileImpl implements ITransformationFile {
     
     public void setPatternFile(MultipartFile patternFile) {
         this.transformationFile = patternFile;
-    }
+    }*/
 }
