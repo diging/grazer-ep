@@ -3,10 +3,8 @@
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import edu.asu.diging.grazer.core.domain.ITransformationFiles;
 import edu.asu.diging.grazer.core.domain.impl.TransformationFilesMetadataImpl;
 
 /**

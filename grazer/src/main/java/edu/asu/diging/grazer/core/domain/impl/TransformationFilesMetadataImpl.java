@@ -1,8 +1,6 @@
 package edu.asu.diging.grazer.core.domain.impl;
 
 import java.time.OffsetDateTime;
-import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,13 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotEmpty;
-import org.springframework.web.multipart.MultipartFile;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-
-import edu.asu.diging.grazer.core.domain.ITransformationFiles;
 import edu.asu.diging.grazer.core.domain.ITransformationFilesMetadata;
 
 @Entity
@@ -30,10 +25,10 @@ public class TransformationFilesMetadataImpl implements ITransformationFilesMeta
     private String description;
     private String uploader;
     private OffsetDateTime date;
-    
-    //@NotEmpty
-    //private List<MultipartFile> file;
-    @Transient private ITransformationFiles files;
+ 
+    @NotEmpty
+    @Valid
+    @Transient private TransformationFilesImpl files;
      
     @Override
     public int getId() {
@@ -72,11 +67,11 @@ public class TransformationFilesMetadataImpl implements ITransformationFilesMeta
         this.description = description;
     }
     
-    public ITransformationFiles getFiles() {
+    public TransformationFilesImpl getFiles() {
         return files;
     }
 
-    public void setFiles(ITransformationFiles files) {
+    public void setFiles(TransformationFilesImpl files) {
         this.files = files;
     }
     

@@ -36,7 +36,7 @@ public class FileMetadataDatabaseConnection implements IFileMetadataDatabaseConn
     public List<TransformationFilesMetadataImpl> list() throws NullPointerException{
         List<TransformationFilesMetadataImpl> files = null;
         try {
-            files = (List<TransformationFilesMetadataImpl>) sessionFactory.getCurrentSession().createQuery("from FileMetadataImpl").list();
+            files = (List<TransformationFilesMetadataImpl>) sessionFactory.getCurrentSession().createQuery("from TransformationFilesMetadataImpl").list();
         } catch(NullPointerException e) {
             logger.error("No files stored in database", e);
         }

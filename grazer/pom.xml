@@ -19,7 +19,7 @@
 
         <admin.password>admin</admin.password>
 
-        <log.level>debug</log.level>
+        <log.level>info</log.level>
 
         <app.url>http://localhost:8080/grazer/</app.url>
 

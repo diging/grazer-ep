@@ -5,11 +5,11 @@ import javax.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -25,6 +25,7 @@ import edu.asu.diging.grazer.web.validator.FormValidator;
 
 @Controller
 @PropertySource(value = "classpath:/validation.properties")
+@Configurable
 public class FileUploadController {
     
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -35,24 +36,27 @@ public class FileUploadController {
     @Autowired
     private FormValidator formValidator;
 
-    @InitBinder
-    protected void initBinder(WebDataBinder binder) {
+    @InitBinder(value="transformation")
+    protected void initBinder1(WebDataBinder binder) {
         binder.setValidator(formValidator);
     }
     
     @RequestMapping(value = "/transformation/save", method = RequestMethod.POST)
-    public String uploadResources(@Valid @ModelAttribute TransformationFilesMetadataImpl transformation,
-            BindingResult result, Model model, @RequestParam CommonsMultipartFile[] files) {
-
+    public String uploadResources(@Valid @ModelAttribute("transformation") TransformationFilesMetadataImpl transformation,
+            BindingResult result, Model model, @RequestParam CommonsMultipartFile transformationFile, @RequestParam CommonsMultipartFile patternFile) {
+        
         if (result.hasErrors()) {
-            logger.info("Error" + result);
+            logger.info("Error " + result);
             model.addAttribute("transformation", transformation);
-            return "fileUploadForm";
+            return "redirect:/transformation/add";
+            
         } else {
-            logger.info("sucess");
-            //service.save(transformation.getFiles(), transformation);
+            
+            CommonsMultipartFile[] files = new CommonsMultipartFile[2];
+            files[0] = transformationFile;
+            files[1] = patternFile;
+            
             service.save(files, transformation);
-            model.addAttribute("transformation", new TransformationFilesMetadataImpl());
             return "redirect:/transformation/add";    
         }
     }

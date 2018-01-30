@@ -1,11 +1,8 @@
 package edu.asu.diging.grazer.core.domain;
 
-import java.time.LocalDate;
 import java.time.OffsetDateTime;
-import java.util.Date;
-import java.util.List;
 
-import org.springframework.web.multipart.MultipartFile;
+import edu.asu.diging.grazer.core.domain.impl.TransformationFilesImpl;
 
 /**
  * This class stores all the details about a transformation file and pattern file 
@@ -26,9 +23,9 @@ public interface ITransformationFilesMetadata {
 
     void setDescription(String description);
     
-    ITransformationFiles getFiles();
+    TransformationFilesImpl getFiles();
     
-    void setFiles(ITransformationFiles files);
+    void setFiles(TransformationFilesImpl files);
     
     String getUploader();
 
