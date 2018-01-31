@@ -34,13 +34,21 @@ public class FileMetadataDatabaseConnection implements IFileMetadataDatabaseConn
     @Override
     @SuppressWarnings("unchecked")
     public List<TransformationFilesMetadataImpl> list() throws NullPointerException{
-        List<TransformationFilesMetadataImpl> files = null;
+        
+        List<TransformationFilesMetadataImpl> files = (List<TransformationFilesMetadataImpl>) sessionFactory.getCurrentSession().createQuery("from TransformationFilesMetadataImpl").list();
+        
+        if(files != null) {
+            return files;
+        }
+        return null;
+        
+        /*List<TransformationFilesMetadataImpl> files = null;
         try {
             files = (List<TransformationFilesMetadataImpl>) sessionFactory.getCurrentSession().createQuery("from TransformationFilesMetadataImpl").list();
         } catch(NullPointerException e) {
             logger.error("No files stored in database", e);
-        }
-        return files;
+        }*/
+        //return files;
     }
     
     /* (non-Javadoc)
