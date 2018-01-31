@@ -8,7 +8,6 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 
 import org.apache.commons.io.FilenameUtils;
@@ -61,14 +60,9 @@ public class FileUploadServiceImpl implements IFileUploadService {
     public void save(TransformationFilesMetadataImpl transformationFile) {
         
         CommonsMultipartFile[] files = new CommonsMultipartFile[2];
-        HashMap<String, byte[]> filesMap = new HashMap<String, byte[]>();
         
         files[0] = transformationFile.getFiles().getTransformationFile();
         files[1] = transformationFile.getFiles().getPatternFile();
-          
-        for (CommonsMultipartFile multipartFile : files) {
-            filesMap.put(multipartFile.getOriginalFilename(), multipartFile.getBytes());
-        }
         
         uploadFiles(files);
         

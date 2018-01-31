@@ -7,7 +7,7 @@
             <form:errors path = "*" cssClass = "errorblock" element = "div" style="color:red"/>
             <div class="form-group">
                 <label for="label" class="control-label">Transformation Label: </label>
-                <form:input class="form-control" id="label" path="label" cssErrorClass="error" type="text"/>
+                <form:input class="form-control" id="label" path="label" type="text"/>
                 <form:errors path="label" cssClass="error" class="control-label" />
             </div>
             <div class="form-group">

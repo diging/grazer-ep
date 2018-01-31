@@ -48,11 +48,4 @@
         class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
         <beans:property name="basename" value="classpath:message" />
     </beans:bean>
-    <beans:bean id="conversionService" class="org.springframework.context.support.ConversionServiceFactoryBean">
-        <beans:property name="converters">
-            <beans:list>
-                <bean class="edu.asu.diging.grazer.web.validator.converter.linkedListToFileConverter" />
-            </beans:list>
-        </beans:property>
-    </beans:bean>
 </beans:beans>
