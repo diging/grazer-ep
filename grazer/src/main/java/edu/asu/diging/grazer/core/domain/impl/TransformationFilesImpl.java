@@ -1,32 +1,29 @@
 package edu.asu.diging.grazer.core.domain.impl;
 
-import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.stereotype.Component;
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import edu.asu.diging.grazer.core.domain.ITransformationFiles;
 
 @Component
 public class TransformationFilesImpl implements ITransformationFiles {
     
-    @NotEmpty
-    private MultipartFile transformationFile;
-    @NotEmpty
-    private MultipartFile patternFile;
+    private CommonsMultipartFile transformationFile;
+    private CommonsMultipartFile patternFile;
     
-    public MultipartFile getTransformationFile() {
+    public CommonsMultipartFile getTransformationFile() {
         return transformationFile;
     }
     
-    public void setTransformationFile(MultipartFile transformationFile) {
+    public void setTransformationFile(CommonsMultipartFile transformationFile) {
         this.transformationFile = transformationFile;
     }
     
-    public MultipartFile getPatternFile() {
+    public CommonsMultipartFile getPatternFile() {
         return patternFile;
     }
     
-    public void setPatternFile(MultipartFile patternFile) {
+    public void setPatternFile(CommonsMultipartFile patternFile) {
         this.patternFile = patternFile;
     }
 }

@@ -3,8 +3,6 @@
 import java.util.HashMap;
 import java.util.List;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import edu.asu.diging.grazer.core.domain.impl.TransformationFilesMetadataImpl;
 
 /**
@@ -28,7 +26,7 @@ public interface IFileUploadService {
      * @param files
      * @param transformationFile
      */
-    void save(CommonsMultipartFile[] files, TransformationFilesMetadataImpl transformationFile);
+    void save(TransformationFilesMetadataImpl transformationFile);
     
     /**
      * Returns a list of the file metadata stored in the database

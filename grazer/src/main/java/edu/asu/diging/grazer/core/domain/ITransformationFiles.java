@@ -1,6 +1,6 @@
 package edu.asu.diging.grazer.core.domain;
 
-import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 /**
  * 
@@ -11,18 +11,13 @@ import org.springframework.web.multipart.MultipartFile;
  *
  */
 public interface ITransformationFiles {
-
     
-    /*HashMap<String, byte[]> getFile();
+    CommonsMultipartFile getTransformationFile();
     
-    void setFile(HashMap<String, byte[]> files);*/
+    void setTransformationFile(CommonsMultipartFile transformationFile);
     
-    MultipartFile getTransformationFile();
+    CommonsMultipartFile getPatternFile();
     
-    void setTransformationFile(MultipartFile transformationFile);
-    
-    MultipartFile getPatternFile();
-    
-    void setPatternFile(MultipartFile patternFile);
+    void setPatternFile(CommonsMultipartFile patternFile);
 
 }

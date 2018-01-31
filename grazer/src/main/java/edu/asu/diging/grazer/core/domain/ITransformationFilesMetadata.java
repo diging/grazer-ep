@@ -35,5 +35,4 @@ public interface ITransformationFilesMetadata {
 
     void setDate(OffsetDateTime date);
 
-
 }

@@ -18,7 +18,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import edu.asu.diging.grazer.core.domain.impl.TransformationFilesImpl;
 import edu.asu.diging.grazer.core.domain.impl.TransformationFilesMetadataImpl;
 import edu.asu.diging.grazer.core.fileupload.db.impl.FileMetadataDatabaseConnection;
 import edu.asu.diging.grazer.core.fileupload.service.IFileUploadService;
@@ -31,10 +30,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
     
     @Autowired
     private FileMetadataDatabaseConnection connection;
-    
-    @Autowired
-    private TransformationFilesImpl transFile;
-    
+
     @Autowired
     private Environment env;
     
@@ -66,20 +62,20 @@ public class FileUploadServiceImpl implements IFileUploadService {
     }
 
     @Override
-    public void save(CommonsMultipartFile[] files, TransformationFilesMetadataImpl transformationFile) {
+    public void save(TransformationFilesMetadataImpl transformationFile) {
         
+        CommonsMultipartFile[] files = new CommonsMultipartFile[2];
         HashMap<String, byte[]> filesMap = new HashMap<String, byte[]>();
         
+        files[0] = transformationFile.getFiles().getTransformationFile();
+        files[1] = transformationFile.getFiles().getPatternFile();
+          
         for (CommonsMultipartFile multipartFile : files) {
             filesMap.put(multipartFile.getOriginalFilename(), multipartFile.getBytes());
         }
         
         uploadFiles(filesMap);
         
-        transFile.setTransformationFile(files[0]);
-        transFile.setPatternFile(files[1]);
-        
-        transformationFile.setFiles(transFile); 
         transformationFile.setDate(OffsetDateTime.now());
         transformationFile.setUploader(SecurityContextHolder.getContext().getAuthentication().getName());
         

@@ -8,7 +8,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
-import javax.validation.Valid;
 
 import org.hibernate.validator.constraints.NotEmpty;
 
@@ -20,14 +19,11 @@ public class TransformationFilesMetadataImpl implements ITransformationFilesMeta
 {
  
     @Id @GeneratedValue(strategy=GenerationType.IDENTITY) private int id;
-    @NotEmpty
     private String label;
     private String description;
     private String uploader;
     private OffsetDateTime date;
  
-    @NotEmpty
-    @Valid
     @Transient private TransformationFilesImpl files;
      
     @Override

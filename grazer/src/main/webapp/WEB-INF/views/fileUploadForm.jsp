@@ -4,8 +4,8 @@
     <form:form modelAttribute="transformation" commandName="transformation" action="/grazer/transformation/save?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Add a file</legend>
-            <form:errors path = "*" cssClass = "errorblock" element = "div" />
-            <div class="form-group ${status.error ? 'has-error' : ''}">
+            <form:errors path = "*" cssClass = "errorblock" element = "div" style="color:red"/>
+            <div class="form-group">
                 <label for="label" class="control-label">Transformation Label: </label>
                 <form:input class="form-control" id="label" path="label" cssErrorClass="error" type="text"/>
                 <form:errors path="label" cssClass="error" class="control-label" />
@@ -16,12 +16,12 @@
             </div>
             <div class="form-group">
                 <label for="transformationFile">Transformation File: </label>
-                <input class="form-control" type="file" name="transformationFile" accept=".graphml" path="files.transformationFile"/>
+                <form:input class="form-control" type="file" name="transformationFile" accept=".graphml" path="files.transformationFile"/>
                 <form:errors path="files.transformationFile" cssClass="error" class="control-label" />
             </div>
             <div class="form-group">    
                 <label for="patternFile">Pattern File: </label>
-                <input class="form-control" type="file" name="patternFile" accept=".graphml" path="files.patternFile"/>
+                <form:input class="form-control" type="file" name="patternFile" accept=".graphml" path="files.patternFile"/>
                 <form:errors path="files.patternFile" cssClass="error" class="control-label" />
             </div>
             <div id="buttons">
