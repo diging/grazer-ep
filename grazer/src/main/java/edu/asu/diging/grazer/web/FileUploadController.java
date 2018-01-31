@@ -34,7 +34,6 @@ public class FileUploadController {
         formValidator.validate(transformation, result);
         
         if (result.hasErrors()) {
-            logger.info("Error " + result);
             model.addAttribute("transformation", transformation);
             return "fileUploadForm";
             
