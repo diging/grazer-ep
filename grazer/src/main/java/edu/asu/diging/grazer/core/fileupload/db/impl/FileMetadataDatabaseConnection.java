@@ -41,14 +41,7 @@ public class FileMetadataDatabaseConnection implements IFileMetadataDatabaseConn
             return files;
         }
         return null;
-        
-        /*List<TransformationFilesMetadataImpl> files = null;
-        try {
-            files = (List<TransformationFilesMetadataImpl>) sessionFactory.getCurrentSession().createQuery("from TransformationFilesMetadataImpl").list();
-        } catch(NullPointerException e) {
-            logger.error("No files stored in database", e);
-        }*/
-        //return files;
+       
     }
     
     /* (non-Javadoc)
