@@ -4,7 +4,10 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -27,6 +30,7 @@ import edu.asu.diging.grazer.core.fileupload.service.IFileUploadService;
 public class FileUploadServiceImpl implements IFileUploadService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
+    private static final String DATE_PATTERN = "yyyyMMddhhmmss";
     
     @Autowired
     private FileMetadataDatabaseConnection connection;
@@ -34,31 +38,23 @@ public class FileUploadServiceImpl implements IFileUploadService {
     @Autowired
     private Environment env;
     
-    public void uploadFiles(HashMap<String, byte[]> filesMap) {
+    public void uploadFiles(CommonsMultipartFile[] multipartFile) {
         
-        for(String key: filesMap.keySet()) {
+        DateFormat df = new SimpleDateFormat(DATE_PATTERN); 
+        
+        for(int i = 0; i < multipartFile.length; i++) {
             try {      
-                int num = 1;
-                
-                String dir = env.getProperty("transformation.file.dir");
-                String serverFileName = dir + File.separator + key;
-                String serverFileNameWithoutExt = FilenameUtils.removeExtension(serverFileName);
-                String extension = FilenameUtils.getExtension(serverFileName);
-                
+                String serverFileName = env.getProperty("transformation.file.dir") + File.separator + multipartFile[i].getOriginalFilename();
+                serverFileName = FilenameUtils.removeExtension(serverFileName) + df.format(new Date()) + "." + FilenameUtils.getExtension(serverFileName);
                 File serverFile = new File(serverFileName);
-                while(serverFile.exists()) {
-                    serverFileName = serverFileNameWithoutExt + (num++) + "." + extension;
-                    serverFile = new File(serverFileName);
-                }
 
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-                stream.write(filesMap.get(key));
+                stream.write(multipartFile[i].getBytes());
                 stream.close();
-                logger.info("Server File Location = " + serverFile.getAbsolutePath());
             } catch(IOException e) {
-                logger.error("You failed to upload " + key, e);
+                logger.error("You failed to upload " + multipartFile[i].getOriginalFilename(), e);
             } 
-        }
+        } 
     }
 
     @Override
@@ -74,7 +70,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
             filesMap.put(multipartFile.getOriginalFilename(), multipartFile.getBytes());
         }
         
-        uploadFiles(filesMap);
+        uploadFiles(files);
         
         transformationFile.setDate(OffsetDateTime.now());
         transformationFile.setUploader(SecurityContextHolder.getContext().getAuthentication().getName());
