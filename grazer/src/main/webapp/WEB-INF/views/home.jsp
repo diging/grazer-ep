@@ -90,23 +90,14 @@ $(document).ready(function() {
 })
 
 </script>
-<script type="text/javascript">
-        $(function() {
-            var offset = $("#graph").offset();
-            var topPadding = 15;
-            $(window).scroll(function() {
-                if ($(window).scrollTop() > offset.top) {
-                    $("#graph").stop().animate({
-                        marginTop: $(window).scrollTop() - offset.top + topPadding
-                    });
-                } else {
-                    $("#graph").stop().animate({
-                        marginTop: 0
-                    });
-                };
-            });
-        });
-</script>
+
+<style>
+    .graph-outer { position: relative; }
+
+@media (min-width: 992px) {
+    .graph { position: fixed; }
+}
+</style>
 
 <h2>People mentioned in the Embryo Project</h2>
 
@@ -115,13 +106,16 @@ $(document).ready(function() {
 		<div>Total: <span id="count">${count}</span></div>
 		<div id="personList" class="list-group">
 		    <c:forEach items="${concepts}" var="concept">
-		    <a href="concept/${concept.id}" class="list-group-item person-entry" data-concept-id="${concept.id}">${concept.word}</a>
+		        <a href="concept/${concept.id}" class="list-group-item person-entry" data-concept-id="${concept.id}">${concept.word}</a>
 		    </c:forEach>
 		</div>
 	</div>
-	<div class="col-md-7" id="graph">
-		<div id="network" style="min-width: 500px; min-height: 500px;">
-		<div id="spinner" class="text-center"><div class="fa fa-spinner fa-spin"></div> Loading graph...</div>
+	<div class="col-md-7 graph-outer" id="graph">
+		<div id="network" class="graph" style="min-width: 500px; min-height: 500px;">
+		    <div id="spinner" class="text-center">
+		        <div class="fa fa-spinner fa-spin"></div> 
+		        Loading graph...
+		    </div>
 		</div>
 	</div>
 </div>
