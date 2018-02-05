@@ -25,6 +25,9 @@
     <c:when test="${edge.targetNode.type == 'http://www.digitalhps.org/types/TYPE_986a7cc9-c0c1-4720-b344-853f08c136ab' }" >
         <a href="<c:url value="/concept/${edge.targetNode.conceptId}" />">${edge.targetNode.label}</a>
     </c:when>
+    <c:when test="${edge.targetNode.type != 'http://www.digitalhps.org/types/TYPE_986a7cc9-c0c1-4720-b344-853f08c136ab' }" >
+        <a href="<c:url value="/concept/${edge.targetNode.conceptId}" />">${edge.targetNode.label}</a>
+    </c:when>
     <c:otherwise>
         ${edge.targetNode.label}
     </c:otherwise>
