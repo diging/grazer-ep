@@ -26,6 +26,96 @@
 	}
 </script>
 
+<script src="<c:url value="/resources/js/cytoscape.min.js" />"></script>
+<script src="<c:url value="/resources/js/cytoscape-layouts/cytoscape-cose-bilkent.js" />"></script>
+<script>
+//# sourceURL=graph.js
+$(document).ready(function() {
+	var cy;
+	var highlightSize = "30px";
+    var nodeSize = "15px";
+    
+	$.ajax({
+        url : '<c:url value="/concept/${concept.id}/network1" />',
+        type : "GET",
+        success : function(result) {
+            if (result == null || result.length == 0) {
+                	$("#spinner1").hide();
+                $("#network").append("Sorry, no network to display.")
+            } else {
+            	   $("#spinner1").hide();
+                data = JSON.stringify(result);
+	            cy = cytoscape({
+	            		container: $('#network'),
+	            		elements: result,
+	            		style: [ // the stylesheet for the graph
+	            		    {
+	            		      selector: 'node',
+	            		      style: {
+	            		        'background-color': '#7bafa6',
+	            		        'width': nodeSize,
+	            		        'height': nodeSize,
+	            		        'label': 'data(label)'
+	            		      }
+	            		    },
+	            		    {
+	            		      selector: 'edge',
+	            		      style: {
+	            		        'width': 2,
+	            		        'line-color': '#b0c7c3',
+	            		        'target-arrow-color': '#b0c7c3',
+	            		        'target-arrow-shape': 'triangle'
+	            		      }
+	            		    }
+	            		  ],
+
+	            		  layout: {
+	            		    name: 'cose-bilkent',
+	            		    nodeDimensionsIncludeLabels: true,
+	            		  }
+	            	});
+	            
+	            cy.on('tap', 'node', function(){
+	            	  window.location.href = "concept/" + this.data('id');
+	            	})
+	            
+	            	cy.ready(function() {
+                    $(".person-entry").hover(highligthPersonInGraph, removeHighlight);
+                });
+            	}
+        },
+        error: function() {
+        	   $("#spinner1").hide();
+            $("#network").append("Sorry, could not load network.")
+        }
+    });
+	
+	function highligthPersonInGraph() {
+		var id = $(this).data("concept-id");
+		var node = cy.getElementById(id);
+		cy.animate({
+            fit: {
+                eles: node,
+                padding: 230,
+            }
+        });
+		node.animate({
+			css: { 'width': highlightSize, 'height' : highlightSize},
+		});
+		
+	}
+	function removeHighlight() {
+		var id = $(this).data("concept-id");
+        var node = cy.getElementById(id);
+        node.animate({
+            css: { 'width': nodeSize, 'height' : nodeSize}
+        });
+	}
+	
+})
+
+</script>
+
 <h2>${concept.word}</h2>
 
 <p>${concept.description}</p>
@@ -39,13 +129,13 @@
 </div>
 <br/>
 
-<div class="col-md-8">
+<div class="col-md-12">
 <ul id="graphList" class="list-group">
 <div id="spinner"><div class="fa fa-spinner fa-spin"></div> Loading relationships... Hang tight, this might take a few minutes.</div>
 </ul>
 </div>
 
-<div class="col-md-4">
+<div class="col-md-6">
 <div class="panel panel-default">
   <div class="panel-heading">Wikidata Statements</div>
   <div class="panel-body">
@@ -68,3 +158,7 @@
 
 </div>
 
+<div class="col-md-6">
+    <div id="network" style="min-width: 200px; min-height: 200px;">
+    <div id="spinner1" class="text-center"><div class="fa fa-spinner fa-spin"></div> Loading graph...</div>
+</div>
