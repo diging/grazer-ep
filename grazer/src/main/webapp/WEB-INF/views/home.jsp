@@ -92,11 +92,9 @@ $(document).ready(function() {
 </script>
 
 <style>
-    .graph-outer { position: relative; }
-
-@media (min-width: 992px) {
-    .graph { position: fixed; }
-}
+    @media (min-width: 992px) {
+        .graph { position: fixed; }
+    }
 </style>
 
 <h2>People mentioned in the Embryo Project</h2>
