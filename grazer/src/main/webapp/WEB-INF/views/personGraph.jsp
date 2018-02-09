@@ -17,7 +17,7 @@
         ${edge.sourceNode.label}
     </c:otherwise>
 </c:choose>
- ${edge.label}
+${edge.label}
 <c:choose>
     <c:when test="${fn:contains(alternativeIdsString, edge.targetNode.uri)}">
         <strong>${edge.targetNode.label}</strong>

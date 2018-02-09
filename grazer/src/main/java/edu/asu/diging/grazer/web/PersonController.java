@@ -68,8 +68,13 @@ public class PersonController {
     public String getPersonGraph(@PathVariable("personId") String personId, Model model) {
         
         IConcept concept = cache.getConceptById(personId);
+        List<Graph> graph;
+        if((concept.getType() != null) && (concept.getType().getUri().equals("http://www.digitalhps.org/types/TYPE_986a7cc9-c0c1-4720-b344-853f08c136ab"))) {
+            graph = graphDbConnector.getGraphs(concept.getUri());
+        } else {
+            graph = graphDbConnector.getNonPeopleGraphs(concept.getUri());
+        }
         
-        List<Graph> graph = graphDbConnector.getGraphs(concept.getUri());
         model.addAttribute("graphs", graph);
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
