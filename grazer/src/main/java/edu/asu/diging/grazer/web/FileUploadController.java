@@ -37,10 +37,9 @@ public class FileUploadController {
             model.addAttribute("transformation", transformation);
             return "fileUploadForm";
             
-        } else {
-            service.save(transformation);
-            return "redirect:/transformation/add";    
-        }
+        } 
+        service.save(transformation);
+        return "redirect:/transformation/add";    
     }
      
     @RequestMapping(value = "/transformation/add")

@@ -29,7 +29,7 @@ import edu.asu.diging.grazer.core.fileupload.service.IFileUploadService;
 public class FileUploadServiceImpl implements IFileUploadService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private static final String DATE_PATTERN = "yyyyMMddhhmmss";
+    private final String DATE_PATTERN = "yyyyMMddhhmmss";
     
     @Autowired
     private FileMetadataDatabaseConnection connection;
@@ -37,21 +37,21 @@ public class FileUploadServiceImpl implements IFileUploadService {
     @Autowired
     private Environment env;
     
-    public void uploadFiles(CommonsMultipartFile[] multipartFile) {
+    public void uploadFiles(CommonsMultipartFile[] multipartFiles) {
         
         DateFormat df = new SimpleDateFormat(DATE_PATTERN); 
         
-        for(int i = 0; i < multipartFile.length; i++) {
+        for(int i = 0; i < multipartFiles.length; i++) {
             try {      
-                String serverFileName = env.getProperty("transformation.file.dir") + File.separator + multipartFile[i].getOriginalFilename();
+                String serverFileName = env.getProperty("transformation.file.dir") + File.separator + multipartFiles[i].getOriginalFilename();
                 serverFileName = FilenameUtils.removeExtension(serverFileName) + df.format(new Date()) + "." + FilenameUtils.getExtension(serverFileName);
                 File serverFile = new File(serverFileName);
 
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-                stream.write(multipartFile[i].getBytes());
+                stream.write(multipartFiles[i].getBytes());
                 stream.close();
             } catch(IOException e) {
-                logger.error("You failed to upload " + multipartFile[i].getOriginalFilename(), e);
+                logger.error("You failed to upload " + multipartFiles[i].getOriginalFilename(), e);
             } 
         } 
     }

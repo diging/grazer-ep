@@ -15,16 +15,14 @@ import edu.asu.diging.grazer.core.domain.impl.TransformationFilesMetadataImpl;
 public interface IFileUploadService {
 
     /**
-     * Receives a hashMap of fileNames and byte arrays of the file data which it uploads to the server.
+     * Receives an array of the transformation file and pattern file which it uploads to the server.
      * 
-     * @param data
-     * @param fileNames
+     * @param multipartFile
      */
     void uploadFiles(CommonsMultipartFile[] multipartFile);
     
     /**
      * Saves the information about the files and sends it to the FileUploadDatabaseConnection.
-     * @param files
      * @param transformationFile
      */
     void save(TransformationFilesMetadataImpl transformationFile);

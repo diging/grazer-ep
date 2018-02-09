@@ -30,7 +30,6 @@ public class SecurityContext extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
        http.formLogin()
                 .loginPage("/login")
-                //.loginProcessingUrl("/login/authenticate")
                 .failureUrl("/loginfailed")
                 // Configures the logout function
                 .and()

@@ -9,8 +9,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import edu.asu.diging.grazer.core.domain.ITransformationFilesMetadata;
 
 @Entity

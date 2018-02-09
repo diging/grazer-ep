@@ -1,7 +1,7 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div id="global">
-    <form:form modelAttribute="transformation" commandName="transformation" action="/grazer/transformation/save?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
+    <form:form modelAttribute="transformation" action="/grazer/transformation/save?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Add a file</legend>
             <form:errors path = "*" cssClass = "errorblock" element = "div" style="color:red"/>

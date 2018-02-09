@@ -28,7 +28,7 @@ public interface IFileMetadataDatabaseConnection {
     List<TransformationFilesMetadataImpl> list();
 
     /**
-     * Retrieves the files from the database.
+     * Retrieves the file from the database.
      * 
      * @param id
      * @return

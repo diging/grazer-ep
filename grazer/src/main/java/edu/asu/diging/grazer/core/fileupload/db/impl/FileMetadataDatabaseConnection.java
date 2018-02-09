@@ -35,12 +35,7 @@ public class FileMetadataDatabaseConnection implements IFileMetadataDatabaseConn
     @SuppressWarnings("unchecked")
     public List<TransformationFilesMetadataImpl> list() throws NullPointerException{
         
-        List<TransformationFilesMetadataImpl> files = (List<TransformationFilesMetadataImpl>) sessionFactory.getCurrentSession().createQuery("from TransformationFilesMetadataImpl").list();
-        
-        if(files != null) {
-            return files;
-        }
-        return null;
+        return (List<TransformationFilesMetadataImpl>) sessionFactory.getCurrentSession().createQuery("from TransformationFilesMetadataImpl").list();
        
     }
     
