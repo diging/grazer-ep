@@ -4,13 +4,10 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.OffsetDateTime;
-import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
-import org.apache.commons.io.FilenameUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +25,6 @@ import edu.asu.diging.grazer.core.fileupload.service.IFileUploadService;
 public class FileUploadServiceImpl implements IFileUploadService {
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
-    private final String DATE_PATTERN = "yyyyMMddhhmmss";
     
     @Autowired
     private FileMetadataDatabaseConnection connection;
@@ -36,14 +32,27 @@ public class FileUploadServiceImpl implements IFileUploadService {
     @Autowired
     private Environment env;
     
+    public static synchronized String createID() {
+        return UUID.randomUUID().toString();
+    } 
+    
+    public String createDirectory() {
+        String directoryName = createID();
+        File directory = new File(env.getProperty("transformation.file.dir") + File.separator + directoryName);
+        while(directory.exists()) {
+            createDirectory();
+        }
+        directory.mkdirs();
+        return directory.toString();
+    }
+    
     public void uploadFiles(CommonsMultipartFile[] multipartFiles) {
-        
-        DateFormat df = new SimpleDateFormat(DATE_PATTERN); 
-        
+
+        String directory = createDirectory();
+
         for(int i = 0; i < multipartFiles.length; i++) {
             try {      
-                String serverFileName = env.getProperty("transformation.file.dir") + File.separator + multipartFiles[i].getOriginalFilename();
-                serverFileName = FilenameUtils.removeExtension(serverFileName) + df.format(new Date()) + "." + FilenameUtils.getExtension(serverFileName);
+                String serverFileName = directory + File.separator + multipartFiles[i].getOriginalFilename();
                 File serverFile = new File(serverFileName);
 
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
@@ -56,8 +65,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
     }
 
     @Override
-    public void save(TransformationFilesMetadataImpl transformationFile) {
-        
+    public void save(TransformationFilesMetadataImpl transformationFile) { 
         transformationFile.setDate(OffsetDateTime.now());
         connection.save(transformationFile);
     }
