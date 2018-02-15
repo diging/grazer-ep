@@ -1,7 +1,5 @@
 package edu.asu.diging.grazer.core.domain;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 /**
  * 
  * This class stores the file names and file data of one pattern file and its 
@@ -12,12 +10,12 @@ import org.springframework.web.multipart.commons.CommonsMultipartFile;
  */
 public interface ITransformationFiles {
     
-    CommonsMultipartFile getTransformationFile();
+    String getTransformationFileName();
     
-    void setTransformationFile(CommonsMultipartFile transformationFile);
+    void setTransformationFileName(String transformationFile);
     
-    CommonsMultipartFile getPatternFile();
+    String getPatternFileName();
     
-    void setPatternFile(CommonsMultipartFile patternFile);
+    void setPatternFileName(String patternFile);
 
 }

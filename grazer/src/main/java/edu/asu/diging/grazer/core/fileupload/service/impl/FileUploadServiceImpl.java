@@ -16,7 +16,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
@@ -59,16 +58,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
     @Override
     public void save(TransformationFilesMetadataImpl transformationFile) {
         
-        CommonsMultipartFile[] files = new CommonsMultipartFile[2];
-        
-        files[0] = transformationFile.getFiles().getTransformationFile();
-        files[1] = transformationFile.getFiles().getPatternFile();
-        
-        uploadFiles(files);
-        
         transformationFile.setDate(OffsetDateTime.now());
-        transformationFile.setUploader(SecurityContextHolder.getContext().getAuthentication().getName());
-        
         connection.save(transformationFile);
     }
 

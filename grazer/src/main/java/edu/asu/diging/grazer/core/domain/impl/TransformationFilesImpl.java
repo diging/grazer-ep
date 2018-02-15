@@ -1,27 +1,46 @@
 package edu.asu.diging.grazer.core.domain.impl;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
+import org.springframework.stereotype.Component;
 
 import edu.asu.diging.grazer.core.domain.ITransformationFiles;
 
+@Component
 public class TransformationFilesImpl implements ITransformationFiles {
+        
+    private String transformationFileName;
+    private String patternFileName;
+    private byte[] transformationFileContent;
+    private byte[] patternFileContent;
     
-    private CommonsMultipartFile transformationFile;
-    private CommonsMultipartFile patternFile;
-    
-    public CommonsMultipartFile getTransformationFile() {
-        return transformationFile;
+    public String getTransformationFileName() {
+        return transformationFileName;
     }
     
-    public void setTransformationFile(CommonsMultipartFile transformationFile) {
-        this.transformationFile = transformationFile;
+    public void setTransformationFileName(String transformationFileName) {
+        this.transformationFileName = transformationFileName;
     }
     
-    public CommonsMultipartFile getPatternFile() {
-        return patternFile;
+    public String getPatternFileName() {
+        return patternFileName;
     }
     
-    public void setPatternFile(CommonsMultipartFile patternFile) {
-        this.patternFile = patternFile;
+    public void setPatternFileName(String patternFileName) {
+        this.patternFileName = patternFileName;
+    }
+    
+    public byte[] getTransformationFileContent() {
+        return transformationFileContent;
+    }
+    
+    public void setTransformationFileContent(byte[] transformationFileContent) {
+        this.transformationFileContent = transformationFileContent;
+    }
+    
+    public byte[] getPatternFileContent() {
+        return patternFileContent;
+    }
+    
+    public void setPatternFileContent(byte[] patternFileContent) {
+        this.patternFileContent = patternFileContent;
     }
 }

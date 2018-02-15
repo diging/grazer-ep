@@ -1,27 +1,26 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div id="global">
-    <form:form modelAttribute="transformation" action="/grazer/transformation/save?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
+    <form:form modelAttribute="transformationMetadataAndFiles" action="${pageContext.servletContext.contextPath}/transformation/save?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Add a file</legend>
-            <form:errors path = "*" cssClass = "errorblock" element = "div" style="color:red"/>
             <div class="form-group">
-                <label for="label" class="control-label">Transformation Label: </label>
-                <form:input class="form-control" id="label" path="label" type="text"/>
-                <form:errors path="label" cssClass="error" class="control-label" />
+                <label for="transformationMetadata.label" class="control-label">Transformation Label: </label>
+                <form:input class="form-control" id="label" path="transformationMetadata.label" type="text"/>
+                <form:errors path="transformationMetadata.label" cssClass="error" class="control-label" />
             </div>
             <div class="form-group">
-                <label for="description">Description: </label>
-                <form:input class="form-control" id="description" path="description" />
+                <label for="transformationMetadata.description">Description: </label>
+                <form:input class="form-control" id="description" path="transformationMetadata.description" />
             </div>
             <div class="form-group">
-                <label for="transformationFile">Transformation File: </label>
-                <form:input class="form-control" type="file" name="transformationFile" accept=".graphml" path="files.transformationFile"/>
+                <label for="files.transformationFile">Transformation File: </label>
+                <form:input class="form-control" type="file" name="files" accept=".graphml" path="files.transformationFile"/>
                 <form:errors path="files.transformationFile" cssClass="error" class="control-label" />
             </div>
             <div class="form-group">    
-                <label for="patternFile">Pattern File: </label>
-                <form:input class="form-control" type="file" name="patternFile" accept=".graphml" path="files.patternFile"/>
+                <label for="files.patternFile">Pattern File: </label>
+                <form:input class="form-control" type="file" name="files" accept=".graphml" path="files.patternFile"/>
                 <form:errors path="files.patternFile" cssClass="error" class="control-label" />
             </div>
             <div id="buttons">

@@ -4,41 +4,29 @@ import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import edu.asu.diging.grazer.core.domain.impl.TransformationFilesMetadataImpl;
+import edu.asu.diging.grazer.core.domain.impl.FileUploadFormImpl;
 
 @Component
 public class FormValidator implements Validator {
-    
-    
+        
     @Override
     public boolean supports(Class<?> clazz) {
-        return TransformationFilesMetadataImpl.class.isAssignableFrom(clazz);
+        return FileUploadFormImpl.class.isAssignableFrom(clazz);
     }
     
     @Override
     public void validate(Object target, Errors errors) {
         
-        TransformationFilesMetadataImpl fileMetadata = (TransformationFilesMetadataImpl) target;
-        
-        CommonsMultipartFile transformationFile = fileMetadata.getFiles().getTransformationFile();
-        CommonsMultipartFile patternFile = fileMetadata.getFiles().getPatternFile();
-        
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "label", "NotEmpty.transformation.label");
-        
-        if(transformationFile.isEmpty()) {
-            errors.rejectValue("files.transformationFile", "NotEmpty.transformation.transformationFile");
+        FileUploadFormImpl transformationFiles = (FileUploadFormImpl) target;
+
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "transformationMetadata.label", "NotEmpty.transformation.label");
+         
+        if(transformationFiles.getFiles().getTransformationFile().isEmpty() || transformationFiles.getFiles().getTransformationFile().getSize() == 0) {
+            errors.rejectValue("files.transformationFile", "NotEmpty.transformation.files.transformationFile");
         }
-        else if(transformationFile.getSize() == 0) {
-            errors.rejectValue("files.transformationFile", "NotEmpty.transformation.transformationFile");
+        if(transformationFiles.getFiles().getPatternFile().isEmpty() || transformationFiles.getFiles().getPatternFile().getSize() == 0) {
+            errors.rejectValue("files.patternFile", "NotEmpty.transformation.files.patternFile");
         }
-        if(patternFile.isEmpty()) {
-            errors.rejectValue("files.patternFile", "NotEmpty.transformation.patternFile");
-        }
-        else if(patternFile.getSize() == 0) {
-            errors.rejectValue("files.patternFile", "NotEmpty.transformation.patternFile");
-        }
-          
     }
 }
