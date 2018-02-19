@@ -46,37 +46,37 @@ $(document).ready(function() {
                 $("#spinner1").hide();
                 data = JSON.stringify(result);
                 cy = cytoscape({
-                	    container: $('#network'),
-                	    elements: result,
-                	    style: [ // the stylesheet for the graph
-                	    	    {
-                	    	        selector: 'node',
-                	    	        style: {
-                	    	        	    'background-color': '#7bafa6',
-                	    	        	    'width': nodeSize,
-                	    	        	    'height': nodeSize,
-                	    	        	    'label': 'data(label)'
-                	    	        	}
-                	        },
-                	        {
-                	        	    selector: 'edge',
-                	        	    style: {
-                	        	    	    'width': 2,
-                	        	    	    'line-color': '#b0c7c3',
-                	        	    	    'target-arrow-color': '#b0c7c3',
-                	        	    	    'target-arrow-shape': 'triangle'
-                	        	    	}
-                	        }
-                	    ],
+                    container: $('#network'),
+                    elements: result,
+                    style: [ // the stylesheet for the graph
+                        {
+                            selector: 'node',
+                            style: {
+                                'background-color': '#7bafa6',
+                                'width': nodeSize,
+                                'height': nodeSize,
+                                'label': 'data(label)'
+                            }
+                        },
+                        {
+                            selector: 'edge',
+                            style: {
+                                'width': 2,
+                                'line-color': '#b0c7c3',
+                                'target-arrow-color': '#b0c7c3',
+                                'target-arrow-shape': 'triangle'
+                            }
+                        }
+                    ],
                 	    
-                	    layout: {
-                	    	    name: 'cose-bilkent',
-                	    	    nodeDimensionsIncludeLabels: true,
-                	    	}
+                    layout: {
+                        name: 'cose-bilkent',
+                        nodeDimensionsIncludeLabels: true,
+                    }
                 });
 	            
                 cy.on('tap', 'node', function(){
-                	    window.location.href = this.data('id');
+                    window.location.href = this.data('id');
                 })
 	            
                 cy.ready(function() {
@@ -85,17 +85,17 @@ $(document).ready(function() {
             }
         },
         error: function() {
-        	    $("#spinner1").hide();
-        	    $("#network").append("Sorry, could not load network.")
-        	}
+            $("#spinner1").hide();
+            $("#network").append("Sorry, could not load network.")
+        }
     });
 	
     function highligthPersonInGraph() {
-    	    var id = $(this).data("concept-id");
-    	    var node = cy.getElementById(id);
-    	    node.animate({
-    	    	    css: { 'width': highlightSize, 'height' : highlightSize},
-    	    	});		
+        var id = $(this).data("concept-id");
+        var node = cy.getElementById(id);
+        node.animate({
+            css: { 'width': highlightSize, 'height' : highlightSize},
+        });		
     }
     
     function removeHighlight() {
@@ -141,10 +141,10 @@ $(document).ready(function() {
                     <div class="alert alert-warning" role="alert">Could not find any statements. This could either mean that there are no statements in Wikidata or Conceptpower has no Wikipedia link for the concept.</div>
                 </c:if>
                 <ul>
-	                <c:forEach var="statement" items="${wikipedia}">
-		                <li><strong>${statement.predicate.label}</strong>: ${statement.object.label}</li>
-		            </c:forEach>
-	            </ul>
+                    <c:forEach var="statement" items="${wikipedia}">
+                        <li><strong>${statement.predicate.label}</strong>: ${statement.object.label}</li>
+                    </c:forEach>
+                </ul>
 	        </c:if>
         </div>
     </div>
