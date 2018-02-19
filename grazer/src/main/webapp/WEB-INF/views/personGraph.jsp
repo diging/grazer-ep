@@ -11,7 +11,7 @@
         <strong>${edge.sourceNode.label}</strong>
     </c:when>
     <c:when test="${edge.sourceNode.type == 'http://www.digitalhps.org/types/TYPE_986a7cc9-c0c1-4720-b344-853f08c136ab' }" >
-        <a href="<c:url value="/concept/${edge.sourceNode.conceptId}" />">${edge.sourceNode.label}</a>
+        <a href="<c:url value="/concept/${edge.sourceNode.conceptId}" />" class="person-entry" data-concept-id="${edge.sourceNode.conceptId}">${edge.sourceNode.label}</a>
     </c:when>
     <c:otherwise>
         ${edge.sourceNode.label}
@@ -23,7 +23,7 @@
         <strong>${edge.targetNode.label}</strong>
     </c:when>
     <c:when test="${edge.targetNode.type == 'http://www.digitalhps.org/types/TYPE_986a7cc9-c0c1-4720-b344-853f08c136ab' }" >
-        <a href="<c:url value="/concept/${edge.targetNode.conceptId}" />">${edge.targetNode.label}</a>
+        <a href="<c:url value="/concept/${edge.targetNode.conceptId}" />" class="person-entry" data-concept-id="${edge.targetNode.conceptId}">${edge.targetNode.label}</a>
     </c:when>
     <c:otherwise>
         ${edge.targetNode.label}

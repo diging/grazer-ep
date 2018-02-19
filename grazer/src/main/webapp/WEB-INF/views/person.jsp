@@ -32,8 +32,8 @@
 //# sourceURL=graph.js
 $(document).ready(function() {
 	var cy;
-	var highlightSize = "30px";
-    var nodeSize = "15px";
+	var highlightSize = "20px";
+    var nodeSize = "10px";
     
 	$.ajax({
         url : '<c:url value="/concept/${concept.id}/network1" />',
@@ -76,7 +76,7 @@ $(document).ready(function() {
 	            	});
 	            
 	            cy.on('tap', 'node', function(){
-	            	  window.location.href = "concept/" + this.data('id');
+	            	  window.location.href = this.data('id');
 	            	})
 	            
 	            	cy.ready(function() {
@@ -93,12 +93,6 @@ $(document).ready(function() {
 	function highligthPersonInGraph() {
 		var id = $(this).data("concept-id");
 		var node = cy.getElementById(id);
-		cy.animate({
-            fit: {
-                eles: node,
-                padding: 230,
-            }
-        });
 		node.animate({
 			css: { 'width': highlightSize, 'height' : highlightSize},
 		});
@@ -129,6 +123,7 @@ $(document).ready(function() {
 </div>
 <br/>
 
+
 <div class="col-md-12">
 <ul id="graphList" class="list-group">
 <div id="spinner"><div class="fa fa-spinner fa-spin"></div> Loading relationships... Hang tight, this might take a few minutes.</div>
@@ -142,7 +137,6 @@ $(document).ready(function() {
     <c:if test="${wikidata_error}">
     <div class="alert alert-danger" role="alert">An error occurred retrieving statements from Wikidata.</div>
     </c:if>
-    
     <c:if test="${not wikidata_error}">
     <c:if test="${empty wikipedia}">
     <div class="alert alert-warning" role="alert">Could not find any statements. This could either mean that there are no statements in Wikidata or Conceptpower has no Wikipedia link for the concept.</div>
@@ -155,10 +149,9 @@ $(document).ready(function() {
 	</c:if>
   </div>
 </div>
-
 </div>
 
 <div class="col-md-6">
-    <div id="network" style="min-width: 200px; min-height: 200px;">
+    <div id="network" style="min-width: 200px; min-height: 200px;"></div>
     <div id="spinner1" class="text-center"><div class="fa fa-spinner fa-spin"></div> Loading graph...</div>
 </div>
