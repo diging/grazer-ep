@@ -80,7 +80,7 @@ $(document).ready(function() {
                 })
 	            
                 cy.ready(function() {
-                    $(".person-entry").hover(highligthPersonInGraph, removeHighlight);
+                    $(".person-entry").hover(highlightPersonInGraph, removeHighlight);
                 });
             }
         },
@@ -90,7 +90,7 @@ $(document).ready(function() {
         }
     });
 	
-    function highligthPersonInGraph() {
+    function highlightPersonInGraph() {
         var id = $(this).data("concept-id");
         var node = cy.getElementById(id);
         node.animate({
