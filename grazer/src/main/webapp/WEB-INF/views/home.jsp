@@ -92,8 +92,9 @@
 </script>
 
 <style>
-    @media (min-width: 992px) {
-        .graph { position: fixed; }
+    #personList {
+        overflow-y: auto;
+        height: 70vh;
     }
 </style>
 
