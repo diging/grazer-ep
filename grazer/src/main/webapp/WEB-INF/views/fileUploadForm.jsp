@@ -5,23 +5,23 @@
         <fieldset>
             <legend>Add a file</legend>
             <div class="form-group">
-                <label for="transformationMetadata.label" class="control-label">Transformation Label: </label>
-                <form:input class="form-control" id="label" path="transformationMetadata.label" type="text"/>
-                <form:errors path="transformationMetadata.label" cssClass="error" class="control-label" />
+                <label for="label" class="control-label">Transformation Label: </label>
+                <form:input class="form-control" id="label" path="label" type="text"/>
+                <form:errors path="label" cssClass="error" class="control-label" />
             </div>
             <div class="form-group">
-                <label for="transformationMetadata.description">Description: </label>
-                <form:input class="form-control" id="description" path="transformationMetadata.description" />
+                <label for="description">Description: </label>
+                <form:input class="form-control" id="description" path="description" />
             </div>
             <div class="form-group">
-                <label for="files.transformationFile">Transformation File: </label>
-                <form:input class="form-control" type="file" name="files" accept=".graphml" path="files.transformationFile"/>
-                <form:errors path="files.transformationFile" cssClass="error" class="control-label" />
+                <label for="transformationFile">Transformation File: </label>
+                <form:input class="form-control" type="file" name="files" accept=".graphml" path="transformationFile"/>
+                <form:errors path="transformationFile" cssClass="error" class="control-label" />
             </div>
             <div class="form-group">    
-                <label for="files.patternFile">Pattern File: </label>
-                <form:input class="form-control" type="file" name="files" accept=".graphml" path="files.patternFile"/>
-                <form:errors path="files.patternFile" cssClass="error" class="control-label" />
+                <label for="patternFile">Pattern File: </label>
+                <form:input class="form-control" type="file" name="files" accept=".graphml" path="patternFile"/>
+                <form:errors path="patternFile" cssClass="error" class="control-label" />
             </div>
             <div id="buttons">
                 <input class="btn btn-default" id="reset" type="reset" tabindex="4">

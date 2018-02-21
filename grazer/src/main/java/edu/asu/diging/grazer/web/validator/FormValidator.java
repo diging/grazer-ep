@@ -5,7 +5,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
-import edu.asu.diging.grazer.core.domain.impl.FileUploadFormImpl;
+import edu.asu.diging.grazer.web.fileUpload.FileUploadFormImpl;
 
 @Component
 public class FormValidator implements Validator {
@@ -20,13 +20,13 @@ public class FormValidator implements Validator {
         
         FileUploadFormImpl transformationFiles = (FileUploadFormImpl) target;
 
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "transformationMetadata.label", "NotEmpty.transformation.label");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "label", "NotEmpty.transformation.label");
          
-        if(transformationFiles.getFiles().getTransformationFile().isEmpty() || transformationFiles.getFiles().getTransformationFile().getSize() == 0) {
-            errors.rejectValue("files.transformationFile", "NotEmpty.transformation.files.transformationFile");
+        if(transformationFiles.getTransformationFile().isEmpty() || transformationFiles.getTransformationFile().getSize() == 0) {
+            errors.rejectValue("transformationFile", "NotEmpty.transformation.files.transformationFile");
         }
-        if(transformationFiles.getFiles().getPatternFile().isEmpty() || transformationFiles.getFiles().getPatternFile().getSize() == 0) {
-            errors.rejectValue("files.patternFile", "NotEmpty.transformation.files.patternFile");
+        if(transformationFiles.getPatternFile().isEmpty() || transformationFiles.getPatternFile().getSize() == 0) {
+            errors.rejectValue("patternFile", "NotEmpty.transformation.files.patternFile");
         }
     }
 }

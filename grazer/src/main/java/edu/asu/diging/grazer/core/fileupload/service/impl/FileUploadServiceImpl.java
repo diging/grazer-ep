@@ -16,7 +16,7 @@ import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
-import edu.asu.diging.grazer.core.domain.impl.TransformationFilesMetadataImpl;
+import edu.asu.diging.grazer.core.domain.ITransformationFilesMetadata;
 import edu.asu.diging.grazer.core.fileupload.db.impl.FileMetadataDatabaseConnection;
 import edu.asu.diging.grazer.core.fileupload.service.IFileUploadService;
 
@@ -37,46 +37,47 @@ public class FileUploadServiceImpl implements IFileUploadService {
     } 
     
     public String createDirectory() {
-        String directoryName = createID();
-        File directory = new File(env.getProperty("transformation.file.dir") + File.separator + directoryName);
+        File directory = new File(env.getProperty("transformation.file.dir") + File.separator + createID());
         while(directory.exists()) {
-            createDirectory();
+            directory = new File(env.getProperty("transformation.file.dir") + File.separator + createID());
         }
-        directory.mkdirs();
+        directory.mkdir();
         return directory.toString();
     }
     
-    public void uploadFiles(CommonsMultipartFile[] multipartFiles) {
+    public void uploadFiles(CommonsMultipartFile[] multipartFiles) throws IOException {
 
         String directory = createDirectory();
 
-        for(int i = 0; i < multipartFiles.length; i++) {
+        for(CommonsMultipartFile file: multipartFiles) {
             try {      
-                String serverFileName = directory + File.separator + multipartFiles[i].getOriginalFilename();
+                String serverFileName = directory + File.separator + file.getOriginalFilename();
                 File serverFile = new File(serverFileName);
 
                 BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-                stream.write(multipartFiles[i].getBytes());
+                stream.write(file.getBytes());
                 stream.close();
             } catch(IOException e) {
-                logger.error("You failed to upload " + multipartFiles[i].getOriginalFilename(), e);
+                logger.error("You failed to upload " + file.getOriginalFilename(), e);
+                throw new IOException(e);
             } 
         } 
     }
 
     @Override
-    public void save(TransformationFilesMetadataImpl transformationFile) { 
+    public void save(ITransformationFilesMetadata transformationFile, CommonsMultipartFile[] multipartFiles) throws IOException { 
         transformationFile.setDate(OffsetDateTime.now());
+        uploadFiles(multipartFiles);
         connection.save(transformationFile);
     }
 
     @Override
-    public List<TransformationFilesMetadataImpl> list() {
+    public List<ITransformationFilesMetadata> list() {
         return connection.list();
     }
 
     @Override
-    public TransformationFilesMetadataImpl get(int id) {
+    public ITransformationFilesMetadata get(int id) {
         return connection.get(id);
     }
 }

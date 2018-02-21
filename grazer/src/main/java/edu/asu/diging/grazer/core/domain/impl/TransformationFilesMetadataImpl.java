@@ -9,10 +9,13 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
+import org.springframework.stereotype.Component;
+
 import edu.asu.diging.grazer.core.domain.ITransformationFilesMetadata;
 
 @Entity
 @Table(name="tbl_files")
+@Component
 public class TransformationFilesMetadataImpl implements ITransformationFilesMetadata
 {
  
