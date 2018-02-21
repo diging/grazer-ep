@@ -92,19 +92,16 @@ public class PersonController {
         return "person/graph";
     }
     
-    @RequestMapping(value = "/concept/{personId}/network1")
+    @RequestMapping(value = "/concept/{personId}/network")
     public ResponseEntity<Collection<GraphElement>> getPersonNetwork(@PathVariable("personId") String personId) {
         
-        IConcept concept1 = cache.getConceptById(personId);
+        IConcept sourceConcept = cache.getConceptById(personId);
         Map<String, GraphElement> elements = new HashMap<>();
-        List<Graph> graphs = graphDbConnector.getGraphs(concept1.getUri());
+        List<Graph> graphs = graphDbConnector.getGraphs(sourceConcept.getUri());
         for (Graph graph : graphs) {
             for (Edge edge : graph.getEdges()) {
                 Node sourceNode = edge.getSourceNode();
                 Node targetNode = edge.getTargetNode();
-                if (!(sourceNode.getType().equals(personType) && targetNode.getType().equals(personType))) {
-                    continue;
-                }
                 GraphElement sourceElem = elements.get(sourceNode.getConceptId());
                 if (sourceElem == null) {
                     IConcept concept = cache.getConceptById(sourceNode.getConceptId());

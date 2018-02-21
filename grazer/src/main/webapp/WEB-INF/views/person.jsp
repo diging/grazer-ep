@@ -36,7 +36,7 @@ $(document).ready(function() {
     var nodeSize = "10px";
     
     $.ajax({
-        url : '<c:url value="/concept/${concept.id}/network1" />',
+        url : '<c:url value="/concept/${concept.id}/network" />',
         type : "GET",
         success : function(result) {
             if (result == null || result.length == 0) {
