@@ -18,7 +18,9 @@ import edu.asu.diging.grazer.core.conceptpower.IConceptpowerCache;
 import edu.asu.diging.grazer.core.exception.WikidataException;
 import edu.asu.diging.grazer.core.graphs.IGraphDBConnection;
 import edu.asu.diging.grazer.core.model.IConcept;
+import edu.asu.diging.grazer.core.model.impl.Edge;
 import edu.asu.diging.grazer.core.model.impl.Graph;
+import edu.asu.diging.grazer.core.model.impl.Node;
 import edu.asu.diging.grazer.core.wikidata.IWikidataConnector;
 import edu.asu.diging.grazer.core.wikidata.impl.WikidataStatement;
 
@@ -69,10 +71,19 @@ public class PersonController {
         
         IConcept concept = cache.getConceptById(personId);
         List<Graph> graph;
-        if((concept.getType() != null) && (concept.getType().getUri().equals("http://www.digitalhps.org/types/TYPE_986a7cc9-c0c1-4720-b344-853f08c136ab"))) {
+        if(concept.getType() != null && concept.getType().getUri().equals("http://www.digitalhps.org/types/TYPE_986a7cc9-c0c1-4720-b344-853f08c136ab")) {
             graph = graphDbConnector.getGraphs(concept.getUri());
         } else {
             graph = graphDbConnector.getNonPeopleGraphs(concept.getUri());
+            for(Graph g: graph) {
+                List<Node> nodeList = g.getNodes();
+                List<Edge> edgeList = g.getEdges();
+                for(Node node: nodeList) {
+                    if(!node.getUri().equals(concept.getUri())) {
+                        edgeList.removeIf(Edge -> Edge.getTarget().equals(node.getId()));
+                    }
+                }
+            }
         }
         
         model.addAttribute("graphs", graph);

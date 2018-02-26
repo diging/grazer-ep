@@ -50,7 +50,8 @@ public class GraphDBConnection implements IGraphDBConnection {
     
     @Override
     public List<Graph> getNonPeopleGraphs(String conceptUri) {
-        Query query = sessionFactory.getCurrentSession().createQuery("SELECT g from Graph g WHERE g.conceptUri IN (SELECT n1.uri from Node n1 WHERE n1.id IN (SELECT e.source from Edge e INNER JOIN Node n WHERE (n.uri = :uri AND n.dbId=e.targetNode)))");
+        //Query query = sessionFactory.getCurrentSession().createQuery("SELECT g from Graph g WHERE g.conceptUri IN SELECT n1.uri from Node n1 WHERE n1.id IN SELECT e.source from Edge e INNER JOIN Node n WHERE n.uri = :uri AND n.dbId=e.targetNode");
+        Query query = sessionFactory.getCurrentSession().createQuery("SELECT g from Graph g JOIN g.nodes n WHERE n.uri = :uri");
         query.setParameter("uri", conceptUri);
         return query.list();
     }
