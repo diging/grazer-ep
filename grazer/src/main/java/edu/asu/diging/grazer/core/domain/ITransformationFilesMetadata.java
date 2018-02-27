@@ -2,8 +2,6 @@ package edu.asu.diging.grazer.core.domain;
 
 import java.time.OffsetDateTime;
 
-import edu.asu.diging.grazer.core.domain.impl.TransformationFilesImpl;
-
 /**
  * This class stores all the details about a transformation file and pattern file 
  * i.e their IDs, labels, descriptions, file names, data uploaded, and uploader.
@@ -23,9 +21,9 @@ public interface ITransformationFilesMetadata {
 
     void setDescription(String description);
     
-    TransformationFilesImpl getFiles();
+    ITransformationFiles getFiles();
     
-    void setFiles(TransformationFilesImpl files);
+    void setFiles(ITransformationFiles files);
     
     String getUploader();
 

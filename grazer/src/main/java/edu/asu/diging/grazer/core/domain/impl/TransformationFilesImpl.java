@@ -1,10 +1,7 @@
 package edu.asu.diging.grazer.core.domain.impl;
 
-import org.springframework.stereotype.Component;
-
 import edu.asu.diging.grazer.core.domain.ITransformationFiles;
 
-@Component
 public class TransformationFilesImpl implements ITransformationFiles {
         
     private String transformationFileName;

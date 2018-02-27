@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.security.Principal;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
@@ -17,8 +18,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.commons.CommonsMultipartFile;
 
 import edu.asu.diging.grazer.core.domain.ITransformationFilesMetadata;
+import edu.asu.diging.grazer.core.domain.impl.TransformationFilesImpl;
+import edu.asu.diging.grazer.core.domain.impl.TransformationFilesMetadataImpl;
 import edu.asu.diging.grazer.core.fileupload.db.impl.FileMetadataDatabaseConnection;
 import edu.asu.diging.grazer.core.fileupload.service.IFileUploadService;
+import edu.asu.diging.grazer.web.fileUpload.FileUploadFormImpl;
 
 @Service
 @PropertySource(value = "classpath:config.properties")
@@ -32,11 +36,11 @@ public class FileUploadServiceImpl implements IFileUploadService {
     @Autowired
     private Environment env;
     
-    public static synchronized String createID() {
+    public synchronized String createID() {
         return UUID.randomUUID().toString();
     } 
     
-    public String createDirectory() {
+    String createDirectory() {
         File directory = new File(env.getProperty("transformation.file.dir") + File.separator + createID());
         while(directory.exists()) {
             directory = new File(env.getProperty("transformation.file.dir") + File.separator + createID());
@@ -45,7 +49,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         return directory.toString();
     }
     
-    public void uploadFiles(CommonsMultipartFile[] multipartFiles) throws IOException {
+    void uploadFiles(CommonsMultipartFile[] multipartFiles) throws IOException {
 
         String directory = createDirectory();
 
@@ -65,10 +69,27 @@ public class FileUploadServiceImpl implements IFileUploadService {
     }
 
     @Override
-    public void save(ITransformationFilesMetadata transformationFile, CommonsMultipartFile[] multipartFiles) throws IOException { 
-        transformationFile.setDate(OffsetDateTime.now());
-        uploadFiles(multipartFiles);
-        connection.save(transformationFile);
+    public void save(FileUploadFormImpl transformationMetadataAndFiles, Principal principal) throws IOException { 
+        
+        TransformationFilesImpl transformation = new TransformationFilesImpl();
+        TransformationFilesMetadataImpl metadata = new TransformationFilesMetadataImpl();
+        
+        transformation.setTransformationFileContent(transformationMetadataAndFiles.getTransformationFile().getBytes());
+        transformation.setPatternFileContent(transformationMetadataAndFiles.getPatternFile().getBytes());
+        transformation.setTransformationFileName(transformationMetadataAndFiles.getTransformationFile().getOriginalFilename());
+        transformation.setPatternFileName(transformationMetadataAndFiles.getPatternFile().getOriginalFilename());
+        
+        metadata.setLabel(transformationMetadataAndFiles.getLabel());
+        metadata.setDescription(transformationMetadataAndFiles.getDescription());
+        metadata.setDate(OffsetDateTime.now());
+        metadata.setUploader(principal.getName());
+        
+        CommonsMultipartFile[] files = new CommonsMultipartFile[2];
+        files[0] = transformationMetadataAndFiles.getTransformationFile();
+        files[1] = transformationMetadataAndFiles.getPatternFile();
+
+        uploadFiles(files);
+        connection.save(metadata);
     }
 
     @Override

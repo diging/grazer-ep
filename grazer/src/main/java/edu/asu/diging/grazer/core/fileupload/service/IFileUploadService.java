@@ -1,11 +1,11 @@
 package edu.asu.diging.grazer.core.fileupload.service;
 
 import java.io.IOException;
+import java.security.Principal;
 import java.util.List;
 
-import org.springframework.web.multipart.commons.CommonsMultipartFile;
-
 import edu.asu.diging.grazer.core.domain.ITransformationFilesMetadata;
+import edu.asu.diging.grazer.web.fileUpload.FileUploadFormImpl;
 
 /**
  * Service class that connects FileUploadController to FileUploadDatabaseConnection
@@ -14,22 +14,14 @@ import edu.asu.diging.grazer.core.domain.ITransformationFilesMetadata;
  *
  */
 public interface IFileUploadService {
-
-    /**
-     * Receives an array of the transformation file and pattern file which it uploads to the server.
-     * 
-     * @param multipartFile
-     * @throws FileUploadException 
-     * @throws IOException 
-     */
-    void uploadFiles(CommonsMultipartFile[] multipartFile) throws IOException;
     
     /**
      * Saves the information about the files and sends it to the FileUploadDatabaseConnection.
      * @param transformationFile
+     * @param principal
      * @throws IOException 
      */
-    void save(ITransformationFilesMetadata transformationFile, CommonsMultipartFile[] multipartFile) throws IOException;
+    void save(FileUploadFormImpl transformationMetadataAndFiles, Principal principal) throws IOException;
     
     /**
      * Returns a list of the file metadata stored in the database

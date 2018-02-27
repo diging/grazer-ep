@@ -9,13 +9,11 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.persistence.Transient;
 
-import org.springframework.stereotype.Component;
-
+import edu.asu.diging.grazer.core.domain.ITransformationFiles;
 import edu.asu.diging.grazer.core.domain.ITransformationFilesMetadata;
 
 @Entity
 @Table(name="tbl_files")
-@Component
 public class TransformationFilesMetadataImpl implements ITransformationFilesMetadata
 {
  
@@ -25,7 +23,7 @@ public class TransformationFilesMetadataImpl implements ITransformationFilesMeta
     private String uploader;
     private OffsetDateTime date;
  
-    @Transient private TransformationFilesImpl files;
+    @Transient private ITransformationFiles files;
      
     @Override
     public int getId() {
@@ -64,11 +62,11 @@ public class TransformationFilesMetadataImpl implements ITransformationFilesMeta
         this.description = description;
     }
     
-    public TransformationFilesImpl getFiles() {
+    public ITransformationFiles getFiles() {
         return files;
     }
 
-    public void setFiles(TransformationFilesImpl files) {
+    public void setFiles(ITransformationFiles files) {
         this.files = files;
     }
     
