@@ -74,13 +74,13 @@ public class PersonController {
         graph = graphDbConnector.getGraphs(concept.getUri());
         for(Graph g: graph) {
             List<Edge> edgeList = g.getEdges();
-            List<Edge> found = new ArrayList<Edge>();
+            List<Edge> edges = new ArrayList<Edge>();
             for(Edge edge: edgeList) {
                 if(!(concept.getAlternativeUris().contains(edge.getSourceNode().getUri()) || concept.getAlternativeUris().contains(edge.getTargetNode().getUri()))) {
-                    found.add(edge);
+                    edges.add(edge);
                 }
             }
-            edgeList.removeAll(found);
+            edgeList.removeAll(edges);
         }
         
         model.addAttribute("graphs", graph);
