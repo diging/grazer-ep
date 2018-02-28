@@ -9,8 +9,6 @@ public interface IGraphDBConnection {
     void store(Graph graph);
 
     List<Graph> getGraphs(String conceptUri);
-    
-    List<Graph> getNonPeopleGraphs(String conceptUri);
 
     void removeGraphs(String conceptUri);
 

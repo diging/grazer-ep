@@ -10,11 +10,8 @@
     <c:when test="${fn:contains(alternativeIdsString, edge.sourceNode.uri)}">
         <strong>${edge.sourceNode.label}</strong>
     </c:when>
-    <c:when test="${edge.sourceNode.type == 'http://www.digitalhps.org/types/TYPE_986a7cc9-c0c1-4720-b344-853f08c136ab' }" >
-        <a href="<c:url value="/concept/${edge.sourceNode.conceptId}" />">${edge.sourceNode.label}</a>
-    </c:when>
     <c:otherwise>
-        ${edge.sourceNode.label}
+        <a href="<c:url value="/concept/${edge.sourceNode.conceptId}" />">${edge.sourceNode.label}</a>
     </c:otherwise>
 </c:choose>
 ${edge.label}

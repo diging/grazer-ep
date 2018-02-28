@@ -39,19 +39,19 @@ public class GraphDBConnection implements IGraphDBConnection {
     public List<Graph> getGraphs(String conceptUri) {
         Query query = sessionFactory.getCurrentSession().createQuery("SELECT g from Graph g WHERE g.conceptUri = :uri");
         query.setParameter("uri", conceptUri);
-        return query.list();
+        List<Graph> results = query.list();
+        
+        if(results.isEmpty()) {
+            query = sessionFactory.getCurrentSession().createQuery("SELECT g from Graph g JOIN g.nodes n WHERE n.uri = :uri");
+            query.setParameter("uri", conceptUri);
+            results = query.list();
+        }
+        return results;
     }
     
     @Override
     public List<String> getAllPersons() {
         Query query = sessionFactory.getCurrentSession().createQuery("SELECT g.conceptUri from Graph g");
-        return query.list();
-    }
-    
-    @Override
-    public List<Graph> getNonPeopleGraphs(String conceptUri) {
-        Query query = sessionFactory.getCurrentSession().createQuery("SELECT g from Graph g JOIN g.nodes n WHERE n.uri = :uri");
-        query.setParameter("uri", conceptUri);
         return query.list();
     }
     
