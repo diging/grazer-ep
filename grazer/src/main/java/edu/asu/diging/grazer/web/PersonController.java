@@ -80,8 +80,8 @@ public class PersonController {
         return "person";
     }
     
-    @RequestMapping("/concept/{personId}/graph")
-    public String getPersonGraph(@PathVariable("personId") String personId, Model model) {
+    @RequestMapping("/concept/{personId}/statements")
+    public String getConceptStatements(@PathVariable("personId") String personId, Model model) {
         
         IConcept concept = cache.getConceptById(personId);
         
@@ -89,7 +89,7 @@ public class PersonController {
         model.addAttribute("graphs", graph);
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
-        return "person/graph";
+        return "person/statements";
     }
     
     @RequestMapping(value = "/concept/{personId}/network")

@@ -10,15 +10,15 @@
 
 	function getGraph() {
 		$.ajax({
-			url : '<c:url value="/concept/${concept.id}/graph" />',
+			url : '<c:url value="/concept/${concept.id}/statements" />',
 			type : "GET",
 			success : function(result) {
 				if (result == null || result.trim() == '') {
-					$("#spinner").hide();
+					$("#spinner1").hide();
 					$("#graphList").append("Sorry, there are no relationships yet.")
 				} else {
 					var list = $.parseHTML(result);
-					$("#spinner").hide();
+					$("#spinner1").hide();
 					$("#graphList").append(list);
 				}
 			}
@@ -28,86 +28,14 @@
 
 <script src="<c:url value="/resources/js/cytoscape.min.js" />"></script>
 <script src="<c:url value="/resources/js/cytoscape-layouts/cytoscape-cose-bilkent.js" />"></script>
-<script>
-//# sourceURL=graph.js
-$(document).ready(function() {
-    var cy;
+<script type="text/javascript">
     var highlightSize = "20px";
     var nodeSize = "10px";
-    
-    $.ajax({
-        url : '<c:url value="/concept/${concept.id}/network" />',
-        type : "GET",
-        success : function(result) {
-            if (result == null || result.length == 0) {
-                $("#spinner1").hide();
-                $("#network").append("Sorry, no network to display.")
-            } else {
-                $("#spinner1").hide();
-                data = JSON.stringify(result);
-                cy = cytoscape({
-                    container: $('#network'),
-                    elements: result,
-                    style: [ // the stylesheet for the graph
-                        {
-                            selector: 'node',
-                            style: {
-                                'background-color': '#7bafa6',
-                                'width': nodeSize,
-                                'height': nodeSize,
-                                'label': 'data(label)'
-                            }
-                        },
-                        {
-                            selector: 'edge',
-                            style: {
-                                'width': 2,
-                                'line-color': '#b0c7c3',
-                                'target-arrow-color': '#b0c7c3',
-                                'target-arrow-shape': 'triangle'
-                            }
-                        }
-                    ],
-                	    
-                    layout: {
-                        name: 'cose-bilkent',
-                        nodeDimensionsIncludeLabels: true,
-                    }
-                });
-	            
-                cy.on('tap', 'node', function(){
-                    window.location.href = this.data('id');
-                })
-	            
-                cy.ready(function() {
-                    $(".person-entry").hover(highlightPersonInGraph, removeHighlight);
-                });
-            }
-        },
-        error: function() {
-            $("#spinner1").hide();
-            $("#network").append("Sorry, could not load network.")
-        }
-    });
-	
-    function highlightPersonInGraph() {
-        var id = $(this).data("concept-id");
-        var node = cy.getElementById(id);
-        node.animate({
-            css: { 'width': highlightSize, 'height' : highlightSize},
-        });		
-    }
-    
-    function removeHighlight() {
-        var id = $(this).data("concept-id");
-        var node = cy.getElementById(id);
-        node.animate({
-            css: { 'width': nodeSize, 'height' : nodeSize}
-        });
-    }
-})
-
+    var url = '<c:url value="/concept/${concept.id}/network" />';
+    var hrefLocation = '';
+    var animate = false;
 </script>
+<script src="<c:url value="/resources/js/graphDisplay.js" />"></script>
 
 <h2>${concept.word}</h2>
 
@@ -125,7 +53,7 @@ $(document).ready(function() {
 
 <div class="col-md-12">
     <ul id="graphList" class="list-group">
-        <div id="spinner"><div class="fa fa-spinner fa-spin"></div> Loading relationships... Hang tight, this might take a few minutes.</div>
+        <div id="spinner1"><div class="fa fa-spinner fa-spin"></div> Loading relationships... Hang tight, this might take a few minutes.</div>
     </ul>
 </div>
 
@@ -152,5 +80,5 @@ $(document).ready(function() {
 
 <div class="col-md-6">
     <div id="network" style="min-width: 200px; min-height: 200px;"></div>
-    <div id="spinner1" class="text-center"><div class="fa fa-spinner fa-spin"></div> Loading graph...</div>
+    <div id="spinner" class="text-center"><div class="fa fa-spinner fa-spin"></div> Loading graph...</div>
 </div>
