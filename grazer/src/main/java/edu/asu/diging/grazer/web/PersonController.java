@@ -70,20 +70,8 @@ public class PersonController {
     public String getPersonGraph(@PathVariable("conceptId") String conceptId, Model model) {
         
         IConcept concept = cache.getConceptById(conceptId);
-        List<Graph> graph;
-        graph = graphDbConnector.getGraphs(concept.getUri());
-        for(Graph g: graph) {
-            List<Edge> edgeList = g.getEdges();
-            List<Edge> edges = new ArrayList<Edge>();
-            for(Edge edge: edgeList) {
-                if(!(concept.getAlternativeUris().contains(edge.getSourceNode().getUri()) || concept.getAlternativeUris().contains(edge.getTargetNode().getUri()))) {
-                    edges.add(edge);
-                }
-            }
-            edgeList.removeAll(edges);
-        }
-        
-        model.addAttribute("graphs", graph);
+        List<Edge> edgeList = graphDbConnector.getEdges(concept.getUri());
+        model.addAttribute("edges", edgeList);
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
         return "person/graph";
