@@ -40,7 +40,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         return UUID.randomUUID().toString();
     } 
     
-    String createDirectory() {
+    private String createDirectory() {
         File directory = new File(env.getProperty("transformation.file.dir") + File.separator + createID());
         while(directory.exists()) {
             directory = new File(env.getProperty("transformation.file.dir") + File.separator + createID());
@@ -49,7 +49,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         return directory.toString();
     }
     
-    void uploadFiles(CommonsMultipartFile[] multipartFiles) throws IOException {
+    private String uploadFiles(CommonsMultipartFile[] multipartFiles) throws IOException {
 
         String directory = createDirectory();
 
@@ -66,6 +66,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
                 throw new IOException(e);
             } 
         } 
+        return directory;
     }
 
     @Override
@@ -88,7 +89,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         files[0] = transformationMetadataAndFiles.getTransformationFile();
         files[1] = transformationMetadataAndFiles.getPatternFile();
 
-        uploadFiles(files);
+        metadata.setPath(uploadFiles(files));
         connection.save(metadata);
     }
 

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import edu.asu.diging.grazer.web.fileUpload.FileUploadFormImpl;
 import edu.asu.diging.grazer.core.fileupload.service.impl.FileUploadServiceImpl;
@@ -35,13 +36,15 @@ public class FileUploadController {
     
     @RequestMapping(value = "/transformation/save", method = RequestMethod.POST)
     public String uploadResources(@ModelAttribute("transformationMetadataAndFiles") @Valid FileUploadFormImpl transformationMetadataAndFiles,
-            BindingResult result, Principal principal, Model model) throws IOException {
+            BindingResult result, Principal principal, Model model, RedirectAttributes redirectAttributes) throws IOException {
         
         if (result.hasErrors()) {
             model.addAttribute("transformationMetadataAndFiles", transformationMetadataAndFiles);
             return "fileUploadForm";  
         }        
         
+        redirectAttributes.addFlashAttribute("css", "success");
+        redirectAttributes.addFlashAttribute("msg", "Files uploaded successfully!");
         service.save(transformationMetadataAndFiles, principal);
         return "redirect:/transformation/add";    
     }
