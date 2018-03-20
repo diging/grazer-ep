@@ -57,6 +57,7 @@
                     <button type="submit" class="btn btn-link" style="color:#800000"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
                   </div>
                 </form>
+                <button type="button" class="btn btn-link pull-right" style="color:#800000"><i class="fas fa-external-link-alt"></i><a href="${pageContext.servletContext.contextPath}/transformation/add">Upload transformation files</a></button>
               </div>
             </div>
           </sec:authorize>
