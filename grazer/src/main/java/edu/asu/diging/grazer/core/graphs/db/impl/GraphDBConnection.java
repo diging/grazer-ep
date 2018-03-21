@@ -42,14 +42,7 @@ public class GraphDBConnection implements IGraphDBConnection {
     public List<Graph> getGraphs(String conceptUri) {
         Query query = sessionFactory.getCurrentSession().createQuery("SELECT g from Graph g WHERE g.conceptUri = :uri");
         query.setParameter("uri", conceptUri);
-        List<Graph> results = query.list();
-        
-        if(results.isEmpty()) {
-            query = sessionFactory.getCurrentSession().createQuery("SELECT g from Graph g JOIN g.nodes n WHERE n.uri = :uri");
-            query.setParameter("uri", conceptUri);
-            results = query.list();
-        }
-        return results;
+        return query.list();
     }
     
     @Override
