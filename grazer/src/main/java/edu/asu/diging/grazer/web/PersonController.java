@@ -20,7 +20,6 @@ import edu.asu.diging.grazer.core.exception.WikidataException;
 import edu.asu.diging.grazer.core.graphs.IGraphDBConnection;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.impl.Edge;
-import edu.asu.diging.grazer.core.model.impl.Graph;
 import edu.asu.diging.grazer.core.wikidata.IWikidataConnector;
 import edu.asu.diging.grazer.core.wikidata.impl.WikidataStatement;
 
@@ -66,11 +65,26 @@ public class PersonController {
         return "person";
     }
     
+    public boolean sameEdge(Edge edge1, Edge edge2){
+        return edge1.getSourceNode().getLabel().equals(edge2.getSourceNode().getLabel()) && 
+                edge1.getTargetNode().getLabel().equals(edge2.getTargetNode().getLabel());
+     }
+    
     @RequestMapping("/concept/{conceptId}/graph")
     public String getPersonGraph(@PathVariable("conceptId") String conceptId, Model model) {
         
         IConcept concept = cache.getConceptById(conceptId);
         List<Edge> edgeList = graphDbConnector.getEdges(concept.getUri());
+        List<Edge> duplicates = new ArrayList<Edge>();
+        for(int i = 0; i < edgeList.size()-1; i++) {
+            for(int j = i+1; j < edgeList.size(); j++) {
+                if(sameEdge(edgeList.get(i), edgeList.get(j))) {
+                    duplicates.add(edgeList.get(j));
+                }
+            }
+        }
+        edgeList.removeAll(duplicates);
+        
         model.addAttribute("edges", edgeList);
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));

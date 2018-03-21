@@ -2,16 +2,12 @@ package edu.asu.diging.grazer.core.graphs.db.impl;
 
 import java.util.List;
 
-import javax.persistence.TypedQuery;
-import javax.print.DocFlavor.STRING;
-
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.ProjectionList;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.transform.AliasToBeanResultTransformer;
 import org.hibernate.transform.Transformers;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,11 +55,15 @@ public class GraphDBConnection implements IGraphDBConnection {
     @Override
     public List<Edge> getEdges(String conceptUri) {
         
+        Query query = sessionFactory.getCurrentSession().createNativeQuery("select alternativeUris from tbl_conceptpower_alternativeuris where id = '" + conceptUri + "'");
+        List<String> uris = query.list();
+        
         Criteria c = sessionFactory.getCurrentSession().createCriteria(Edge.class, "edge");
         c.createAlias("edge.sourceNode", "sourceNode");
         c.createAlias("edge.targetNode", "targetNode");
-        c.add(Restrictions.disjunction().add(Restrictions.eq("targetNode.uri", conceptUri))
-                .add(Restrictions.like("sourceNode.uri", conceptUri)));
+        c.add(Restrictions.disjunction()
+                .add(Restrictions.in("targetNode.uri", uris))
+                .add(Restrictions.in("sourceNode.uri", uris)));
         ProjectionList projList = Projections.projectionList()
                 .add(Projections.property("source"), "source")
                 .add(Projections.property("target"), "target")
@@ -78,12 +78,6 @@ public class GraphDBConnection implements IGraphDBConnection {
         c.setProjection(Projections.distinct(projList));
         c.setResultTransformer(Transformers.aliasToBean(Edge.class));
         return c.list();
-        /*List<Edge> results ;
-        Query query = sessionFactory.getCurrentSession().createQuery("SELECT e from Graph g JOIN g.edges e JOIN g.nodes n WHERE n.uri = :uri and (n.id=source or n.id=target)");
-        //select e.* from tbl_conceptpower_alternativeuris a INNER JOIN Edge e INNER JOIN Node n where a.id='http://www.digitalhps.org/concepts/WID-13512725-N-01-meiosis' and (n.id=e.source or n.id=e.target) and a.alternativeUris=n.uri;
-        query.setParameter("uri", conceptUri);
-        results = query.list();
-        return results;*/
     }
     
     @Override
