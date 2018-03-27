@@ -1,5 +1,7 @@
 package edu.asu.diging.grazer.core.conceptpower.db;
 
+import java.util.List;
+
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.IConceptType;
 
@@ -15,4 +17,5 @@ public interface IConceptDatabaseConnection {
 
     IConcept getConceptByUri(String uri);
 
+    List<IConcept> getConceptList(String query);
 }
