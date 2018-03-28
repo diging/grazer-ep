@@ -28,9 +28,5 @@
     
     <definition name="person/graph" template="/WEB-INF/views/personGraph.jsp">  
     </definition>
-    
-    <definition name="searchPage/getTags" template="/WEB-INF/views/searchResults.jsp">  
-    </definition>
-	
 	
 </tiles-definitions>
