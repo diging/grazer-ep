@@ -41,6 +41,12 @@
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
  	<script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />"></script>
 	<script src="<c:url value="/resources/bootstrap/js/main.js" />"></script>
+	
+	<!-- Autocomplete function -->
+	<script src="<c:url value="/resources/js/searchConcepts.js" />"></script>
+	<script src="<c:url value="/resources/js/jquery-ui.js" />"></script>
+	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/jquery-ui.css" />
+	
   </head>
 
   <body>
@@ -52,20 +58,26 @@
       <div class="page-header">
       <nav>
           <ul class="nav nav-pills pull-right">
-          <li role="presentation">
+              <li>
+                <div class="ui-widget">
+                  <input id="conceptQuery" type="text" name="tagQuery" value="" placeholder="Search for a concept..">
+                  <span id="searchLink"></span>
+                </div>
+              </li>
+              <li role="presentation">
           		<a href="<c:url value="/" />" >Home</a>
-          	</li>
+              </li>
           	
-          	<sec:authorize access="isAuthenticated()">
-          	<li role="presentation">
+          	  <sec:authorize access="isAuthenticated()">
+          	  <li role="presentation">
          	 	<form action="<c:url value="/logout" />" method="POST">
          	 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
   				<button class="btn-link" type="submit" title="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
          	 	</form>
-         	 </li>
-          </sec:authorize>
+         	  </li>
+              </sec:authorize>
           </ul>
-         
+          
         </nav>
         
         <h1><a class="appName" href="<c:url value="/" />">EP Grazer</a></h1>   
