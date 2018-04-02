@@ -1,10 +1,13 @@
 package edu.asu.diging.grazer.web;
 
 import java.io.IOException;
+
 import java.util.Collection;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +31,7 @@ import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.impl.Edge;
 import edu.asu.diging.grazer.core.model.impl.Graph;
 import edu.asu.diging.grazer.core.model.impl.Node;
+
 import edu.asu.diging.grazer.core.wikidata.IWikidataConnector;
 import edu.asu.diging.grazer.core.wikidata.impl.WikidataStatement;
 import edu.asu.diging.grazer.web.cytoscape.Data;
@@ -80,13 +84,25 @@ public class PersonController {
         return "person";
     }
     
-    @RequestMapping("/concept/{personId}/statements")
-    public String getConceptStatements(@PathVariable("personId") String personId, Model model) {
+    @RequestMapping("/concept/{conceptId}/statements")
+    public String getConceptStatements(@PathVariable("conceptId") String conceptId, Model model) {
         
-        IConcept concept = cache.getConceptById(personId);
+        IConcept concept = cache.getConceptById(conceptId);
+        List<Edge> edgeList = graphDbConnector.getEdges(concept.getUri());
+        List<Edge> duplicates = new ArrayList<Edge>();
+        HashSet<String> uniqueEdges = new HashSet<>();
         
-        List<Graph> graph = graphDbConnector.getGraphs(concept.getUri());
-        model.addAttribute("graphs", graph);
+        for(int i = 0; i < edgeList.size(); i++) {
+            String sourceAndTarget = edgeList.get(i).getSourceNode().getUri() + "-" + edgeList.get(i).getTargetNode().getUri();
+            if(!uniqueEdges.contains(sourceAndTarget)) {
+                uniqueEdges.add(sourceAndTarget);
+            } else {
+                duplicates.add(edgeList.get(i));
+            }
+        }
+        edgeList.removeAll(duplicates);
+        
+        model.addAttribute("edges", edgeList);
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
         return "person/statements";
