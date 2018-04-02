@@ -88,21 +88,9 @@ public class PersonController {
     public String getConceptStatements(@PathVariable("conceptId") String conceptId, Model model) {
         
         IConcept concept = cache.getConceptById(conceptId);
-        List<Edge> edgeList = graphDbConnector.getEdges(concept.getUri());
-        List<Edge> duplicates = new ArrayList<Edge>();
-        HashSet<String> uniqueEdges = new HashSet<>();
+        List<Edge> uniqueEdges = getEdges(concept.getUri());
         
-        for(int i = 0; i < edgeList.size(); i++) {
-            String sourceAndTarget = edgeList.get(i).getSourceNode().getUri() + "-" + edgeList.get(i).getTargetNode().getUri();
-            if(!uniqueEdges.contains(sourceAndTarget)) {
-                uniqueEdges.add(sourceAndTarget);
-            } else {
-                duplicates.add(edgeList.get(i));
-            }
-        }
-        edgeList.removeAll(duplicates);
-        
-        model.addAttribute("edges", edgeList);
+        model.addAttribute("edges", uniqueEdges);
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
         return "person/statements";
@@ -113,26 +101,44 @@ public class PersonController {
         
         IConcept sourceConcept = cache.getConceptById(personId);
         Map<String, GraphElement> elements = new HashMap<>();
-        List<Graph> graphs = graphDbConnector.getGraphs(sourceConcept.getUri());
-        for (Graph graph : graphs) {
-            for (Edge edge : graph.getEdges()) {
-                Node sourceNode = edge.getSourceNode();
-                Node targetNode = edge.getTargetNode();
-                GraphElement sourceElem = elements.get(sourceNode.getConceptId());
-                if (sourceElem == null) {
-                    IConcept concept = cache.getConceptById(sourceNode.getConceptId());
-                    sourceElem = new GraphElement(new Data(concept.getId(), sourceNode.getLabel()));
-                    elements.put(sourceNode.getConceptId(), sourceElem);
-                }
-                GraphElement targetElem = elements.get(targetNode.getConceptId());
-                if (targetElem == null) {
-                    IConcept concept = cache.getConceptById(targetNode.getConceptId());
-                    targetElem = new GraphElement(new Data(concept.getId(), targetNode.getLabel()));
-                    elements.put(targetNode.getConceptId(), targetElem);
-                }
-                elements.put(edge.getId() + "", new GraphElement(new EdgeData(sourceElem.getData().getId(), targetElem.getData().getId(), edge.getId() + "", "")));
+        
+        List<Edge> uniqueEdges = getEdges(sourceConcept.getUri());
+        
+        for (Edge edge : uniqueEdges) {
+            Node sourceNode = edge.getSourceNode();
+            Node targetNode = edge.getTargetNode();
+            GraphElement sourceElem = elements.get(sourceNode.getConceptId());
+            if (sourceElem == null) {
+                IConcept concept = cache.getConceptById(sourceNode.getConceptId());
+                sourceElem = new GraphElement(new Data(concept.getId(), sourceNode.getLabel()));
+                elements.put(sourceNode.getConceptId(), sourceElem);
             }
-        } 
+            GraphElement targetElem = elements.get(targetNode.getConceptId());
+            if (targetElem == null) {
+                IConcept concept = cache.getConceptById(targetNode.getConceptId());
+                targetElem = new GraphElement(new Data(concept.getId(), targetNode.getLabel()));
+                elements.put(targetNode.getConceptId(), targetElem);
+            }
+            elements.put(edge.getId() + "", new GraphElement(new EdgeData(sourceElem.getData().getId(), targetElem.getData().getId(), edge.getId() + "", "")));
+        }
         return new ResponseEntity<Collection<GraphElement>>(elements.values(), HttpStatus.OK);
+    }
+    
+    private List<Edge> getEdges(String uri) {
+        List<Edge> edgeList = graphDbConnector.getEdges(uri);
+        List<Edge> duplicates = new ArrayList<Edge>();
+        List<Edge> uniqueEdges = new ArrayList<Edge>();
+        HashSet<String> uniqueEdgeStrings = new HashSet<>();
+        
+        for(int i = 0; i < edgeList.size(); i++) {
+            String sourceAndTarget = edgeList.get(i).getSourceNode().getUri() + "-" + edgeList.get(i).getTargetNode().getUri();
+            if(!uniqueEdgeStrings.contains(sourceAndTarget)) {
+                uniqueEdgeStrings.add(sourceAndTarget);
+                uniqueEdges.add(edgeList.get(i));
+            } else {
+                duplicates.add(edgeList.get(i));
+            }
+        }
+        return uniqueEdges;
     }
 }
