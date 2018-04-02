@@ -60,7 +60,7 @@
           <ul class="nav nav-pills pull-right">
               <li>
                 <div class="ui-widget">
-                  <input id="conceptQuery" type="text" name="tagQuery" value="" placeholder="Search for a concept.." myContextPath="${pageContext.request.contextPath}">
+                  <input id="conceptQuery" type="text" name="tagQuery" value="" placeholder="Search for a concept..">
                   <span id="searchLink"></span>
                 </div>
               </li>
