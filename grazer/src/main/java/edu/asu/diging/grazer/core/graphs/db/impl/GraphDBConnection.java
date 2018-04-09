@@ -58,6 +58,7 @@ public class GraphDBConnection implements IGraphDBConnection {
                 .add(Restrictions.in("targetNode.uri", uris))
                 .add(Restrictions.in("sourceNode.uri", uris)));
         ProjectionList projList = Projections.projectionList()
+                .add(Projections.property("id"), "id")
                 .add(Projections.property("source"), "source")
                 .add(Projections.property("target"), "target")
                 .add(Projections.property("label"), "label")
