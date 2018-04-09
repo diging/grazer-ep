@@ -11,6 +11,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.stereotype.Service;
 
 import edu.asu.diging.grazer.core.amphora.IAmphoraConnector;
+import edu.asu.diging.grazer.core.amphora.IAmphoraService;
 import edu.asu.diging.grazer.core.exception.AmphoraException;
 import edu.asu.diging.grazer.core.util.ISourceUriPatternUtil;
 
@@ -31,7 +32,7 @@ public class SourceUriPatternUtil implements ISourceUriPatternUtil {
     private String transformedHandlePattern;
     
     @Autowired
-    private IAmphoraConnector amphoraConnector;
+    private IAmphoraService amphoraService;
     
     @Override
     public String getTransformedUri(String uri) {
@@ -53,13 +54,8 @@ public class SourceUriPatternUtil implements ISourceUriPatternUtil {
     
     @Override
     public String getTransformedResolvedUri(String uri) {
-        String resolvedUri;
-        try {
-            resolvedUri = amphoraConnector.getURIofParentResource(uri);
-        } catch (AmphoraException e) {
-            logger.error("Could not resolve URI: " + uri, e);
-            return uri;
-        }
+        String resolvedUri = amphoraService.getMappedUri(uri);
+        
         if (resolvedUri != null) {
             return getTransformedUri(resolvedUri);
         }
