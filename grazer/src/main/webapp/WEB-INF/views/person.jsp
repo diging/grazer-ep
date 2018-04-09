@@ -51,13 +51,15 @@
 <br/>
 
 
-<div class="col-md-12">
+<div class="col-md-8">
     <ul id="graphList" class="list-group">
         <div id="spinner1"><div class="fa fa-spinner fa-spin"></div> Loading relationships... Hang tight, this might take a few minutes.</div>
     </ul>
 </div>
 
-<div class="col-md-6">
+<div class="col-md-4">
+    <div id="network" style="min-width: 200px; min-height: 200px;"></div>
+    <div id="spinner" class="text-center"><div class="fa fa-spinner fa-spin"></div> Loading graph...</div>
     <div class="panel panel-default">
         <div class="panel-heading">Wikidata Statements</div>
         <div class="panel-body">
@@ -76,9 +78,4 @@
 	        </c:if>
         </div>
     </div>
-</div>
-
-<div class="col-md-6">
-    <div id="network" style="min-width: 200px; min-height: 200px;"></div>
-    <div id="spinner" class="text-center"><div class="fa fa-spinner fa-spin"></div> Loading graph...</div>
 </div>
