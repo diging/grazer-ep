@@ -16,11 +16,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import edu.asu.diging.grazer.core.amphora.IAmphoraConnector;
 import edu.asu.diging.grazer.core.conceptpower.IConceptpowerCache;
+import edu.asu.diging.grazer.core.exception.AmphoraException;
 import edu.asu.diging.grazer.core.exception.WikidataException;
 import edu.asu.diging.grazer.core.graphs.IGraphDBConnection;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.impl.Edge;
+import edu.asu.diging.grazer.core.util.ISourceUriPatternUtil;
 import edu.asu.diging.grazer.core.wikidata.IWikidataConnector;
 import edu.asu.diging.grazer.core.wikidata.impl.WikidataStatement;
 
@@ -37,6 +40,9 @@ public class PersonController {
     
     @Autowired
     private IWikidataConnector wikiConnector;
+    
+    @Autowired
+    private ISourceUriPatternUtil patternUtil;
     
     @RequestMapping(value = "/concept/{personId}", produces = MediaType.TEXT_HTML_VALUE)
     public String showPerson(@PathVariable("personId") String personId, Model model) throws IOException {
@@ -83,6 +89,17 @@ public class PersonController {
             }
         }
         edgeList.removeAll(duplicates);
+        
+        edgeList.forEach(e -> {
+            e.setPresentationUri(e.getSourceUri());
+            if (!patternUtil.isPatternUri(e.getSourceUri())) {
+                String resolvedUri = patternUtil.getTransformedResolvedUri(e.getSourceUri());
+                if (resolvedUri != null) {
+                    e.setPresentationUri(resolvedUri);
+                } 
+            }
+            
+        });
         
         model.addAttribute("edges", edgeList);
         model.addAttribute("concept", concept);

@@ -23,6 +23,10 @@
         <quadriga.url>http://localhost:8080/quadriga/</quadriga.url>
         <quadriga.concepts.endpoint>public/concepts</quadriga.concepts.endpoint>
         <conceptpower.url>https://chps.asu.edu/conceptpower/rest/</conceptpower.url>
+        
+        <amphora.base.url>https://amphora.asu.edu/amphora</amphora.base.url>
+        <amphora.metadata.endpoint>/resource/get</amphora.metadata.endpoint>
+        <amphora.token></amphora.token>
 
         <rdf.store.dir></rdf.store.dir>
         <cron.job.schedule>0 00 21 * * SUN</cron.job.schedule>
