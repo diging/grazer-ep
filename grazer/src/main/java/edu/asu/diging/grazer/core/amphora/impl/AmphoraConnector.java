@@ -24,6 +24,12 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import edu.asu.diging.grazer.core.amphora.IAmphoraConnector;
 import edu.asu.diging.grazer.core.exception.AmphoraException;
 
+/**
+ * Class to make calls to Amphora.
+ * 
+ * @author jdamerow
+ *
+ */
 @Service
 @PropertySource("classpath:/config.properties")
 public class AmphoraConnector implements IAmphoraConnector {
@@ -46,8 +52,11 @@ public class AmphoraConnector implements IAmphoraConnector {
         restTemplate = new RestTemplate();
     }
 
-    /* (non-Javadoc)
-     * @see edu.asu.diging.grazer.core.amphora.impl.IAmphoraConnector#getURIofParentResource(java.lang.String)
+    /**
+     * Get the uri of a parent resource, given a child resource. This method will call
+     * Amphora's resource get endpoint (/resource/get), passing the provided URI as
+     * 'uri' parameter.
+     * This method returns the 'uri' field of the Amphora response.
      */
     @Override
     @Cacheable("amphoraUris")

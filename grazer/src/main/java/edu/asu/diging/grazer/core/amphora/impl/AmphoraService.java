@@ -10,6 +10,13 @@ import edu.asu.diging.grazer.core.amphora.IAmphoraService;
 import edu.asu.diging.grazer.core.exception.AmphoraException;
 import edu.asu.diging.grazer.core.model.impl.UriMapping;
 
+/**
+ * Class to connect to Amphora using the DB as a cache to store data retrieved from Amphora
+ * that won't change to reduce load times.
+ * 
+ * @author jdamerow
+ *
+ */
 @Service
 public class AmphoraService implements IAmphoraService {
     
@@ -21,8 +28,10 @@ public class AmphoraService implements IAmphoraService {
     @Autowired
     private MappingDBConnector dbConnector;
     
-    /* (non-Javadoc)
-     * @see edu.asu.diging.grazer.core.amphora.impl.IAmphoraService#getMappedUri(java.lang.String)
+    /**
+     * This method first checks the DB if a mapped URI has already been stored
+     *  for the passed URI. If so, it returns it, otherwise it'll request the 
+     *  mapped URI from Amphor.
      */
     @Override
     public String getMappedUri(String uri) {

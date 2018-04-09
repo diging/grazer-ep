@@ -30,5 +30,38 @@ public class UriMapping {
     public void setMappedUri(String mappedUri) {
         this.mappedUri = mappedUri;
     }
+
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((annotatedUri == null) ? 0 : annotatedUri.hashCode());
+        result = prime * result
+                + ((mappedUri == null) ? 0 : mappedUri.hashCode());
+        return result;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj)
+            return true;
+        if (obj == null)
+            return false;
+        if (getClass() != obj.getClass())
+            return false;
+        UriMapping other = (UriMapping) obj;
+        if (annotatedUri == null) {
+            if (other.annotatedUri != null)
+                return false;
+        } else if (!annotatedUri.equals(other.annotatedUri))
+            return false;
+        if (mappedUri == null) {
+            if (other.mappedUri != null)
+                return false;
+        } else if (!mappedUri.equals(other.mappedUri))
+            return false;
+        return true;
+    }
     
 }
