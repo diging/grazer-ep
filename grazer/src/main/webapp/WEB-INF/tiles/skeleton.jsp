@@ -62,8 +62,8 @@
       <nav>
           <ul class="nav nav-pills pull-right">
               <li>
-                <div class="ui-widget">
-                  <input id="conceptQuery" type="text" name="tagQuery" value="" placeholder="Search for a concept..">
+                <div class="ui-widget form-inline">
+                  <input id="conceptQuery" type="text" class="form-control" name="tagQuery" value="" placeholder="Search for a concept..">
                   <span id="searchLink"></span>
                 </div>
               </li>

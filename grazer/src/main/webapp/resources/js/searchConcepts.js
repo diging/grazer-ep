@@ -16,7 +16,7 @@ $(document).ready(function() {
         select: function(event, ui) {
             $("#conceptQuery").val(ui.item.label);
             $("#searchLink").html("");
-            $("#searchLink").append('<a href="' + ui.item.tag_url + '">Search</a>');
+            $("#searchLink").append('<a href="' + ui.item.tag_url + '"><i class="fa fa-search"></i></a>');
             return false;
         }
     });
