@@ -20,7 +20,6 @@ public class SearchConceptController {
     
     @RequestMapping(value = "/searchPage/getConcepts", method = RequestMethod.GET)
     public @ResponseBody List<IConcept> getTags(@RequestParam String term) {
-        List<IConcept> concepts = conceptDatabaseConnection.getConceptList(term);
-        return concepts;
+        return conceptDatabaseConnection.getSearchResults(term);
     }
 }

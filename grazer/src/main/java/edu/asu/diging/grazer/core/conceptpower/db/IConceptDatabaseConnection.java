@@ -17,5 +17,5 @@ public interface IConceptDatabaseConnection {
 
     IConcept getConceptByUri(String uri);
 
-    List<IConcept> getConceptList(String query);
+    List<IConcept> getSearchResults(String query);
 }

@@ -3,15 +3,12 @@ $(document).ready(function() {
         minLength: 1,
         autofocus: true,
         source: function (request, response) {
-            var pathArray = window.location.pathname.split( '/' );
-            var root = pathArray[1];
-
-            $.getJSON('/' + root + '/searchPage/getConcepts', request, function(result) {
+            $.getJSON(root + '/searchPage/getConcepts', request, function(result) {
                 response($.map(result, function(item) {
                     return {
                         label: item.word,
                         value: item.word,
-                        tag_url: "/" + root + "/concept/" + item.id
+                        tag_url: root + "/concept/" + item.id
                     }
                 }));
             });
