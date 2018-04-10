@@ -18,6 +18,7 @@ public class Edge {
     private String label;
     private String concept;
     private String sourceUri;
+    private String presentationUri;
     private String startTime;
     private String endTime;
     private String occurred;
@@ -40,6 +41,12 @@ public class Edge {
     }
     public void setSource(String source) {
         this.source = source;
+    }
+    public String getPresentationUri() {
+        return presentationUri;
+    }
+    public void setPresentationUri(String presentationUri) {
+        this.presentationUri = presentationUri;
     }
     public String getTarget() {
         return target;
