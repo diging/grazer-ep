@@ -185,8 +185,11 @@ public class WikidataConnector implements IWikidataConnector {
             EntityDocument objectDoc = entityResults
                     .get(statement.getObject().getId());
             if (objectDoc instanceof ItemDocument) {
-                statement.getObject().setLabel(((ItemDocument) objectDoc)
-                        .getLabels().get(LANGUAGE).getText());
+                Map<String, MonolingualTextValue> labels = ((ItemDocument) objectDoc)
+                        .getLabels();
+                if (labels != null && labels.get(LANGUAGE) != null) {
+                    statement.getObject().setLabel(labels.get(LANGUAGE).getText());
+                }
             }
         }
     }
@@ -225,8 +228,12 @@ public class WikidataConnector implements IWikidataConnector {
     protected WikidataConcept createWikidataConcept(EntityDocument entity) {
         WikidataConcept wdConcept = new WikidataConcept();
         wdConcept.setId(((ItemDocument) entity).getItemId().getId());
-        wdConcept.setLabel(
-                ((ItemDocument) entity).getLabels().get(LANGUAGE).getText());
+        
+        Map<String, MonolingualTextValue> labels = ((ItemDocument) entity).getLabels();
+        if (labels != null && labels.get(LANGUAGE) != null) {
+            wdConcept.setLabel(labels.get(LANGUAGE).getText());
+        }
+        
         Map<String, MonolingualTextValue> descriptions = ((ItemDocument) entity)
                 .getDescriptions();
         if (descriptions != null && descriptions.get(LANGUAGE) != null) {
