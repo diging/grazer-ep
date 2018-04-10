@@ -31,6 +31,6 @@ ${edge.label}
 <c:if test="${not empty edge.occurred}">
     in ${edge.occurred}
 </c:if>
-    found in <a href="${edge.sourceUri}" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i> ${edge.sourceUri}</a>.
+    found in <a href="${edge.presentationUri}" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i> ${edge.presentationUri}</a>.
 </li>
 </c:forEach>

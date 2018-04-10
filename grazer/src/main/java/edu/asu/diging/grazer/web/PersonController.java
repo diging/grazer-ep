@@ -1,9 +1,8 @@
 package edu.asu.diging.grazer.web;
 
 import java.io.IOException;
-
-import java.util.Collection;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -29,9 +28,8 @@ import edu.asu.diging.grazer.core.exception.WikidataException;
 import edu.asu.diging.grazer.core.graphs.IGraphDBConnection;
 import edu.asu.diging.grazer.core.model.IConcept;
 import edu.asu.diging.grazer.core.model.impl.Edge;
-import edu.asu.diging.grazer.core.model.impl.Graph;
 import edu.asu.diging.grazer.core.model.impl.Node;
-
+import edu.asu.diging.grazer.core.util.ISourceUriPatternUtil;
 import edu.asu.diging.grazer.core.wikidata.IWikidataConnector;
 import edu.asu.diging.grazer.core.wikidata.impl.WikidataStatement;
 import edu.asu.diging.grazer.web.cytoscape.Data;
@@ -53,6 +51,9 @@ public class PersonController {
     @Autowired
     private IWikidataConnector wikiConnector;
     
+    @Autowired
+    private ISourceUriPatternUtil patternUtil;
+
     @Value("${concepts.type.person}")
     private String personType;
     
@@ -91,6 +92,17 @@ public class PersonController {
         List<Edge> uniqueEdges = getEdges(concept.getUri());
         
         model.addAttribute("edges", uniqueEdges);
+        uniqueEdges.forEach(e -> {
+            e.setPresentationUri(e.getSourceUri());
+            if (!patternUtil.isPatternUri(e.getSourceUri())) {
+                String resolvedUri = patternUtil.getTransformedResolvedUri(e.getSourceUri());
+                if (resolvedUri != null) {
+                    e.setPresentationUri(resolvedUri);
+                } 
+            }
+            
+        });
+        
         model.addAttribute("concept", concept);
         model.addAttribute("alternativeIdsString", String.join(",", concept.getAlternativeUris()));
         return "person/statements";
@@ -126,7 +138,6 @@ public class PersonController {
     
     private List<Edge> getEdges(String uri) {
         List<Edge> edgeList = graphDbConnector.getEdges(uri);
-        List<Edge> duplicates = new ArrayList<Edge>();
         List<Edge> uniqueEdges = new ArrayList<Edge>();
         HashSet<String> uniqueEdgeStrings = new HashSet<>();
         
@@ -135,10 +146,9 @@ public class PersonController {
             if(!uniqueEdgeStrings.contains(sourceAndTarget)) {
                 uniqueEdgeStrings.add(sourceAndTarget);
                 uniqueEdges.add(edgeList.get(i));
-            } else {
-                duplicates.add(edgeList.get(i));
-            }
+            } 
         }
+        
         return uniqueEdges;
     }
 }
