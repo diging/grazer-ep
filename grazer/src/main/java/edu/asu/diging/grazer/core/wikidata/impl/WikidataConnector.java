@@ -25,6 +25,7 @@ import org.springframework.web.client.RestTemplate;
 import org.wikidata.wdtk.datamodel.interfaces.EntityDocument;
 import org.wikidata.wdtk.datamodel.interfaces.EntityIdValue;
 import org.wikidata.wdtk.datamodel.interfaces.ItemDocument;
+import org.wikidata.wdtk.datamodel.interfaces.MonolingualTextValue;
 import org.wikidata.wdtk.datamodel.interfaces.PropertyDocument;
 import org.wikidata.wdtk.datamodel.interfaces.Snak;
 import org.wikidata.wdtk.datamodel.interfaces.Statement;
@@ -38,8 +39,9 @@ import edu.asu.diging.grazer.core.wikidata.IWikidataFetcherFactory;
 import edu.asu.diging.grazer.core.wikidata.IWikidataConnector;
 
 /**
- * Implementation of {@link IWikidataConnector} using the Wikidata Toolkit.
- * See https://github.com/Wikidata/Wikidata-Toolkit and https://www.mediawiki.org/wiki/Wikidata_Toolkit
+ * Implementation of {@link IWikidataConnector} using the Wikidata Toolkit. See
+ * https://github.com/Wikidata/Wikidata-Toolkit and
+ * https://www.mediawiki.org/wiki/Wikidata_Toolkit
  * 
  * @author jdamerow
  *
@@ -49,7 +51,7 @@ import edu.asu.diging.grazer.core.wikidata.IWikidataConnector;
 public class WikidataConnector implements IWikidataConnector {
 
     private final String LANGUAGE = "en";
-    
+
     private RestTemplate restTemplate;
 
     private final Logger logger = LoggerFactory.getLogger(getClass());
@@ -62,10 +64,10 @@ public class WikidataConnector implements IWikidataConnector {
 
     @Value("${wikipedia.wikibaseitem.pattern}")
     private String wikipediaWikibaseItemPattern;
-    
+
     @Value("${wikidata.entry.url}")
     private String wikidataEntryUrl;
-    
+
     @Autowired
     private IWikidataFetcherFactory fetcherFactory;
 
@@ -120,17 +122,18 @@ public class WikidataConnector implements IWikidataConnector {
 
         return personCodes;
     }
-    
+
     @Override
     @Cacheable(value = "wikidata")
-    public List<WikidataStatement> getWikidataStatements(IConcept concept) throws WikidataException {
+    public List<WikidataStatement> getWikidataStatements(IConcept concept)
+            throws WikidataException {
         List<String> personCodes = getPersonCodes(concept);
-        
+
         List<WikidataStatement> statements = new ArrayList<>();
-        
+
         WikibaseDataFetcher wbdf = fetcherFactory.createFetcher();
         wbdf.getFilter().setLanguageFilter(Collections.singleton(LANGUAGE));
-        
+
         for (String code : personCodes) {
             EntityDocument entity = null;
             try {
@@ -138,25 +141,26 @@ public class WikidataConnector implements IWikidataConnector {
             } catch (MediaWikiApiErrorException e1) {
                 throw new WikidataException(e1);
             }
-            
+
             if (entity instanceof ItemDocument) {
                 WikidataConcept wdConcept = createWikidataConcept(entity);
-                
-                Iterator<Statement> itemStatements = ((ItemDocument) entity).getAllStatements();
+
+                Iterator<Statement> itemStatements = ((ItemDocument) entity)
+                        .getAllStatements();
                 List<String> idsToFetch = new ArrayList<>();
-                
-                while (itemStatements.hasNext()){
+
+                while (itemStatements.hasNext()) {
                     statements.add(createWikidataStatement(wdConcept,
                             itemStatements, idsToFetch));
                 }
-                
+
                 Map<String, EntityDocument> entityResults = null;
                 try {
                     entityResults = wbdf.getEntityDocuments(idsToFetch);
                 } catch (MediaWikiApiErrorException e) {
                     throw new WikidataException(e);
                 }
-                
+
                 if (entityResults != null) {
                     for (WikidataStatement statement : statements) {
                         fillStatements(entityResults, statement);
@@ -164,59 +168,70 @@ public class WikidataConnector implements IWikidataConnector {
                 }
             }
         }
-        
+
         return statements;
     }
 
     protected void fillStatements(Map<String, EntityDocument> entityResults,
             WikidataStatement statement) {
-        EntityDocument predicateDoc = entityResults.get(statement.getPredicate().getId());
+        EntityDocument predicateDoc = entityResults
+                .get(statement.getPredicate().getId());
         if (predicateDoc instanceof PropertyDocument) {
-            statement.getPredicate().setLabel(((PropertyDocument) predicateDoc).getLabels().get(LANGUAGE).getText());
-        } 
-        
+            statement.getPredicate().setLabel(((PropertyDocument) predicateDoc)
+                    .getLabels().get(LANGUAGE).getText());
+        }
+
         if (statement.getObject() != null) {
-            EntityDocument objectDoc = entityResults.get(statement.getObject().getId());
+            EntityDocument objectDoc = entityResults
+                    .get(statement.getObject().getId());
             if (objectDoc instanceof ItemDocument) {
-                statement.getObject().setLabel(((ItemDocument) objectDoc).getLabels().get(LANGUAGE).getText());
-            } 
+                statement.getObject().setLabel(((ItemDocument) objectDoc)
+                        .getLabels().get(LANGUAGE).getText());
+            }
         }
     }
 
-    protected WikidataStatement createWikidataStatement(WikidataConcept wdConcept, Iterator<Statement> itemStatements,
+    protected WikidataStatement createWikidataStatement(
+            WikidataConcept wdConcept, Iterator<Statement> itemStatements,
             List<String> idsToFetch) {
         WikidataStatement statement = new WikidataStatement();
         statement.setSubject(wdConcept);
-        
+
         Statement st = itemStatements.next();
         Snak relation = st.getClaim().getMainSnak();
         String propertyId = relation.getPropertyId().getId();
-        
+
         WikidataProperty wdProperty = new WikidataProperty();
         wdProperty.setId(propertyId);
         idsToFetch.add(propertyId);
         statement.setPredicate(wdProperty);
-        
-        org.wikidata.wdtk.datamodel.interfaces.Value value = relation.getValue();
-        if (value != null) { 
+
+        org.wikidata.wdtk.datamodel.interfaces.Value value = relation
+                .getValue();
+        if (value != null) {
             WikidataConcept wdObject = new WikidataConcept();
             statement.setObject(wdObject);
             if (value instanceof EntityIdValue) {
-                wdObject.setId(((EntityIdValue)value).getId());
+                wdObject.setId(((EntityIdValue) value).getId());
                 idsToFetch.add(wdObject.getId());
             } else if (value instanceof StringValue) {
                 wdObject.setLabel(((StringValue) value).getString());
             }
         }
-        
+
         return statement;
     }
 
     protected WikidataConcept createWikidataConcept(EntityDocument entity) {
         WikidataConcept wdConcept = new WikidataConcept();
-        wdConcept.setId(((ItemDocument)entity).getItemId().getId());
-        wdConcept.setLabel(((ItemDocument)entity).getLabels().get(LANGUAGE).getText());
-        wdConcept.setDescription(((ItemDocument)entity).getDescriptions().get(LANGUAGE).getText());
+        wdConcept.setId(((ItemDocument) entity).getItemId().getId());
+        wdConcept.setLabel(
+                ((ItemDocument) entity).getLabels().get(LANGUAGE).getText());
+        Map<String, MonolingualTextValue> descriptions = ((ItemDocument) entity)
+                .getDescriptions();
+        if (descriptions != null && descriptions.get(LANGUAGE) != null) {
+            wdConcept.setDescription(descriptions.get(LANGUAGE).getText());
+        }
         return wdConcept;
     }
 }
