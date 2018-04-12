@@ -19,5 +19,9 @@
     <cache name="wikidata" eternal="false" maxElementsInMemory="1000"
         overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
         timeToLiveSeconds="604800" memoryStoreEvictionPolicy="LRU" /> <!-- 7 days caching -->
+        
+    <cache name="amphoraUris" eternal="false" maxElementsInMemory="1000"
+        overflowToDisk="false" diskPersistent="false" timeToIdleSeconds="0"
+        timeToLiveSeconds="604800" memoryStoreEvictionPolicy="LRU" /> <!-- 7 days caching -->
 
 </ehcache>
