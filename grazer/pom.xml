@@ -9,7 +9,7 @@
 
     <properties>
         <org.slf4j-version>1.7.5</org.slf4j-version>
-        <org.springframework-version>4.3.1.RELEASE</org.springframework-version>
+        <org.springframework-version>4.3.15.RELEASE</org.springframework-version>
         <spring-security-version>4.1.3.RELEASE</spring-security-version>
         <rdf4j.version>2.2.2</rdf4j.version>
         <hibernate.version>5.2.11.Final</hibernate.version>
@@ -23,7 +23,13 @@
         <quadriga.url>http://localhost:8080/quadriga/</quadriga.url>
         <quadriga.concepts.endpoint>public/concepts</quadriga.concepts.endpoint>
         <conceptpower.url>https://chps.asu.edu/conceptpower/rest/</conceptpower.url>
+
         <searchConceptpowerEndpoint>ConceptSearch/</searchConceptpowerEndpoint>
+
+        
+        <amphora.base.url>https://amphora.asu.edu/amphora</amphora.base.url>
+        <amphora.metadata.endpoint>/resource/get</amphora.metadata.endpoint>
+        <amphora.token></amphora.token>
 
         <rdf.store.dir></rdf.store.dir>
         <cron.job.schedule>0 00 21 * * SUN</cron.job.schedule>
@@ -70,6 +76,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
 

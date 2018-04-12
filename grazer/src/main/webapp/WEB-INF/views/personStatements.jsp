@@ -3,7 +3,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-
 <c:forEach items="${edges}" var="edge">
 <li class="list-group-item">
 <c:choose>
@@ -32,6 +31,6 @@ ${edge.label}
 <c:if test="${not empty edge.occurred}">
     in ${edge.occurred}
 </c:if>
-    found in <a href="${edge.sourceUri}" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i> ${edge.sourceUri}</a>.
+    found in <a href="${edge.presentationUri}" target="_blank"><i class="fa fa-globe" aria-hidden="true"></i> ${edge.presentationUri}</a>.
 </li>
 </c:forEach>
