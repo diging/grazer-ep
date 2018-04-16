@@ -49,7 +49,6 @@ public class ConceptpowerCache implements IConceptpowerCache {
         if(concept != null) {
             conceptDB.createOrUpdate(concept);
         }
-        
         return concept; 
     }
 }

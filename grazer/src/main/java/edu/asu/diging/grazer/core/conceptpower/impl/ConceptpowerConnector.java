@@ -4,8 +4,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -16,32 +14,27 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.client.RestClientException;
 import org.springframework.web.client.RestTemplate;
 
 import edu.asu.diging.grazer.core.conceptpower.IConceptpowerConnector;
 import edu.asu.diging.grazer.core.model.IConcept;
-import edu.asu.diging.grazer.core.conceptpower.impl.ConceptpowerConcepts;
 
 @Service
 @PropertySource("classpath:config.properties")
 public class ConceptpowerConnector implements IConceptpowerConnector {
 
-    private static final Logger logger = LoggerFactory.getLogger(ConceptpowerConnector.class);
-    
     @Autowired
     private ConceptMapper conceptMapper;
 
     @Value("${conceptpower.url}")
     private String conceptpowerUrl;
-    
-    @Value("${searchConceptpowerEndpoint}")
-    private String searchEndpoint;
 
     @Value("${conceptpower.concept.endpoint}")
     private String conceptEndpoint;
 
     private RestTemplate restTemplate;
+    
+    private String searchEndpoint = "/ConceptSearch";
 
     public ConceptpowerConnector() {
         restTemplate = new RestTemplate();
@@ -73,7 +66,6 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
         }
         return null;
     }
-    
     
     @Override
     @Cacheable(value = "concepts")

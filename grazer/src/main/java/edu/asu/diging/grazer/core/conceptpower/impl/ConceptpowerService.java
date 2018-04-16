@@ -4,42 +4,23 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 
-import edu.asu.diging.grazer.core.conceptpower.impl.ConceptpowerConcepts;
-import edu.asu.diging.grazer.core.conceptpower.IConceptCollectionManager;
+import edu.asu.diging.grazer.core.conceptpower.IConceptpowerConnector;
+import edu.asu.diging.grazer.core.conceptpower.IConceptpowerService;
 import edu.asu.diging.grazer.core.conceptpower.ISearchResult;
-import edu.asu.diging.grazer.core.conceptpower.IService;
-import edu.asu.diging.grazer.core.conceptpower.impl.ConceptpowerConcept;
 
-@Service
-public class ConceptpowerService implements IService {
-
+public class ConceptpowerService implements IConceptpowerService {
+    
     @Autowired
-    private IConceptCollectionManager collectionManager;
-    
-    private final static String SERVICE_ID = "edu.asu.conceptpower";
-    private final static String SERVICE_NAME = "ConceptPower";
-    
-    @Override
-    public String getServiceId() {
-
-        return SERVICE_ID;
-    }
-    
-    @Override
-    public String getName() {
-
-        return SERVICE_NAME;
-    }
+    private IConceptpowerConnector conceptpowerConnector;
 
     @Override
     public List<ISearchResult> search(String term) {
 
         List<ISearchResult> searchResults = new ArrayList<ISearchResult>();
         
-        ConceptpowerConcepts cpc = collectionManager.search(term);
-        if(cpc!=null)
+        ConceptpowerConcepts cpc = conceptpowerConnector.search(term);
+        if(cpc != null)
         {
             List<ConceptpowerConcept> conceptEntries = cpc.getConceptEntries();
             for(ConceptpowerConcept ce : conceptEntries)
@@ -53,5 +34,4 @@ public class ConceptpowerService implements IService {
         }
         return searchResults;
     }
-
 }
