@@ -14,25 +14,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import edu.asu.diging.grazer.core.conceptpower.IConceptpowerConnector;
-import edu.asu.diging.grazer.core.conceptpower.db.IConceptDatabaseConnection;
 import edu.asu.diging.grazer.core.conceptpower.impl.ConceptpowerConcept;
 import edu.asu.diging.grazer.core.conceptpower.impl.ConceptpowerConcepts;
-import edu.asu.diging.grazer.core.model.IConcept;
-
-/*@Controller
-public class SearchConceptController {
-    
-    @Autowired
-    private IConceptDatabaseConnection conceptDatabaseConnection;
-    
-    @RequestMapping(value = "/searchPage/getConcepts", method = RequestMethod.GET)
-    public @ResponseBody List<IConcept> getTags(@RequestParam String term) {
-        return conceptDatabaseConnection.getSearchResults(term);
-    }
-}*/
 
 @Controller
 public class SearchConceptController {
@@ -41,14 +26,34 @@ public class SearchConceptController {
 
     @Autowired
     private IConceptpowerConnector connector;
+    
+    @RequestMapping(value = "search/texts")
+    public String search() throws Exception {
+        return "search/texts";
+    }
 
-    @RequestMapping(value = "/public/concept/search", method = RequestMethod.GET)
+    @RequestMapping(value = "search/searchConcepts", method = RequestMethod.GET)
     public ResponseEntity<String> searchConcepts(@RequestParam("searchTerm") String searchTerm) {
         
-        ConceptpowerConcepts reply = connector.search(searchTerm);
-        List<ConceptpowerConcept> conceptList = reply.getConceptEntries();
-        conceptList.addAll(reply.getConceptEntries());
+        ConceptpowerConcepts concepts = connector.search(searchTerm, "noun");
+        List<ConceptpowerConcept> conceptList = concepts.getConceptEntries();
 
+        concepts = connector.search(searchTerm, "verb");
+        if (concepts.getConceptEntries() != null && !concepts.getConceptEntries().isEmpty()) {
+            conceptList.addAll(concepts.getConceptEntries());
+        }
+        
+
+        concepts = connector.search(searchTerm, "adjective");
+        if (concepts.getConceptEntries() != null && !concepts.getConceptEntries().isEmpty()) {
+            conceptList.addAll(concepts.getConceptEntries());
+        }
+
+        concepts = connector.search(searchTerm, "adverb");
+        if (concepts.getConceptEntries() != null && !concepts.getConceptEntries().isEmpty()) {
+            conceptList.addAll(concepts.getConceptEntries());
+        }
+        
         List<JSONObject> jsonResults = new ArrayList<JSONObject>();
 
         if (conceptList != null) {
@@ -58,13 +63,14 @@ public class SearchConceptController {
                     jsonResult.put("id", result.getId());
                     jsonResult.put("name", result.getLemma());
                     jsonResult.put("description", result.getDescription());
+                    jsonResult.put("pos", result.getPos());
                     jsonResult.put("type", result.getType());
                     jsonResults.add(jsonResult);
                 } catch (JSONException e) {
                     logger.error("Json exception while adding the results", e);
                 }
             }
-        }
+        } 
 
         JSONObject jsonResponse = new JSONObject();
         try {

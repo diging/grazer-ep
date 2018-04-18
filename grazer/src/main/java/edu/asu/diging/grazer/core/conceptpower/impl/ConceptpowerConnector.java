@@ -1,9 +1,9 @@
 package edu.asu.diging.grazer.core.conceptpower.impl;
 
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -34,7 +34,7 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
 
     private RestTemplate restTemplate;
     
-    private String searchEndpoint = "/ConceptSearch";
+    private String searchEndpoint = "/ConceptLookup/";
 
     public ConceptpowerConnector() {
         restTemplate = new RestTemplate();
@@ -69,11 +69,18 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
     
     @Override
     @Cacheable(value = "concepts")
-    public ConceptpowerConcepts search(String searchTerm) {
-        Map<String, String> vars = new HashMap<String, String>();
-        vars.put("searchterm", searchTerm); 
-
-        return restTemplate.getForObject(conceptpowerUrl + searchEndpoint + "?word={searchterm}", ConceptpowerConcepts.class,
-                vars);
+    public ConceptpowerConcepts search(String item, String pos) {
+        
+        HttpHeaders requestHeaders = new HttpHeaders();
+        requestHeaders.setAccept(
+                Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
+        HttpEntity<?> entity = new HttpEntity<Object>(requestHeaders);
+        
+        ResponseEntity<ConceptpowerConcepts> response = restTemplate.exchange(
+                conceptpowerUrl + searchEndpoint + item + "/" + pos, 
+                HttpMethod.GET, entity, ConceptpowerConcepts.class);
+        
+        return response.getBody();
     }
+    
 }

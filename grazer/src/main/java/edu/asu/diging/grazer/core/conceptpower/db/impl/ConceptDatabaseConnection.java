@@ -25,12 +25,6 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
 
     @Autowired
     protected SessionFactory sessionFactory;
-
-    public List<IConcept> getSearchResults(String query) {
-        Query conceptQuery = sessionFactory.getCurrentSession().createQuery("select c from Concept c where c.word like :word");
-        conceptQuery.setString("word", "%" + query + "%");
-        return conceptQuery.list();
-    }
     
     @Override
     public IConcept getConcept(String id) {
