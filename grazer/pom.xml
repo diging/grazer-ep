@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <groupId>edu.asu.diging</groupId>
     <artifactId> grazer</artifactId>
@@ -9,7 +9,7 @@
 
     <properties>
         <org.slf4j-version>1.7.5</org.slf4j-version>
-        <org.springframework-version>4.3.1.RELEASE</org.springframework-version>
+        <org.springframework-version>4.3.15.RELEASE</org.springframework-version>
         <spring-security-version>4.1.3.RELEASE</spring-security-version>
         <rdf4j.version>2.2.2</rdf4j.version>
         
@@ -26,10 +26,14 @@
         <quadriga.url>http://localhost:8080/quadriga/</quadriga.url>
         <quadriga.concepts.endpoint>public/concepts</quadriga.concepts.endpoint>
         <conceptpower.url>https://chps.asu.edu/conceptpower/rest/</conceptpower.url>
+        
+        <amphora.base.url>https://amphora.asu.edu/amphora</amphora.base.url>
+        <amphora.metadata.endpoint>/resource/get</amphora.metadata.endpoint>
+        <amphora.token></amphora.token>
 
         <rdf.store.dir></rdf.store.dir>
         <cron.job.schedule>0 00 21 * * SUN</cron.job.schedule>
-        
+
         <tomcat.manager.path></tomcat.manager.path>
         <tomcat.server.id></tomcat.server.id>
         <tomcat.appname>ep-grazer</tomcat.appname>
@@ -37,6 +41,8 @@
         <database.url>jdbc:mysql://localhost:3306/grazer</database.url>
         <database.username>dbadmin</database.username>
         <database.pw>dbadmin</database.pw>
+        
+        <google.tracking.id></google.tracking.id>
 
     </properties>
 
@@ -72,6 +78,11 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context-support</artifactId>
+            <version>${org.springframework-version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
             <version>${org.springframework-version}</version>
         </dependency>
 
@@ -342,6 +353,13 @@
             <artifactId>rdf4j-sail-nativerdf</artifactId>
             <version>${rdf4j.version}</version>
         </dependency>
+
+        <!-- Wikidata -->
+        <dependency>
+            <groupId>org.wikidata.wdtk</groupId>
+            <artifactId>wdtk-wikibaseapi</artifactId>
+            <version>0.8.0</version>
+        </dependency>
     </dependencies>
 
     <build>
@@ -412,7 +430,8 @@
                             <directory>src/main/webapp</directory>
                             <includes>
                                 <include>**/*</include>
-                                <!-- include any other file types you want to filter -->
+                                <!-- include any other file types you want 
+                                    to filter -->
                             </includes>
                             <excludes>
                                 <exclude>**/*.woff</exclude>
@@ -448,7 +467,7 @@
             </plugin>
         </plugins>
     </build>
-    
+
     <scm>
         <connection>scm:svn:http://none</connection>
         <url>scm:svn:https://none</url>

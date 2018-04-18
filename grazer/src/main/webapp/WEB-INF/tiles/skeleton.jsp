@@ -42,6 +42,20 @@
     <script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />"></script>
     <script src="<c:url value="/resources/bootstrap/js/main.js" />"></script>	
     <script src="<c:url value="/resources/js/jquery-alert.js" />"></script>
+	
+	<c:set var="googleTracking" value="${google.tracking.id}" />
+	<c:if test="${not empty googleTracking }">
+	<!-- Google Analytics -->
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=${google.tracking.id}"></script>
+	<script>
+	  window.dataLayer = window.dataLayer || [];
+	  function gtag(){dataLayer.push(arguments);}
+	  gtag('js', new Date());
+	
+	  gtag('config', '${google.tracking.id}');
+	</script>
+	</c:if>
   </head>
 
   <body data-spy="scroll" data-offset="0" data-target="#navigation">
