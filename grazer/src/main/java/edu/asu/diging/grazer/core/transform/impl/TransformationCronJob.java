@@ -25,7 +25,7 @@ import edu.asu.diging.grazer.core.quadriga.impl.PollResponse;
 import edu.asu.diging.grazer.core.rdf.IRDFTripleService;
 
 @Component
-@EnableScheduling
+//@EnableScheduling
 @PropertySource("classpath:config.properties")
 public class TransformationCronJob {
     
@@ -49,7 +49,7 @@ public class TransformationCronJob {
     }
     
     @Async
-    @Scheduled(cron = "${cron_schedule}")
+    //@Scheduled(cron = "${cron_schedule}")
     public void retrieveTransformations() {
         runTransformations(new ArrayList<>());
     }
@@ -57,6 +57,7 @@ public class TransformationCronJob {
     @Async
     public void retrieveTransformations(List<String> excludes) {
         runTransformations(excludes);
+        System.out.println("Reached here");
     }
     
     private void runTransformations(List<String> excludes) {

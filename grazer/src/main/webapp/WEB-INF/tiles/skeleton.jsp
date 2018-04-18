@@ -71,6 +71,7 @@
                     <button type="submit" class="btn btn-link" style="color:#800000"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
                   </div>
                 </form>
+                <button type="button" class="btn btn-link pull-right"><a href="${pageContext.servletContext.contextPath}/api/transformations/start">Start cron job</a></button>
               </div>
             </div>
           </sec:authorize>
