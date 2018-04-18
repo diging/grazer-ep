@@ -28,8 +28,14 @@ public class SearchConceptController {
     private IConceptpowerConnector connector;
     
     @RequestMapping(value = "search/texts")
-    public String search() throws Exception {
+    public String search() {
         return "search/texts";
+    }
+    
+    private void addConcepts(ConceptpowerConcepts concepts, List<ConceptpowerConcept> conceptList) {
+        if (concepts.getConceptEntries() != null && !concepts.getConceptEntries().isEmpty()) {
+            conceptList.addAll(concepts.getConceptEntries());
+        }
     }
 
     @RequestMapping(value = "search/searchConcepts", method = RequestMethod.GET)
@@ -39,20 +45,13 @@ public class SearchConceptController {
         List<ConceptpowerConcept> conceptList = concepts.getConceptEntries();
 
         concepts = connector.search(searchTerm, "verb");
-        if (concepts.getConceptEntries() != null && !concepts.getConceptEntries().isEmpty()) {
-            conceptList.addAll(concepts.getConceptEntries());
-        }
-        
+        addConcepts(concepts, conceptList);        
 
         concepts = connector.search(searchTerm, "adjective");
-        if (concepts.getConceptEntries() != null && !concepts.getConceptEntries().isEmpty()) {
-            conceptList.addAll(concepts.getConceptEntries());
-        }
+        addConcepts(concepts, conceptList);
 
         concepts = connector.search(searchTerm, "adverb");
-        if (concepts.getConceptEntries() != null && !concepts.getConceptEntries().isEmpty()) {
-            conceptList.addAll(concepts.getConceptEntries());
-        }
+        addConcepts(concepts, conceptList);        
         
         List<JSONObject> jsonResults = new ArrayList<JSONObject>();
 

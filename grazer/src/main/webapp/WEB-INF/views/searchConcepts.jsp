@@ -41,7 +41,7 @@
 //# sourceURL=loader.js
     function init() {
         // ajax loader
-        var networkURL = '${pageContext.servletContext.contextPath}/search/texts?conceptId=';
+        var networkURL = '${pageContext.servletContext.contextPath}/concept/';
         var $searchInput = $('#search-term');
         var $resWrapper = $('#search-results-wrapper');
         var $items = $('#search-results-items');

@@ -2,8 +2,6 @@ package edu.asu.diging.grazer.core.conceptpower.impl;
 
 import java.util.Arrays;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.cache.annotation.Cacheable;
@@ -34,7 +32,8 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
 
     private RestTemplate restTemplate;
     
-    private String searchEndpoint = "/ConceptLookup/";
+    @Value("${conceptpower.search.endpoint}")
+    private String searchEndpoint;
 
     public ConceptpowerConnector() {
         restTemplate = new RestTemplate();

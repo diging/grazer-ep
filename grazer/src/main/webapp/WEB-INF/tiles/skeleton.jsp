@@ -74,12 +74,6 @@
       <div class="page-header">
       <nav>
           <ul class="nav nav-pills pull-right">
-              <li>
-                <div class="ui-widget form-inline">
-                  <input id="conceptQuery" type="text" class="form-control" name="tagQuery" value="" placeholder="Search for a concept..">
-                  <span id="searchLink"></span>
-                </div>
-              </li>
               <li role="presentation">
           		<a href="<c:url value="/" />" >Home</a>
               </li>

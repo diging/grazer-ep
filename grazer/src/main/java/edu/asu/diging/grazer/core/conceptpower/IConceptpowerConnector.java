@@ -1,5 +1,7 @@
 package edu.asu.diging.grazer.core.conceptpower;
 
+import java.util.List;
+
 import edu.asu.diging.grazer.core.conceptpower.impl.ConceptpowerConcepts;
 import edu.asu.diging.grazer.core.model.IConcept;
 
