@@ -42,14 +42,6 @@
  	<script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />"></script>
 	<script src="<c:url value="/resources/bootstrap/js/main.js" />"></script>
 	
-	<!-- Autocomplete function -->
-	<script type="text/javascript">
-        var root = "${pageContext.servletContext.contextPath}";
-    </script>
-	<script src="<c:url value="/resources/js/searchConcepts.js" />"></script>
-	<script src="<c:url value="/resources/js/jquery-ui.js" />"></script>
-	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/jquery-ui.css" />
-	
 	<c:set var="googleTracking" value="${google.tracking.id}" />
 	<c:if test="${not empty googleTracking }">
 	<!-- Google Analytics -->
