@@ -8,6 +8,7 @@ import java.security.Principal;
 import java.time.OffsetDateTime;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Pattern;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -41,20 +42,21 @@ public class FileUploadServiceImpl implements IFileUploadService {
     } 
     
     private String createDirectory() {
-        String path = createID();
-        File directory = new File(env.getProperty("transformation.file.dir") + File.separator + path);
+        File directory = new File(env.getProperty("transformation.file.dir") + File.separator + createID());
         while(directory.exists()) {
-            path = createID();
-            directory = new File(env.getProperty("transformation.file.dir") + File.separator + path);
+            directory = new File(env.getProperty("transformation.file.dir") + File.separator + createID());
         }
         directory.mkdir();
-        return path;
+        return directory.toString();
     }
     
     private String uploadFiles(CommonsMultipartFile[] multipartFiles) throws IOException {
 
         String directory = createDirectory();
-
+        
+        String[] splitDirectoryName = directory.split(Pattern.quote(File.separator));
+        String path = splitDirectoryName[splitDirectoryName.length-1];
+        
         for(CommonsMultipartFile file: multipartFiles) {
             try {      
                 String serverFileName = directory + File.separator + file.getOriginalFilename();
@@ -68,7 +70,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
                 throw new IOException(e);
             } 
         } 
-        return directory;
+        return path;
     }
 
     @Override
