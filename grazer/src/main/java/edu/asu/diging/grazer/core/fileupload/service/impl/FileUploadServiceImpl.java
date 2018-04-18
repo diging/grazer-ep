@@ -41,12 +41,14 @@ public class FileUploadServiceImpl implements IFileUploadService {
     } 
     
     private String createDirectory() {
-        File directory = new File(env.getProperty("transformation.file.dir") + File.separator + createID());
+        String path = createID();
+        File directory = new File(env.getProperty("transformation.file.dir") + File.separator + path);
         while(directory.exists()) {
-            directory = new File(env.getProperty("transformation.file.dir") + File.separator + createID());
+            path = createID();
+            directory = new File(env.getProperty("transformation.file.dir") + File.separator + path);
         }
         directory.mkdir();
-        return directory.toString();
+        return path;
     }
     
     private String uploadFiles(CommonsMultipartFile[] multipartFiles) throws IOException {
