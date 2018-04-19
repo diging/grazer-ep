@@ -53,7 +53,6 @@ public class TransformationCronJob {
     @Async
     public void retrieveTransformations(List<String> excludes) {
         runTransformations(excludes);
-        System.out.println("Reached here");
     }
     
     private void runTransformations(List<String> excludes) {
