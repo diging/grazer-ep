@@ -34,7 +34,7 @@ public class FileUploadController {
         binder.setValidator(formValidator);
     }
     
-    @RequestMapping(value = "/transformation/save", method = RequestMethod.POST)
+    @RequestMapping(value = "/admin/transformation/save", method = RequestMethod.POST)
     public String uploadResources(@ModelAttribute("transformationMetadataAndFiles") @Valid FileUploadFormImpl transformationMetadataAndFiles,
             BindingResult result, Principal principal, Model model, RedirectAttributes redirectAttributes) throws IOException {
         
@@ -46,10 +46,10 @@ public class FileUploadController {
         redirectAttributes.addFlashAttribute("css", "success");
         redirectAttributes.addFlashAttribute("msg", "Files uploaded successfully!");
         service.save(transformationMetadataAndFiles, principal);
-        return "redirect:/transformation/add";    
+        return "redirect:/admin/transformation/add";    
     }
      
-    @RequestMapping(value = "/transformation/add")
+    @RequestMapping(value = "/admin/transformation/add")
     public String inputFile(Model model) {
         model.addAttribute("transformationMetadataAndFiles", new FileUploadFormImpl());
         model.addAttribute("fileList", service.list());

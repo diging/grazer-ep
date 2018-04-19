@@ -37,38 +37,37 @@ public class FileUploadServiceImpl implements IFileUploadService {
     @Autowired
     private Environment env;
     
-    public synchronized String createID() {
+    public String createID() {
         return UUID.randomUUID().toString();
     } 
     
-    private String createDirectory() {
-        File directory = new File(env.getProperty("transformation.file.dir") + File.separator + createID());
+    private String[] createDirectory() {
+        String path = createID();
+        File directory = new File(env.getProperty("transformation.file.dir") + File.separator + path);
+        
         while(directory.exists()) {
-            directory = new File(env.getProperty("transformation.file.dir") + File.separator + createID());
+            path = createID();
+            directory = new File(env.getProperty("transformation.file.dir") + File.separator + path);
         }
         directory.mkdir();
-        return directory.toString();
+        return new String[]{directory.toString(), path};
     }
     
     private String uploadFiles(CommonsMultipartFile[] multipartFiles) throws IOException {
 
-        String directory = createDirectory();
+        String[] directoryAndPathArray = createDirectory();
         
-        String[] splitDirectoryName = directory.split(Pattern.quote(File.separator));
-        String path = splitDirectoryName[splitDirectoryName.length-1];
+        String directory = directoryAndPathArray[0];
+        String path = directoryAndPathArray[1];
         
         for(CommonsMultipartFile file: multipartFiles) {
-            try {      
-                String serverFileName = directory + File.separator + file.getOriginalFilename();
-                File serverFile = new File(serverFileName);
+            String serverFileName = directory + File.separator + file.getOriginalFilename();
+            File serverFile = new File(serverFileName);
 
-                BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
-                stream.write(file.getBytes());
-                stream.close();
-            } catch(IOException e) {
-                logger.error("You failed to upload " + file.getOriginalFilename(), e);
-                throw new IOException(e);
-            } 
+            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
+            stream.write(file.getBytes());
+            stream.close();
+             
         } 
         return path;
     }
@@ -88,6 +87,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         metadata.setDescription(transformationMetadataAndFiles.getDescription());
         metadata.setDate(OffsetDateTime.now());
         metadata.setUploader(principal.getName());
+        metadata.setFiles(transformation);
         
         CommonsMultipartFile[] files = new CommonsMultipartFile[2];
         files[0] = transformationMetadataAndFiles.getTransformationFile();

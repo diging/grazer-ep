@@ -8,7 +8,7 @@
         </div>
     </c:if>
     
-    <form:form modelAttribute="transformationMetadataAndFiles" action="${pageContext.servletContext.contextPath}/transformation/save?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
+    <form:form modelAttribute="transformationMetadataAndFiles" action="${pageContext.servletContext.contextPath}/admin/transformation/save?${_csrf.parameterName}=${_csrf.token}" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Add a file</legend>
             <div class="form-group">
