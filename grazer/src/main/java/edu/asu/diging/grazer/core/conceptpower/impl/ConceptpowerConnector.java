@@ -1,6 +1,8 @@
 package edu.asu.diging.grazer.core.conceptpower.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -15,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import edu.asu.diging.grazer.core.conceptpower.IConceptpowerConnector;
+import edu.asu.diging.grazer.core.conceptpower.db.IConceptDatabaseConnection;
 import edu.asu.diging.grazer.core.model.IConcept;
 
 @Service
@@ -23,6 +26,9 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
 
     @Autowired
     private ConceptMapper conceptMapper;
+    
+    @Autowired
+    private IConceptDatabaseConnection conceptDB;
 
     @Value("${conceptpower.url}")
     private String conceptpowerUrl;
@@ -30,10 +36,10 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
     @Value("${conceptpower.concept.endpoint}")
     private String conceptEndpoint;
 
-    private RestTemplate restTemplate;
-    
     @Value("${conceptpower.search.endpoint}")
     private String searchEndpoint;
+    
+    private RestTemplate restTemplate;
 
     public ConceptpowerConnector() {
         restTemplate = new RestTemplate();
@@ -68,18 +74,28 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
     
     @Override
     @Cacheable(value = "concepts")
-    public ConceptpowerConcepts search(String item, String pos) {
+    public List<ConceptpowerConcept> search(String item) {
         
         HttpHeaders requestHeaders = new HttpHeaders();
         requestHeaders.setAccept(
                 Arrays.asList(new MediaType[] { MediaType.APPLICATION_JSON }));
         HttpEntity<?> entity = new HttpEntity<Object>(requestHeaders);
-        
+
         ResponseEntity<ConceptpowerConcepts> response = restTemplate.exchange(
-                conceptpowerUrl + searchEndpoint + item + "/" + pos, 
+                conceptpowerUrl + searchEndpoint + item, 
                 HttpMethod.GET, entity, ConceptpowerConcepts.class);
+
+        List<ConceptpowerConcept> conceptList = response.getBody().getConceptEntries();  
+        List<ConceptpowerConcept> results = new ArrayList<>();
         
-        return response.getBody();
+        if (conceptList != null) {
+            for (ConceptpowerConcept result : conceptList) {
+                if(conceptDB.getConcept(result.getId()) != null) {
+                    results.add(result);
+                } 
+            }
+        } 
+        return results;
     }
     
 }
