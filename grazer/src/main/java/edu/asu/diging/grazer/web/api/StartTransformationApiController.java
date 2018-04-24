@@ -19,7 +19,7 @@ public class StartTransformationApiController {
     @Autowired
     private TransformationCronJob cronJob;
 
-    @RequestMapping("/admin/api/transformations/start")
+    @RequestMapping("/api/transformations/start")
     public ResponseEntity<String> kickoffTransformations(@RequestParam(value="excludes", defaultValue="") String excludes) {
         List<String> excludeConcepts = Arrays.asList(excludes.split(","));
         excludeConcepts = excludeConcepts.stream().map(c -> c.trim()).collect(Collectors.toList());
