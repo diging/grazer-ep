@@ -41,35 +41,32 @@ public class FileUploadServiceImpl implements IFileUploadService {
         return UUID.randomUUID().toString();
     } 
     
-    private String[] createDirectory() {
-        String path = createID();
-        File directory = new File(env.getProperty("transformation.file.dir") + File.separator + path);
+    private String createDirectory() {
+        String pathId = createID();
+        File directory = new File(env.getProperty("transformation.file.dir") + File.separator + pathId);
         
         while(directory.exists()) {
-            path = createID();
-            directory = new File(env.getProperty("transformation.file.dir") + File.separator + path);
+            pathId = createID();
+            directory = new File(env.getProperty("transformation.file.dir") + File.separator + pathId);
         }
         directory.mkdir();
-        return new String[]{directory.toString(), path};
+        return pathId;
     }
     
     private String uploadFiles(CommonsMultipartFile[] multipartFiles) throws IOException {
 
-        String[] directoryAndPathArray = createDirectory();
-        
-        String directory = directoryAndPathArray[0];
-        String path = directoryAndPathArray[1];
+        String pathId = createDirectory();
+        String directory = env.getProperty("transformation.file.dir");
         
         for(CommonsMultipartFile file: multipartFiles) {
-            String serverFileName = directory + File.separator + file.getOriginalFilename();
+            String serverFileName = directory + File.separator + pathId + File.separator + file.getOriginalFilename();
             File serverFile = new File(serverFileName);
 
             BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(serverFile));
             stream.write(file.getBytes());
             stream.close();
-             
         } 
-        return path;
+        return pathId;
     }
 
     @Override
@@ -93,7 +90,7 @@ public class FileUploadServiceImpl implements IFileUploadService {
         files[0] = transformationMetadataAndFiles.getTransformationFile();
         files[1] = transformationMetadataAndFiles.getPatternFile();
 
-        metadata.setPath(uploadFiles(files));
+        metadata.setPathId(uploadFiles(files));
         connection.save(metadata);
     }
 

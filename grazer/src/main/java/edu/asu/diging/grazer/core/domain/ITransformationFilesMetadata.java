@@ -32,5 +32,9 @@ public interface ITransformationFilesMetadata {
     OffsetDateTime getDate();
 
     void setDate(OffsetDateTime date);
+    
+    String getPathId();
+    
+    void setPathId(String pathId);
 
 }

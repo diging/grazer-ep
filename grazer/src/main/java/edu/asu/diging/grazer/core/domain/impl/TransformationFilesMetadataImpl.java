@@ -22,7 +22,7 @@ public class TransformationFilesMetadataImpl implements ITransformationFilesMeta
     private String description;
     private String uploader;
     private OffsetDateTime date;
-    private String path;
+    private String pathId;
  
     @Transient private ITransformationFiles files;
      
@@ -103,11 +103,11 @@ public class TransformationFilesMetadataImpl implements ITransformationFilesMeta
         this.date = date;
     }
     
-    public String getPath() {
-        return path;
+    public String getPathId() {
+        return pathId;
     }
     
-    public void setPath(String path) {
-        this.path = path;
+    public void setPathId(String pathId) {
+        this.pathId = pathId;
     }
 }
