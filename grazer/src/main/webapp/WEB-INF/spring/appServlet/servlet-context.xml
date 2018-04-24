@@ -36,5 +36,14 @@
 			</beans:list>
 		</beans:property>
 	</beans:bean>
-
+    <beans:bean id="multipartResolver"
+        class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- setting maximum upload size -->
+        <beans:property name="maxUploadSize" value="100000000" />
+        <beans:property name="resolveLazily" value="true"/>
+    </beans:bean>
+    <beans:bean id="messageSource" 
+        class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+        <beans:property name="basename" value="classpath:message" />
+    </beans:bean>
 </beans:beans>

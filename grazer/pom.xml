@@ -12,7 +12,10 @@
         <org.springframework-version>4.3.15.RELEASE</org.springframework-version>
         <spring-security-version>4.1.3.RELEASE</spring-security-version>
         <rdf4j.version>2.2.2</rdf4j.version>
+        
         <hibernate.version>5.2.11.Final</hibernate.version>
+        <hibernate.dialect>org.hibernate.dialect.MySQL5Dialect</hibernate.dialect>
+        <hibernate.dialect.storage_engine>InnoDB</hibernate.dialect.storage_engine>
 
         <admin.password>admin</admin.password>
 
@@ -29,6 +32,7 @@
         <amphora.token></amphora.token>
 
         <rdf.store.dir></rdf.store.dir>
+        <transformation.file.dir></transformation.file.dir>
         <cron.job.schedule>0 00 21 * * SUN</cron.job.schedule>
 
         <tomcat.manager.path></tomcat.manager.path>
@@ -349,6 +353,23 @@
             <groupId>org.eclipse.rdf4j</groupId>
             <artifactId>rdf4j-sail-nativerdf</artifactId>
             <version>${rdf4j.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>commons-fileupload</groupId>
+            <artifactId>commons-fileupload</artifactId>
+            <version>1.3.3</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>aopalliance</groupId>
+            <artifactId>aopalliance</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>cglib</groupId>
+            <artifactId>cglib</artifactId>
+            <version>2.2</version>
         </dependency>
 
         <!-- Wikidata -->
