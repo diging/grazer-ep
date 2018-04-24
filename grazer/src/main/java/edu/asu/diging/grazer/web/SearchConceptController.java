@@ -31,7 +31,7 @@ public class SearchConceptController {
         return "search/texts";
     }
 
-    @RequestMapping(value = "search/searchConcepts", method = RequestMethod.GET)
+    @RequestMapping(value = "search/concepts", method = RequestMethod.GET)
     public ResponseEntity<String> searchConcepts(@RequestParam("searchTerm") String searchTerm) {
 
         List<ConceptpowerConcept> conceptList = connector.search(searchTerm);  

@@ -157,7 +157,7 @@
                 $xhr = $.ajax({
                     method: 'get',
                     dataType: 'json',
-                    url: "${pageContext.servletContext.contextPath}/search/searchConcepts",
+                    url: "${pageContext.servletContext.contextPath}/search/concepts",
                     data: {
                         searchTerm: searchVal
                     }

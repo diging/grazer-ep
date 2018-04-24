@@ -67,9 +67,11 @@
       <nav>
           <ul class="nav nav-pills pull-right">
               <li role="presentation">
+          		<a href="<c:url value="/search/texts" />" >Search for concepts</a>
+              </li>
+              <li role="presentation">
           		<a href="<c:url value="/" />" >Home</a>
               </li>
-          	
           	  <sec:authorize access="isAuthenticated()">
           	  <li role="presentation">
          	 	<form action="<c:url value="/logout" />" method="POST">
