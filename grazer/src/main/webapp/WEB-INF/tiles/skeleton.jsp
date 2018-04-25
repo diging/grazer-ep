@@ -71,7 +71,25 @@
                     <button type="submit" class="btn btn-link" style="color:#800000"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
                   </div>
                 </form>
-                <button type="button" class="btn btn-link pull-right"><a href="${pageContext.servletContext.contextPath}/api/transformations/start">Start Data Import</a></button>
+                <button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#dataImportModal">Start Data Import</a></button>
+                <div class="modal fade" id="dataImportModal" role="dialog">
+                    <div class="modal-dialog">
+                    <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Data Import</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>This action will delete previously imported data. Are you sure you want to proceed?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default"><a href="${pageContext.servletContext.contextPath}/api/transformations/start">Start import</button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
               </div>
             </div>
           </sec:authorize>

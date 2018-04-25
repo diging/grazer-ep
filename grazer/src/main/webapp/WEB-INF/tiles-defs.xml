@@ -22,6 +22,10 @@
         <put-attribute name="content" value="/WEB-INF/views/person.jsp" />    
     </definition>
     
+    <definition name="data/import" extends="base.definition">
+        <put-attribute name="content" value="/WEB-INF/views/dataImport.jsp" />    
+    </definition>
+    
     <definition name="person/statements" template="/WEB-INF/views/personStatements.jsp">  
     </definition>
 	
