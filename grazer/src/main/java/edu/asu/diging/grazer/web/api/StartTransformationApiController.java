@@ -19,11 +19,19 @@ public class StartTransformationApiController {
     @Autowired
     private TransformationCronJob cronJob;
 
-    @RequestMapping("/api/transformations/start")
+    /*@RequestMapping("/api/transformations/start")
     public ResponseEntity<String> kickoffTransformations(@RequestParam(value="excludes", defaultValue="") String excludes) {
         List<String> excludeConcepts = Arrays.asList(excludes.split(","));
         excludeConcepts = excludeConcepts.stream().map(c -> c.trim()).collect(Collectors.toList());
         cronJob.retrieveTransformations(excludeConcepts);
         return new ResponseEntity<String>("Transformations started.", HttpStatus.OK);
+    }*/
+    
+    @RequestMapping("/api/transformations/start")
+    public String kickoffTransformations(@RequestParam(value="excludes", defaultValue="") String excludes) {
+        List<String> excludeConcepts = Arrays.asList(excludes.split(","));
+        excludeConcepts = excludeConcepts.stream().map(c -> c.trim()).collect(Collectors.toList());
+        cronJob.retrieveTransformations(excludeConcepts);
+        return "data/import";
     }
 }

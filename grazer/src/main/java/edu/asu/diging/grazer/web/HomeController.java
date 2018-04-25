@@ -1,5 +1,6 @@
 package edu.asu.diging.grazer.web;
 
+import java.security.Principal;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
@@ -14,9 +15,12 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import edu.asu.diging.grazer.core.conceptpower.IConceptpowerCache;
@@ -45,6 +49,20 @@ public class HomeController {
     
     @Value("${concepts.type.person}")
     private String personType;
+    
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    public String login(ModelMap model) {
+        return "home";
+        
+    }
+    
+    @RequestMapping(value = "/loginfailed", method = RequestMethod.GET)
+    public String loginerror(ModelMap model) {
+
+        model.addAttribute("error", "true");
+        return "home";
+
+    }
 
     @RequestMapping(value = "/", produces = MediaType.TEXT_HTML_VALUE)
     public String home(Model model) {           
@@ -117,4 +135,5 @@ public class HomeController {
         
         return new ResponseEntity<Collection<GraphElement>>(elements.values(), HttpStatus.OK);
     }
+    
 }

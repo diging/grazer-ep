@@ -39,8 +39,9 @@
     <![endif]-->
     
     <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
- 	<script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />"></script>
-	<script src="<c:url value="/resources/bootstrap/js/main.js" />"></script>
+    <script src="<c:url value="/resources/bootstrap/js/bootstrap.min.js" />"></script>
+    <script src="<c:url value="/resources/bootstrap/js/main.js" />"></script>	
+    <script src="<c:url value="/resources/js/jquery-alert.js" />"></script>
 	
 	<c:set var="googleTracking" value="${google.tracking.id}" />
 	<c:if test="${not empty googleTracking }">
@@ -57,58 +58,115 @@
 	</c:if>
   </head>
 
-  <body>
-  <div style="opacity: 0.1; position: absolute; top: 10px; left: 10px; ">
-    <img src="<c:url value="/resources/images/ep-logo.gif" />" />
-  </div>
-    <div class="container" style="padding-bottom: 150px;">
-
-      <div class="page-header">
-      <nav>
-          <ul class="nav nav-pills pull-right">
-          <li role="presentation">
-          		<a href="<c:url value="/" />" >Home</a>
-          	</li>
-          	
-          	<sec:authorize access="isAuthenticated()">
-          	<li role="presentation">
-         	 	<form action="<c:url value="/logout" />" method="POST">
-         	 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-  				<button class="btn-link" type="submit" title="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
-         	 	</form>
-         	 </li>
+  <body data-spy="scroll" data-offset="0" data-target="#navigation">
+    <div id="navigation" class="navbar navbar-default">
+      <div class="container-fluid">
+          <sec:authorize access="isAuthenticated()">
+            <div class="container">
+              <div class="row" style="padding-top: 15px;">
+                <button class="btn btn-link" style="cursor:default">Welcome <i class="fa fa-user"></i><span style="margin-left: 5px;"><sec:authentication property="principal.username" /></span>!</button>
+                <form action="<c:url value='/logout' />" method='POST' class="pull-right">
+                  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                  <div>
+                    <button type="submit" class="btn btn-link" style="color:#800000"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
+                  </div>
+                </form>
+                <button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#dataImportModal">Start Data Import</a></button>
+                <div class="modal fade" id="dataImportModal" role="dialog">
+                    <div class="modal-dialog">
+                    <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">Data Import</h4>
+                            </div>
+                            <div class="modal-body">
+                                <p>This action will delete previously imported data. Are you sure you want to proceed?</p>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default"><a href="${pageContext.servletContext.contextPath}/api/transformations/start">Start import</a></button>
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+              </div>
+            </div>
           </sec:authorize>
+          <sec:authorize access="not isAuthenticated()">
+            <form name='f' action="<c:url value='/login' />" method='POST' class="navbar-form navbar-right">
+              <div class="form-group">
+                <input type="text" class="form-control input-sm" name="username" placeholder="Username">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control input-sm" name="password" placeholder="Password">
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-sm">Sign In</button>
+              </div>
+              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+          </sec:authorize>
+        </div>
+      </div>
+    </div>
+    <div id="headerwrap">
+      <div class="container">
+        <div class="row centered">
+          <div class="col-lg-12">
+            <c:choose>
+            <c:when test="${not empty error }">
+            <!--<c:if test="${not empty error}">-->
+              <div class="alert alert-danger alert-dismissible" role="alert">
+                <button type="button" class="close" data-dismiss="alert"
+                  aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+                Your login attempt was not successful, try again.<br /> Caused :
+                  ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+              </div>
+            <!--</c:if>-->
+            </c:when>
+            </c:choose>
+          </div>
+        </div>
+      </div>
+      <!--/ .container -->
+    </div>
+    <!--/ #headerwrap -->
+
+    <div style="opacity: 0.1; position: absolute; top: 10px; left: 10px; ">
+      <img src="<c:url value="/resources/images/ep-logo.gif" />" />
+    </div>
+    <div class="container" style="padding-bottom: 150px;">
+      <div class="page-header">
+        <nav>
+          <ul class="nav nav-pills pull-right">
+            <li role="presentation">
+              <a href="<c:url value="/" />" >Home</a>
+            </li>
           </ul>
-         
         </nav>
         
         <h1><a class="appName" href="<c:url value="/" />">EP Grazer</a></h1>   
       </div>
-      
-      
-	  <c:if test="${show_alert}" >
-	  <div class="alert alert-${alert_type}" role="alert">${alert_msg}</div>
-	  </c:if>
       <tiles:insertAttribute name="content" />
 
     </div> <!-- /container -->
     
     <footer class="footer">
-      <div class="container">
-      
+      <div class="container">  
         <div class="row">
-        <div class="col-md-12">
-		<hr style="margin-bottom: 25px;">
-		<p class="text-muted pull-left">
-		
-	    <p class="text-muted">
-	    Version: ${buildNumber}
-        </p>
-        </div>
+          <div class="col-md-12">
+            <hr style="margin-bottom: 25px;">
+            <p class="text-muted pull-left">
+              <p class="text-muted">
+                Version: ${buildNumber}
+              </p>
+            </p>
+          </div>
         </div>
       </div>
-    </footer>
-    
-
-     </body>
+    </footer> 
+  </body>
 </html>
