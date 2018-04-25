@@ -64,7 +64,7 @@
           <sec:authorize access="isAuthenticated()">
             <div class="container">
               <div class="row" style="padding-top: 15px;">
-                Welcome <i class="fa fa-user"></i><span style="margin-left: 5px;"><sec:authentication property="principal.username" /></span>!
+                <button class="btn btn-link" style="cursor:default">Welcome <i class="fa fa-user"></i><span style="margin-left: 5px;"><sec:authentication property="principal.username" /></span>!</button>
                 <form action="<c:url value='/logout' />" method='POST' class="pull-right">
                   <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
                   <div>
@@ -84,7 +84,7 @@
                                 <p>This action will delete previously imported data. Are you sure you want to proceed?</p>
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-default"><a href="${pageContext.servletContext.contextPath}/api/transformations/start">Start import</button>
+                                <button type="button" class="btn btn-default"><a href="${pageContext.servletContext.contextPath}/api/transformations/start">Start import</a></button>
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
                             </div>
                         </div>
