@@ -66,20 +66,22 @@
       <div class="page-header">
       <nav>
           <ul class="nav nav-pills pull-right">
-          <li role="presentation">
+              <li role="presentation">
+          		<a href="<c:url value="/search/texts" />" >Search for concepts</a>
+              </li>
+              <li role="presentation">
           		<a href="<c:url value="/" />" >Home</a>
-          	</li>
-          	
-          	<sec:authorize access="isAuthenticated()">
-          	<li role="presentation">
+              </li>
+          	  <sec:authorize access="isAuthenticated()">
+          	  <li role="presentation">
          	 	<form action="<c:url value="/logout" />" method="POST">
          	 	<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
   				<button class="btn-link" type="submit" title="Logout"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
          	 	</form>
-         	 </li>
-          </sec:authorize>
+         	  </li>
+              </sec:authorize>
           </ul>
-         
+          
         </nav>
         
         <h1><a class="appName" href="<c:url value="/" />">EP Grazer</a></h1>   

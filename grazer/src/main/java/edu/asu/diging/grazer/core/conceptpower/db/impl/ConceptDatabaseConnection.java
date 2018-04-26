@@ -25,7 +25,7 @@ public class ConceptDatabaseConnection implements IConceptDatabaseConnection {
 
     @Autowired
     protected SessionFactory sessionFactory;
-
+    
     @Override
     public IConcept getConcept(String id) {
 

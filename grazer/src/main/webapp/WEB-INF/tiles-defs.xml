@@ -22,6 +22,10 @@
         <put-attribute name="content" value="/WEB-INF/views/person.jsp" />    
     </definition>
     
+    <definition name="search/texts" extends="base.definition">
+        <put-attribute name="content" value="/WEB-INF/views/searchConcepts.jsp" />    
+    </definition>
+    
     <definition name="person/statements" template="/WEB-INF/views/personStatements.jsp">  
     </definition>
 	

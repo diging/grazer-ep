@@ -14,5 +14,4 @@ public interface IConceptDatabaseConnection {
     IConceptType getType(String uri);
 
     IConcept getConceptByUri(String uri);
-
 }
