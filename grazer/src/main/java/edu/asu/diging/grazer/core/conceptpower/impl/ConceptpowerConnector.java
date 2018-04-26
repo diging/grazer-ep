@@ -72,10 +72,14 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
             return null;
         }
         
-        ConceptpowerConcepts concepts = response.getBody();
-        if (concepts.getConceptEntries() != null && !concepts.getConceptEntries().isEmpty()) {
-            ConceptpowerConcept cpc = concepts.getConceptEntries().get(0);
-            return conceptMapper.mapConceptpowerConceptToConcept(cpc);
+        try {
+            ConceptpowerConcepts concepts = response.getBody();
+            if (concepts.getConceptEntries() != null && !concepts.getConceptEntries().isEmpty()) {
+                ConceptpowerConcept cpc = concepts.getConceptEntries().get(0);
+                return conceptMapper.mapConceptpowerConceptToConcept(cpc);
+            }
+        } catch(NullPointerException ex) {
+            logger.error("Could not find any concepts", ex);
         }
         return null;
     }
@@ -96,17 +100,21 @@ public class ConceptpowerConnector implements IConceptpowerConnector {
             return null;
         }
         
-        List<ConceptpowerConcept> conceptList = response.getBody().getConceptEntries();  
+        List<ConceptpowerConcept> conceptList;
         List<ConceptpowerConcept> results = new ArrayList<>();
         
-        if (conceptList != null) {
+        try {
+            conceptList = response.getBody().getConceptEntries();  
             for (ConceptpowerConcept result : conceptList) {
                 if(conceptDB.getConcept(result.getId()) != null) {
                     results.add(result);
                 } 
-            }
-        } 
-        return results;
+            } 
+            return results;
+            
+        } catch(NullPointerException ex) {
+            logger.error("Could not find any concepts", ex);
+        }
+        return null;
     }
-    
 }

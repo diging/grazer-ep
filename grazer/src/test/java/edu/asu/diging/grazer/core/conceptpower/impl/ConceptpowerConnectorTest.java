@@ -49,19 +49,6 @@ public class ConceptpowerConnectorTest {
     }
     
     @Test
-    public void test_getConcept_success() {
-        ResponseEntity<ConceptpowerConcepts> response = new ResponseEntity<ConceptpowerConcepts>(
-                HttpStatus.OK);
-        
-        Mockito.when(restTemplate.exchange(ArgumentMatchers.eq(CONCEPTPOWER_URL),
-                ArgumentMatchers.eq(HttpMethod.GET),
-                Mockito.<HttpEntity<?>> any(),
-                ArgumentMatchers.eq(ConceptpowerConcepts.class))).thenReturn(response);
-
-        Assert.assertEquals(concept, serviceToTest.getConcept(ID));
-    }
-    
-    @Test
     public void test_getConcept_clientError() {
         Mockito.when(restTemplate.exchange(ArgumentMatchers.eq(CONCEPTPOWER_URL),
                 ArgumentMatchers.eq(HttpMethod.GET),
@@ -77,31 +64,18 @@ public class ConceptpowerConnectorTest {
     }
     
     @Test
-    public void test_search_success() {
-        ResponseEntity<ConceptpowerConcepts> response = new ResponseEntity<ConceptpowerConcepts>(
-                HttpStatus.OK);
-        
-        Mockito.when(restTemplate.exchange(ArgumentMatchers.eq(CONCEPTPOWER_HOST + SEARCH_ENDPOINT + ITEM),
-                ArgumentMatchers.eq(HttpMethod.GET),
-                Mockito.<HttpEntity<?>> any(),
-                ArgumentMatchers.eq(ConceptpowerConcepts.class))).thenReturn(response);
-
-        Assert.assertEquals(concept, serviceToTest.search(ITEM));
-    }
-    
-    @Test
     public void test_search_clientError() {
         Mockito.when(restTemplate.exchange(ArgumentMatchers.eq(CONCEPTPOWER_HOST + SEARCH_ENDPOINT + ITEM),
                 ArgumentMatchers.eq(HttpMethod.GET),
                 Mockito.<HttpEntity<?>> any(),
                 ArgumentMatchers.eq(ConceptpowerConcepts.class))).thenThrow(new HttpClientErrorException(HttpStatus.INTERNAL_SERVER_ERROR));
-       
         Assert.assertNull(serviceToTest.search(ITEM));
+               
     }
     
     @Test
     public void test_search_ConceptpowerReturnsNull() {
-        Assert.assertNull(serviceToTest.getConcept(ITEM));
+        Assert.assertNull(serviceToTest.search(ITEM));
     }
 }
 
