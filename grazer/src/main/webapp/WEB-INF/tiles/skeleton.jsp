@@ -157,7 +157,7 @@
           </div>
           <div class="col-md-4 pull-right">
           <sec:authorize access="not isAuthenticated()">
-            <form name='f' action="<c:url value='/login' />" method='POST' class="navbar-form navbar-right">
+            <form name='f' action="<c:url value='/' />" method='POST' class="navbar-form navbar-right">
               <div class="form-group">
                 <input type="text" class="form-control input-sm" name="username" placeholder="Username">
               </div>
