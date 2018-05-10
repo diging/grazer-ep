@@ -5,7 +5,9 @@
 
 <script src="<c:url value="/resources/js/cytoscape.min.js" />"></script>
 <script src="<c:url value="/resources/js/cytoscape-layouts/cytoscape-cose-bilkent.js" />"></script>
+
 <script type="text/javascript">
+    var cy;
     var highlightSize = "50px";
     var nodeSize = "15px";
     var url = '<c:url value="/persons/network" />';
