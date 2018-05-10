@@ -15,7 +15,7 @@
     <meta name="author" content="">
     
     <link rel="stylesheet" href="<c:url value="/resources/font-awesome-4.6.3/css/font-awesome.min.css" />" />
-    <link href="https://fonts.googleapis.com/css?family=Dosis" rel="stylesheet"> 
+    <link href="https://fonts.googleapis.com/css?family=Dosis|Quicksand" rel="stylesheet"> 
     
     <title>EP Grazer</title>
 
@@ -59,57 +59,7 @@
   </head>
 
   <body data-spy="scroll" data-offset="0" data-target="#navigation">
-    <div id="navigation" class="navbar navbar-default">
-      <div class="container-fluid">
-          <sec:authorize access="isAuthenticated()">
-            <div class="container">
-              <div class="row" style="padding-top: 15px;">
-                <button class="btn btn-link" style="cursor:default">Welcome <i class="fa fa-user"></i><span style="margin-left: 5px;"><sec:authentication property="principal.username" /></span>!</button>
-                <form action="<c:url value='/logout' />" method='POST' class="pull-right">
-                  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-                  <div>
-                    <button type="submit" class="btn btn-link" style="color:#800000"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
-                  </div>
-                </form>
-                <button type="button" class="btn btn-link pull-right" data-toggle="modal" data-target="#dataImportModal">Start Data Import</a></button>
-                <div class="modal fade" id="dataImportModal" role="dialog">
-                    <div class="modal-dialog">
-                    <!-- Modal content-->
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                                <h4 class="modal-title">Data Import</h4>
-                            </div>
-                            <div class="modal-body">
-                                <p>This action will delete previously imported data. Are you sure you want to proceed?</p>
-                            </div>
-                            <div class="modal-footer">
-                                <button type="button" class="btn btn-default"><a href="${pageContext.servletContext.contextPath}/api/transformations/start">Start import</a></button>
-                                <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-              </div>
-            </div>
-          </sec:authorize>
-          <sec:authorize access="not isAuthenticated()">
-            <form name='f' action="<c:url value='/login' />" method='POST' class="navbar-form navbar-right">
-              <div class="form-group">
-                <input type="text" class="form-control input-sm" name="username" placeholder="Username">
-              </div>
-              <div class="form-group">
-                <input type="password" class="form-control input-sm" name="password" placeholder="Password">
-              </div>
-              <div class="form-group">
-                <button type="submit" class="btn btn-primary btn-sm">Sign In</button>
-              </div>
-              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-            </form>
-          </sec:authorize>
-        </div>
-      </div>
-    </div>
+    
     <div id="headerwrap">
       <div class="container">
         <div class="row centered">
@@ -143,13 +93,51 @@
         <nav>
           <ul class="nav nav-pills pull-right">
             <li role="presentation">
-              <a href="<c:url value="/" />" >Home</a>
+              <a class="btn btn-link" href="<c:url value="/" />" >Home</a>
             </li>
-          </ul>
+          
+            <sec:authorize access="isAuthenticated()">
+            <form action="<c:url value='/logout' />" method='POST' class="pull-right">
+                  <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+                  <li role="presentation">
+                    <button type="submit" class="btn btn-link" style="color:#800000; margin-top:5px;"><i class="fa fa-sign-out" aria-hidden="true"></i> Logout</button>
+                  </li>
+            </form>
+            </sec:authorize>
+            <sec:authorize access="hasRole('ADMIN')">
+            <li role="presentation">
+            <button class="btn btn-link pull-right" style="margin-top:5px;" data-toggle="modal" data-target="#dataImportModal">Import Data</button>
+            </li>
+            </sec:authorize>
+        </ul>
         </nav>
-        
-        <h1><a class="appName" href="<c:url value="/" />">EP Grazer</a></h1>   
+        <h1><a class="appName" href="<c:url value="/" />" style="text-decoration:none; font-family:'Quicksand';">Explore the Embryo Project</a></h1>   
       </div>
+      
+      <sec:authorize access="hasRole('ADMIN')">
+      <div class="modal fade" id="dataImportModal" role="dialog">
+      <form action="${pageContext.servletContext.contextPath}/admin/transformations/start" method='POST'>
+          <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+          <div class="modal-dialog">
+          <!-- Modal content-->
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                      <h4 class="modal-title">Data Import</h4>
+                  </div>
+                  <div class="modal-body">
+                      <p>This action will delete previously imported data. Are you sure you want to proceed?</p>
+                  </div>
+                  <div class="modal-footer">
+                      <button type="submit" class="btn btn-default">Start import</button>
+                      <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+                  </div>
+              </div>
+          </div>
+      </form>
+      </div>
+      </sec:authorize>
+         
       <tiles:insertAttribute name="content" />
 
     </div> <!-- /container -->
@@ -158,12 +146,30 @@
       <div class="container">  
         <div class="row">
           <div class="col-md-12">
-            <hr style="margin-bottom: 25px;">
+          <hr style="margin-bottom: 15px;">
+          </div>
+          <div class="col-md-8">
             <p class="text-muted pull-left">
               <p class="text-muted">
                 Version: ${buildNumber}
               </p>
             </p>
+          </div>
+          <div class="col-md-4 pull-right">
+          <sec:authorize access="not isAuthenticated()">
+            <form name='f' action="<c:url value='/login' />" method='POST' class="navbar-form navbar-right">
+              <div class="form-group">
+                <input type="text" class="form-control input-sm" name="username" placeholder="Username">
+              </div>
+              <div class="form-group">
+                <input type="password" class="form-control input-sm" name="password" placeholder="Password">
+              </div>
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary btn-sm">Sign In</button>
+              </div>
+              <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+            </form>
+          </sec:authorize>
           </div>
         </div>
       </div>
