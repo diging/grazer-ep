@@ -3,23 +3,22 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
   
-   	<import resource="../spring/spring-dbconnectionmanager.xml"/>
+    <import resource="../spring/spring-dbconnectionmanager.xml"/>
   
     <bean id="sessionFactory" class="org.springframework.orm.hibernate5.LocalSessionFactoryBean">
-    	<property name="dataSource">
-    		<ref bean="dataSource"/>
-    	</property>
-    	<property name="hibernateProperties">
-    		<value>
-    			hibernate.dialect=org.hibernate.dialect.MySQLDialect
-           		hibernate.show_sql=false
-           		hibernate.hbm2ddl.auto = update
-    		</value>
-    	</property>
-    	<property name="packagesToScan">
-    		<list>	
-    			<value>edu.asu.diging.grazer.core</value>
-    		</list>
-    	</property>
+        <property name="dataSource">
+            <ref bean="dataSource"/>
+        </property>
+        <property name="hibernateProperties">
+            <value>
+                hibernate.show_sql=false
+                hibernate.hbm2ddl.auto = update
+            </value>
+        </property>
+        <property name="packagesToScan">
+            <list>	
+                <value>edu.asu.diging.grazer.core</value>
+            </list>
+    	   </property>
     </bean>
 </beans>

@@ -12,8 +12,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.EnableScheduling;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 import edu.asu.diging.grazer.core.graphs.IGraphDBConnection;
@@ -25,7 +23,6 @@ import edu.asu.diging.grazer.core.quadriga.impl.PollResponse;
 import edu.asu.diging.grazer.core.rdf.IRDFTripleService;
 
 @Component
-@EnableScheduling
 @PropertySource("classpath:config.properties")
 public class TransformationCronJob {
     
@@ -49,7 +46,6 @@ public class TransformationCronJob {
     }
     
     @Async
-    @Scheduled(cron = "${cron_schedule}")
     public void retrieveTransformations() {
         runTransformations(new ArrayList<>());
     }
