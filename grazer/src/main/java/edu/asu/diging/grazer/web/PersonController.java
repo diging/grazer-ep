@@ -77,6 +77,12 @@ public class PersonController {
     
                 @Override
                 public int compare(WikidataStatement o1, WikidataStatement o2) {
+                    if (o1.getPredicate() == null || o1.getPredicate().getLabel() == null) {
+                        return 1;
+                    } 
+                    if (o2.getPredicate() == null || o2.getPredicate().getLabel() == null) {
+                        return -1;
+                    } 
                     return o1.getPredicate().getLabel().compareTo(o2.getPredicate().getLabel());
                 }
             });
